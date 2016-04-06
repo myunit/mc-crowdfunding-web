@@ -400,6 +400,13 @@ require(['Vue', 'Utils'],
 		}
 
 		if ($('#page-reg-platform').length > 0 ) {
+			var search = Utils.getSearch(location);
+			if (!search['phone'] || !search['wechat'] || !search['password'] || !search['captcha'] ||
+				!search['name'] || !search['cardID'] || !search['email'] || !search['pcdCode'] ||
+				!search['pcdDes'] || !search['address']) {
+				location.href = '/reg-start';
+				return;
+			}
 			/*平台选择*/
 			$(document).ready(function () {
 				var vm = new Vue({
@@ -417,14 +424,39 @@ require(['Vue', 'Utils'],
 			});
 		}
 
-		if ($('page-reg-verify').length > 0 ) {
+		if ($('#page-reg-verify').length > 0 ) {
 			/*提交注册*/
 			$(document).ready(function () {
+				var search = Utils.getSearch(location);
+				if (!search['phone'] || !search['wechat'] || !search['password'] || !search['captcha'] ||
+					!search['name'] || !search['cardID'] || !search['email'] || !search['pcdCode'] ||
+					!search['pcdDes'] || !search['address'] || !search['type'] || !search['categoryId']) {
+					location.href = '/reg-start';
+					return;
+				}
+
 				var vm = new Vue({
 					el: '#page-reg-verify',
 					data: {
 					}
 				});
+				var type = parseInt(search['type']);
+				if (type === 1) {
+					$('.my-verify-nav li:eq(0)').addClass('active');
+					$('.my-verify-content .tab-pane:eq(0)').addClass('active');
+				} else if (type === 2) {
+					$('.my-verify-nav li:eq(1)').addClass('active');
+					$('.my-verify-content .tab-pane:eq(1)').addClass('active');
+				} else if (type === 6) {
+					$('.my-verify-nav li:eq(2)').addClass('active');
+					$('.my-verify-content .tab-pane:eq(2)').addClass('active');
+				} else if (type === 7) {
+					$('.my-verify-nav li:eq(3)').addClass('active');
+					$('.my-verify-content .tab-pane:eq(3)').addClass('active');
+				} else {
+					$('.my-verify-nav li:eq(0)').addClass('active');
+					$('.my-verify-content .tab-pane:eq(0)').addClass('active');
+				}
 
 				/*实体店验证*/
 				$("#submit-reg-realshop").click(function () {

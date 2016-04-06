@@ -37,7 +37,7 @@
 
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs my-verify-nav" role="tablist">
-                    <li role="presentation" class="active"><a href="#shopOnline" aria-controls="shopOnline" role="tab" data-toggle="tab">网店验证</a></li>
+                    <li role="presentation"><a href="#shopOnline" aria-controls="shopOnline" role="tab" data-toggle="tab">网店验证</a></li>
                     <li role="presentation"><a href="#shopOffline" aria-controls="shopOffline" role="tab" data-toggle="tab">实体店验证</a></li>
                     <li role="presentation"><a href="#purchase" aria-controls="purchase" role="tab" data-toggle="tab">平台采购验证</a></li>
                     <li role="presentation"><a href="#weiChat" aria-controls="weiChat" role="tab" data-toggle="tab">微商验证</a></li>
@@ -45,7 +45,7 @@
 
                 <!-- Tab panes -->
                 <div class="tab-content my-verify-content">
-                    <div role="tabpanel" class="tab-pane active" id="shopOnline">
+                    <div role="tabpanel" class="tab-pane" id="shopOnline">
                         <div class="ui-reg-platform-box">
                             <div class="ui-platform-item">
                                 <h3>1.店铺信息</h3>
@@ -98,6 +98,28 @@
                             </div>
                         </div>
                     </div>
+                    <div role="tabpanel" class="tab-pane" id="purchase">
+                        <div class="ui-reg-platform-box">
+                            <div class="ui-platform-item">
+                                <h3>1.平台信息</h3>
+                                <div class="ui-form-item p-item">
+                                    <label class="ui-label">平台名称 </label> <input name="" type="text" validate="{required:'请输入企业名称'}" class="ui-input" id="platform-name"/>
+                                </div>
+                            </div>
+                            <div class="ui-platform-item">
+                                <h3>2.采购资质信息</h3>
+                                <p><input type="file" name="uploadFile" accept="image/png,image/jpeg,image/bmp" id="work-pic">上传工号牌照片</input> <label id="work-pic-alert"></label></p>
+                                <p class="ui-text-999 pad-0">备注：能证明平台采购身份的证件，如：名片，桌牌等也可以</p>
+                                <p>示例</p>
+                                <p><img src="/images/sample-purchase.gif" width="604" height="409" alt=""/></p>
+                            </div>
+
+                            <div class="my-text-center">
+                                <button type="button" class="btn btn-long btn-dark" id="submit-reg-purchase">提交</button>
+                                <p >如有任何疑问，<a href="#">请联系客服</a></p>
+                            </div>
+                        </div>
+                    </div>
                     <div role="tabpanel" class="tab-pane" id="weiChat">
                         <div class="ui-reg-platform-box">
                             <div class="ui-platform-item">
@@ -120,30 +142,6 @@
                         </div>
 
                     </div>
-                    <div role="tabpanel" class="tab-pane" id="purchase">
-                        <div class="ui-reg-platform-box">
-                            <div class="ui-platform-item">
-                                <h3>1.平台信息</h3>
-                                <div class="ui-form-item p-item">
-                                    <label class="ui-label">平台名称 </label> <input name="" type="text" validate="{required:'请输入企业名称'}" class="ui-input" id="platform-name"/>
-                                </div>
-                            </div>
-                            <div class="ui-platform-item">
-                                <h3>2.采购资质信息</h3>
-                                <p><input type="file" name="uploadFile" accept="image/png,image/jpeg,image/bmp" id="work-pic">上传工号牌照片</input> <label id="work-pic-alert"></label></p>
-                                <p class="ui-text-999 pad-0">备注：能证明平台采购身份的证件，如：名片，桌牌等也可以</p>
-                                <p>示例</p>
-                                <p><img src="/images/sample-purchase.gif" width="604" height="409" alt=""/></p>
-                            </div>
-
-                            <div class="my-text-center">
-                                <button type="button" class="btn btn-long btn-dark" id="submit-reg-purchase">提交</button>
-                                <p >如有任何疑问，<a href="#">请联系客服</a></p>
-                            </div>
-                        </div>
-
-
-                    </div>
                 </div>
 
             </div>
@@ -156,7 +154,8 @@
         </footer>
     </div>
 </div>
-<script src="/js/jquery.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
-<script src="/js/my.js"></script>
+<script src="/js/lib/jquery.min.js"></script>
+<script src="/js/lib/bootstrap.min.js"></script>
+<script src="/js/lib/my.js"></script>
+<script src="/js/lib/toastr.min.js"></script>
 <script type='text/javascript' src='/js/lib/requirejs.min.js' data-main='/js/controller/index-ctrl'></script>

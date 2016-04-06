@@ -5,7 +5,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var compression = require('compression');
-
+var session = require('express-session');
+var RedisStore = require('connect-redis')(session);
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var product = require('./routes/product');
@@ -22,7 +23,21 @@ app.use(compression());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieParser('hhmweb_'));
+
+app.use(session({
+  store: new RedisStore({
+    host: "127.0.0.1",
+    port: 6379,
+    db: 2
+  }),
+  secret: 'MYun 123!@# web',
+  key: 'sid',
+  cookie: {secure: false, maxAge: 90 * 24 * 3600 * 1000},
+  resave: false,
+  saveUninitialized: true
+}));
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);

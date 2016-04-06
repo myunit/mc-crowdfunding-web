@@ -68,9 +68,7 @@ require(['Vue'],
                     captchaTip: '获取验证码',
                     isSendCaptcha: false,
                     isDisable: true,
-                    captchaMsg: '',
-                    rePassword: '',
-                    phone: ''
+                    captchaMsg: ''
                 }
             });
 
@@ -121,28 +119,38 @@ require(['Vue'],
 
             $("#login").click(function () {
                 var myreg=/^[1][358][0-9]{9}$/;
+                var a = null;
                 if (!vm.username ) {
-                    var a = document.getElementById("id-label");
+                    a = document.getElementById("id-label");
                     a.innerHTML = '<label style="font-size:14px;color:red;">11位手机号码</label>';
                     return;
                 }
+
                 if(!myreg.test(vm.username)){
-                    var a = document.getElementById("id-label");
+                    a = document.getElementById("id-label");
                     a.innerHTML = '<label style="font-size:14px;color:red;">手机号码不正确</label>';
                     return;
                 }
+
                 if (!vm.captcha) {
-                    var a=document.getElementById("captcha-label");
+                    a=document.getElementById("captcha-label");
                     a.innerHTML='<label style="font-size:14px;color:red;">请输入验证码</label>';
                     return;
                 }
+
                 if (!vm.password) {
-                    var a=document.getElementById("pass-label");
+                    a=document.getElementById("pass-label");
                     a.innerHTML='<label style="font-size:14px;color:red;">密码不能为空</label>';
                     return;
                 }
 
-                location.href = '/login-suc?username='+vm.username;
+                ajaxPost('/login', {'phone': vm.username, 'password': vm.password, 'captcha':vm.captcha}, function (err, data) {
+                    if (err) {
+                        toastr.error(err, '错误');
+                    } else {
+                        location.href = '/login-suc';
+                    }
+                });
             });
         });
         /*注册*/

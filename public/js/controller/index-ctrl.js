@@ -13,6 +13,25 @@ require.config({
     }
 });
 
+function ajaxPost(url, data, cb) {
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: data,
+        timeout: 15000,
+        success: function (data, status, xhr) {
+            if (data.status) {
+                cb(null, data);
+            } else {
+                cb(data.msg, null);
+            }
+        },
+        error: function (xhr, errorType, error) {
+            console.error(url + ' error: ' + errorType + '##' + error);
+            cb('服务异常', null);
+        }
+    });
+}
 
 
 require(['Vue'],
@@ -20,8 +39,26 @@ require(['Vue'],
         'use strict';
         Vue.config.delimiters = ['${', '}'];
         Vue.config.unsafeDelimiters = ['{!!', '!!}'];
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-center",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "3000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+
         /*登录*/
-        $(document).ready(function () {
+        $('#page-login').ready(function () {
             var vm = new Vue({
                 el: '#page-login',
                 data: {
@@ -37,7 +74,8 @@ require(['Vue'],
                 }
             });
 
-            $('#sendCaptcha').click(function () {
+            $('#sendCaptcha').click(function (e) {
+                e.preventDefault();
                 var myreg=/^[1][358][0-9]{9}$/;
                 if (vm.isSendCaptcha) {
                     return;
@@ -53,26 +91,32 @@ require(['Vue'],
                     return;
                 }
 
-                var time = 60;
-                vm.captchaTip = time + '秒';
-                vm.isSendCaptcha = true;
-                vm.isDisable = false;
-                vm.captchaMsg = '如果您未收到短信，请在60秒后再次获取';
-                var sendCaptchaInterval = setInterval(function () {
-                    time--;
-                    if (time > 9) {
-                        vm.captchaTip = time + '秒';
+                ajaxPost('/send-captcha', {'phone': vm.username, 'type': 2}, function (err, data) {
+                    if (err) {
+                        toastr.error(err, '错误');
                     } else {
-                        vm.captchaTip = '0' + time + '秒';
+                        var time = 60;
+                        vm.captchaTip = time + '秒';
+                        vm.isSendCaptcha = true;
+                        vm.isDisable = false;
+                        vm.captchaMsg = '如果您未收到短信，请在60秒后再次获取';
+                        var sendCaptchaInterval = setInterval(function () {
+                            time--;
+                            if (time > 9) {
+                                vm.captchaTip = time + '秒';
+                            } else {
+                                vm.captchaTip = '0' + time + '秒';
+                            }
+                            if (time === 0) {
+                                vm.captchaTip = '获取验证码';
+                                vm.isSendCaptcha = false;
+                                vm.isDisable = true;
+                                vm.captchaMsg = '';
+                                clearInterval(sendCaptchaInterval);
+                            }
+                        }, 1000);
                     }
-                    if (time === 0) {
-                        vm.captchaTip = '获取验证码';
-                        vm.isSendCaptcha = false;
-                        vm.isDisable = true;
-                        vm.captchaMsg = '';
-                        clearInterval(sendCaptchaInterval);
-                    }
-                }, 1000);
+                });
             });
 
             $("#login").click(function () {

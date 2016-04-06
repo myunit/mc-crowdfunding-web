@@ -1,5 +1,11 @@
 var express = require('express');
+var unirest = require('unirest');
+var ApiFactory = require('../common/api_config');
+
 var router = express.Router();
+
+var api = ApiFactory.CreateApi();
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -38,5 +44,23 @@ router.get('/reg-success', function(req, res, next) {
   res.render('reg-success', { title: '美仓众筹' });
 });
 
+
+router.post('/send-captcha', function (req, res, next) {
+  unirest.post(api.sendCaptcha())
+      .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
+      .send({"phone": req.body.phone, "type": parseInt(req.body.type)})
+      .end(function (response) {
+        var data = response.body.repData;
+        if (data === undefined) {
+          res.json({status: 0, msg: '服务异常'});
+          return;
+        }
+        if (data.status) {
+          res.json({status: data.status});
+        } else {
+          res.json({status: data.status, msg: data.msg});
+        }
+      });
+});
 
 module.exports = router;

@@ -49,7 +49,7 @@
             </div>
             <div class="ui-form-item p-item ui-vertify">
                 <label class="ui-label"><span class="ui-text-red">*</span> 验证码</label> <input name="" type="text" validate="{required:'请输入验证码'}" class="ui-input" v-model="validate"/><label id="validate"></label>
-                <a href="#" class="ui-vertify-button"><img src="images/demo/code-temp.gif"  alt=""/></a>  <a href="#" class="ui-a-vertify">换一张</a>
+                <input type="text" readonly="readonly" v-model="checkCode" class="ui-vertify-button" style="width: 80px"/>  <a href="#" class="ui-a-vertify" @click.prevent="changeCode()">换一张</a>
             </div>
             <div class="ui-form-item p-item ui-active">
                 <label class="ui-label"><span class="ui-text-red">*</span> 激活码</label> <input name="" type="text" validate="{required:'请输入激活码'}" class="ui-input" v-model="captcha"/><label id="captcha"></label>

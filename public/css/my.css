@@ -255,7 +255,7 @@ footer.my-footer-home{position:fixed; bottom:40px; height:auto; background:none;
 .ui-reg-form .ui-input{ float:left; padding:6px 9px; width:284px;}
 .ui-reg-form .ui-label{ padding-right:10px; width:90px;}
 .ui-reg-form .ui-vertify .ui-input{ width:168px;}
-.ui-reg-form .ui-vertify .ui-vertify-button{ float:left;margin-left:10px;line-height: 18px; border: 1px solid #d1dbe4; color:#333;}
+.ui-reg-form .ui-vertify .ui-vertify-button{ background:url(../images/demo/code-temp.gif);float:left;margin-left:10px;line-height: 18px; border: 1px solid #d1dbe4; color:#cc0000;font-weight:bold;font-style:italic;}
 .ui-reg-form .ui-vertify .ui-a-vertify{ padding:5px 0 0 6px; float:left;}
 
 .ui-reg-form .ui-active .ui-input{ width:168px;}

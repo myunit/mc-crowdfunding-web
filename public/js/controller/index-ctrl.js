@@ -33,6 +33,20 @@ function ajaxPost(url, data, cb) {
     });
 }
 
+function createCode()
+{
+    var code = '';
+    var codeLength = 4;//验证码的长度
+    var selectChar = new Array(0,1,2,3,4,5,6,7,8,9,'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z');//所有候选组成验证码的字符，当然也可以用中文的
+
+    for(var i=0;i<codeLength;i++)
+    {
+        var charIndex = Math.floor(Math.random()*36);
+        code += '  ' + selectChar[charIndex];
+    }
+
+    return code;
+}
 
 require(['Vue'],
     function (Vue) {
@@ -167,9 +181,19 @@ require(['Vue'],
                     captchaTip: '获取激活码',
                     isSendCaptcha: false,
                     isDisable: true,
-                    captchaMsg: ''
+                    captchaMsg: '',
+                    checkCode: ''
+                },
+                methods: {
+                    changeCode: changeCode
                 }
             });
+
+            vm.checkCode = createCode();
+
+            function changeCode () {
+                vm.checkCode = createCode();
+            }
 
             $('#sendActiveCode').click(function () {
                 e.preventDefault();

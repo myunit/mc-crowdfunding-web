@@ -15,7 +15,8 @@
     "serve-favicon": "~2.3.0",
     "unirest": "^0.4.2",
     "async": "^1.5.2",
-    "unirest": "^0.4.2"
+    "unirest": "^0.4.2",
+    "compression": "^1.6.1"
   },
   "devDependencies": {
     "gulp": "^3.9.1",

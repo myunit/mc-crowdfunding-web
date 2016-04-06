@@ -154,7 +154,7 @@ require(['Vue'],
             });
         });
         /*注册*/
-        $(document).ready(function () {
+        $('#page-reg-start').ready(function () {
             var vm = new Vue({
                 el: '#page-reg-start',
                 data: {
@@ -170,86 +170,97 @@ require(['Vue'],
                     captchaMsg: ''
                 }
             });
+
             $('#sendActiveCode').click(function () {
+                e.preventDefault();
                 var myreg=/^[1][358][0-9]{9}$/;
                 if (vm.isSendCaptcha) {
                     return;
                 }
+                var a = null;
                 if(!vm.phone){
-                    var a=document.getElementById("phone");
+                    a=document.getElementById("phone");
                     a.innerHTML='<label style="font-size:14px;color:red;">11位手机号码</label>';
                     return;
                 }
                 if(!myreg.test(vm.phone)){
-                    var a=document.getElementById("phone");
+                    a=document.getElementById("phone");
                     a.innerHTML='<label style="font-size:14px;color:red;">手机号码不正确</label>';
                     return;
                 }
 
-                var time = 60;
-                vm.captchaTip = time + '秒';
-                vm.isSendCaptcha = true;
-                vm.isDisable = false;
-                vm.captchaMsg = '如果您未收到短信，请在60秒后再次获取';
-                var sendCaptchaInterval = setInterval(function () {
-                    time--;
-                    if (time > 9) {
-                        vm.captchaTip = time + '秒';
+                ajaxPost('/send-captcha', {'phone': vm.phone, 'type': 1}, function (err, data) {
+                    if (err) {
+                        toastr.error(err, '错误');
                     } else {
-                        vm.captchaTip = '0' + time + '秒';
+                        var time = 60;
+                        vm.captchaTip = time + '秒';
+                        vm.isSendCaptcha = true;
+                        vm.isDisable = false;
+                        vm.captchaMsg = '如果您未收到短信，请在60秒后再次获取';
+                        var sendCaptchaInterval = setInterval(function () {
+                            time--;
+                            if (time > 9) {
+                                vm.captchaTip = time + '秒';
+                            } else {
+                                vm.captchaTip = '0' + time + '秒';
+                            }
+                            if (time === 0) {
+                                vm.captchaTip = '获取验证码';
+                                vm.isSendCaptcha = false;
+                                vm.isDisable = true;
+                                vm.captchaMsg = '';
+                                clearInterval(sendCaptchaInterval);
+                            }
+                        }, 1000);
                     }
-                    if (time === 0) {
-                        vm.captchaTip = '获取激活码';
-                        vm.isSendCaptcha = false;
-                        vm.isDisable = true;
-                        vm.captchaMsg = '';
-                        clearInterval(sendCaptchaInterval);
-                    }
-                }, 1000);
+                });
             });
 
             $("#reg-start-next").click(function(){
                 var myreg=/^[1][358][0-9]{9}$/;
+                var a = null;
                 if(!vm.phone){
-                    var a=document.getElementById("phone");
+                    a=document.getElementById("phone");
                     a.innerHTML='<label style="font-size:14px;color:red;">请输入电话号码</label>';
                     return;
                 }
                 if(!myreg.test(vm.phone)){
-                    var a=document.getElementById("phone");
+                    a=document.getElementById("phone");
                     a.innerHTML='<label style="font-size:14px;color:red;">电话号码不正确</label>';
                     return;
                 }
                 if(!vm.wechat){
-                    var a=document.getElementById("wechat");
+                    a=document.getElementById("wechat");
                     a.innerHTML='<label style="font-size:14px;color:red;">请输入微信号</label>';
                     return;
                 }
                 if(!vm.password ||(vm.password && (vm.password.length<6 || vm.password.length>15))){
-                    var a=document.getElementById("password");
+                    a=document.getElementById("password");
                     a.innerHTML='<label style="font-size:14px;color:red;">6-15位密码</label>';
                     return;
                 }
 
                 if(!vm.repassword){
-                    var a=document.getElementById("repassword");
+                    a=document.getElementById("repassword");
                     a.innerHTML='<label style="font-size:14px;color:red;">请确认密码</label>';
                     return;
                 }
 
                 if(vm.password!=vm.repassword){
-                    var a=document.getElementById("repassword");
+                    a=document.getElementById("repassword");
                     a.innerHTML='<label style="font-size:14px;color:red;">密码输入不一致</label>';
                     return;
                 }
 
                 if(!vm.validate){
-                    var a=document.getElementById("validate");
+                    a=document.getElementById("validate");
                     a.innerHTML='<label style="font-size:14px;color:red;">请输入验证码</label>';
                     return;
                 }
+
                 if(!vm.captcha){
-                    var a=document.getElementById("captcha");
+                    a=document.getElementById("captcha");
                     a.innerHTML='<label style="font-size:14px;color:red;">请输入激活码</label>';
                     return;
                 }

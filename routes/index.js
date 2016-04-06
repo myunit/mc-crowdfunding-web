@@ -39,7 +39,6 @@ router.route('/login')
 				}
 			});
 	});
-;
 
 router.get('/login-suc', function (req, res, next) {
 	if (req.session.uid) {

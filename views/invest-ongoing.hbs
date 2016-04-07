@@ -51,17 +51,29 @@
             <div id="my-carousel" class="carousel slide my-carousel" data-ride="carousel">
                 <!-- Indicators -->
                 <ol class="carousel-indicators">
-                    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                    <li data-target="#my-carousel" data-slide-to="0" class="active"></li>
+                    <li data-target="#my-carousel" data-slide-to="1"></li>
+                    <li data-target="#my-carousel" data-slide-to="2"></li>
+                    <li data-target="#my-carousel" data-slide-to="3"></li>
+                    <li data-target="#my-carousel" data-slide-to="4"></li>
                 </ol>
 
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner" role="listbox">
-                    <div class="item active">
-                        <img src="/images/demo/banner1.jpg" alt="...">
+                    <div class="item active" data-slide-number="0">
+                        <img :src="imgList[2].ImgValue" alt="...">
                     </div>
-                    <div class="item">
-                        <img src="/images/demo/banner2.jpg" alt="...">
+                    <div class="item"  data-slide-number="1">
+                        <img :src="imgList[3].ImgValue" alt="...">
+                    </div>
+                    <div class="item"  data-slide-number="2">
+                        <img :src="imgList[4].ImgValue" alt="...">
+                    </div>
+                    <div class="item"  data-slide-number="3">
+                        <img :src="imgList[5].ImgValue" alt="...">
+                    </div>
+                    <div class="item"  data-slide-number="4">
+                        <img :src="imgList[6].ImgValue" alt="...">
                     </div>
                 </div>
 
@@ -82,23 +94,23 @@
                             <span>宣传视频</span></a>
                     </li>
                     <li class="my-thumbnail-item">
-                        <a href="#"><img :src="imgList[2].ImgValue" width="185" height="130" alt=""/>
+                        <a id="carousel-selector-0"><img :src="imgList[2].ImgValue" width="185" height="130" alt=""/>
                             <span>品牌及产品介绍</span></a>
                     </li>
                     <li class="my-thumbnail-item">
-                        <a href="#"><img :src="imgList[3].ImgValue" width="185" height="130" alt=""/>
+                        <a id="carousel-selector-1"><img :src="imgList[3].ImgValue" width="185" height="130" alt=""/>
                             <span>营销策划方案</span></a>
                     </li>
                     <li class="my-thumbnail-item">
-                        <a href="#"><img :src="imgList[4].ImgValue" width="185" height="130" alt=""/>
+                        <a id="carousel-selector-2"><img :src="imgList[4].ImgValue" width="185" height="130" alt=""/>
                             <span>投资回报</span></a>
                     </li>
                     <li class="my-thumbnail-item">
-                        <a href="#"><img :src="imgList[5].ImgValue" width="185" height="130" alt=""/>
+                        <a id="carousel-selector-3"><img :src="imgList[5].ImgValue" width="185" height="130" alt=""/>
                             <span>权利与义务</span></a>
                     </li>
                     <li class="my-thumbnail-item">
-                        <a href="#"><img :src="imgList[5].ImgValue" width="185" height="130" alt=""/>
+                        <a id="carousel-selector-4"><img :src="imgList[6].ImgValue" width="185" height="130" alt=""/>
                             <span>淘汰机制</span></a>
                     </li>
                 </ul>
@@ -131,9 +143,4 @@
 <script src="../js/lib/jquery.min.js"></script>
 <script src="../js/lib/bootstrap.min.js"></script>
 <script src="../js/lib/toastr.min.js"></script>
-<script>
-    $(function(){
-        $('#my-carousel').carousel();
-    })
-</script>
 <script type='text/javascript' src='../js/lib/requirejs.min.js' data-main='../js/controller/invest-ctrl' ></script>

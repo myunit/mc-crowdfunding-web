@@ -94,8 +94,15 @@ require(['Vue', 'Utils'],
                         count: 0,
                         equityList: [],
                         equityImg: []
+                    },
+                    methods: {
+                        goToDetail: goToDetail
                     }
                 });
+
+                function goToDetail(index) {
+                    location.href = '/invest/invest-ongoing?id=' + vm.equityList[index].SysNo;
+                }
 
                 var foundingItem = new FoundingItems('/invest/get-all-funding', 20, -1 , 3);
                 foundingItem.addItems(function (err, data) {
@@ -149,6 +156,38 @@ require(['Vue', 'Utils'],
                 });
 
             });
+            return;
+        }
+
+        if ($('#page-invest-detail').length > 0 ) {
+            $(document).ready(function () {
+                var search = Utils.getSearch(location);
+                if (!search['id']) {
+                    location.href = '/invest/invest-list';
+                    return;
+                }
+                var vm = new Vue({
+                    el: '#page-invest-detail',
+                    data: {
+                        count: 0,
+                        funding: null,
+                        imgList: []
+                    }
+                });
+
+                ajaxPost('/invest/get-funding-detail', {fundingId: parseInt(search['id'])}, function (err, data) {
+                    if (err) {
+                        toastr.error(err, '错误');
+                    } else {
+                        if (data.count === 1) {
+                            vm.funding = Utils.clone(data.funding);
+                            vm.imgList = data.img.slice();
+                        }
+                    }
+                });
+
+            });
+
             return;
         }
 

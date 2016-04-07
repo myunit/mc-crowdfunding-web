@@ -12,7 +12,8 @@
       "getFundingOrder": "Fundings/get-funding-order",
       "getFundingProgress": "Fundings/get-funding-progress",
       "getFundingReserve": "Fundings/get-funding-reserve",
-      "getHotFunding": "Fundings/get-hot-funding"
+      "getHotFunding": "Fundings/get-hot-funding",
+      "getFundingDetail": "Fundings/get-funding-detail"
     }
   }
 }

@@ -403,3 +403,7 @@ DIV.digg SPAN.current {FONT-WEIGHT: bold;MARGIN: 2px 2px; COLOR: #363636; paddin
 DIV.digg A {padding: 10px 10px; border: 1px solid #f0f0f0;MARGIN: 2px 2px; COLOR: #333;TEXT-DECORATION: none; }
 DIV.digg A:hover{ background:#21b5b5;border: 1px solid #21b5b5; color:#fff; }
 DIV.digg  .next{ margin:2px 6px 2px 6px;}
+
+[v-cloak] {
+	display: none;
+}

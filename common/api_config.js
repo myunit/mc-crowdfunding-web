@@ -50,5 +50,8 @@ ApiService.prototype = {
 	},
 	getHotFunding: function () {
 		return api_config.apiService.baseUrl + api_config.apiService.method.getHotFunding;
+	},
+	getFundingDetail: function () {
+		return api_config.apiService.baseUrl + api_config.apiService.method.getFundingDetail;
 	}
 };

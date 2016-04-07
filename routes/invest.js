@@ -26,7 +26,7 @@ router.get('/invest-failed', function(req, res, next) {
 });
 
 router.get('/invest-ongoing', function(req, res, next) {
-    res.render('invest-ongoing',{title:"美仓众筹"});
+    res.render('invest-ongoing',{title:"美仓众筹", name: req.session.name});
 });
 
 router.get('/invest-preheat', function(req, res, next) {
@@ -55,6 +55,29 @@ router.post('/get-all-funding', function (req, res, next) {
     };
 
     unirest.post(api.getAllFunding())
+        .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
+        .send(obj)
+        .end(function (response) {
+            var data = response.body.repData;
+            if (data === undefined) {
+                res.json({status: 0, msg: '服务异常'});
+                return;
+            }
+            if (data.status) {
+                res.json({status: data.status, count: data.count, funding: data.funding, img: data.img});
+            } else {
+                res.json({status: data.status, msg: data.msg});
+            }
+        });
+});
+
+router.post('/get-funding-detail', function (req, res, next) {
+    var obj = {
+        "userId": req.session.uid,
+        "fundingId": parseInt(req.body.fundingId)
+    };
+
+    unirest.post(api.getFundingDetail())
         .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
         .send(obj)
         .end(function (response) {

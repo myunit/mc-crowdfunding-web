@@ -73,6 +73,41 @@ require(['Vue', 'Utils'],
 			"hideMethod": "fadeOut"
 		};
 
+		if ($('#page-index').length > 0 ) {
+			$(document).ready(function () {
+				var vm = new Vue({
+					el: '#page-index',
+					data: {
+						equityList: [],
+						productList: [],
+						equityImg: [],
+						productImg: []
+					}
+				});
+
+				ajaxPost('/get-hot-funding-index', {'fundingType': 2}, function (err, data) {
+					if (err) {
+						toastr.error(err, '错误');
+					} else {
+						vm.productList = data.funding.slice();
+						vm.productImg = data.img.slice();
+					}
+				});
+
+				ajaxPost('/get-hot-funding-index', {'fundingType': 3}, function (err, data) {
+					if (err) {
+						toastr.error(err, '错误');
+					} else {
+						vm.equityList = data.funding.slice();
+						vm.equityImg = data.img.slice();
+					}
+				});
+
+
+			});
+			return;
+		}
+
 		if ($('#page-login').length > 0 ) {
 			/*登录*/
 			$(document).ready(function () {
@@ -174,6 +209,7 @@ require(['Vue', 'Utils'],
 					});
 				});
 			});
+			return;
 		}
 
 		if ($('#page-reg-start').length > 0 ) {
@@ -310,6 +346,7 @@ require(['Vue', 'Utils'],
 				});
 
 			});
+			return;
 		}
 
 		if ($('#page-reg-info').length > 0 ) {
@@ -398,6 +435,7 @@ require(['Vue', 'Utils'],
 					+ '&email=' + vm.email + '&pcdCode=' + pcdCode + '&pcdDes=' + encodeURI(encodeURI(pcdDes)) + '&address=' + vm.address + '&qq=' + vm.qq;
 				});
 			});
+			return;
 		}
 
 		if ($('#page-reg-platform').length > 0 ) {
@@ -423,6 +461,7 @@ require(['Vue', 'Utils'],
 					location.href = '/reg-platform-verify' + location.search + '&type=' + type + '&categoryId=' + categoryId;
 				}
 			});
+			return;
 		}
 
 		if ($('#page-reg-verify').length > 0 ) {
@@ -686,6 +725,7 @@ require(['Vue', 'Utils'],
 					});
 				});
 			});
+			return;
 		}
 
 	});

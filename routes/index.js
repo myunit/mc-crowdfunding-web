@@ -101,8 +101,8 @@ router.post('/register', function (req, res, next) {
 		var buf = new Buffer(req.body.imgData, 'base64');
 		rs.push(buf);
 		rs.push(null);
-		var opt = { flags: 'w', encoding: null,fd: null, mode: 0666, autoClose: true};
-		var filePath =  path.join(__dirname, '../public/images/verifty/');
+		var opt = {flags: 'w', encoding: null, fd: null, mode: 0666, autoClose: true};
+		var filePath = path.join(__dirname, '../public/images/verifty/');
 		if (!fs.existsSync(filePath)) {
 			fs.mkdirSync(filePath);
 		}
@@ -153,6 +153,30 @@ router.post('/register', function (req, res, next) {
 			}
 			if (data.status) {
 				res.json({status: data.status});
+			} else {
+				res.json({status: data.status, msg: data.msg});
+			}
+		});
+});
+
+router.post('/get-hot-funding-index', function (req, res, next) {
+	var obj = {
+		"userId": req.session.uid,
+		"pageId": 0,
+		"pageSize": 2,
+		"fundingType": parseInt(req.body.fundingType)
+	};
+	unirest.post(api.getHotFunding())
+		.headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
+		.send(obj)
+		.end(function (response) {
+			var data = response.body.repData;
+			if (data === undefined) {
+				res.json({status: 0, msg: '服务异常'});
+				return;
+			}
+			if (data.status) {
+				res.json({status: data.status, funding: data.funding, img: data.img});
 			} else {
 				res.json({status: data.status, msg: data.msg});
 			}

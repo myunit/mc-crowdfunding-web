@@ -28,89 +28,51 @@
 <div class="my-wp-1200">
     <h2 class="my-h2">热门权益众筹 <a href="invest/invest-list">查看更多</a></h2>
     <!--  众筹项目开始-->
-    <div class="my-item-box clearfix">
-        <p class="my-item-img pull-left"><img src="/images/demo/index-img.gif" width="216" height="152" alt=""/></p>
-        <div class="my-item-info pull-left">
-            <h3>品牌名称品牌名称</h3>
-            <p>千万不要在一个模态框上重叠另一个模态框。要想同时支持多个模态框，需要自己写额外的代码来实现。千万不要在一个模态框上重叠另一个模态框。要想同时支持多个模态框，需要自己写额外的代码来实现。</p>
-            <p>来自：日本</p>
-        </div>
-        <div class="my-item-status pull-left">
-            <div class="my-item-progress my-mar-t30  clearfix"> <div class="progress">
-                <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-                    <span class="sr-only">60% Complete</span>
+    <template v-for="equity in equityList" track-by="SysNo">
+        <div class="my-item-box clearfix">
+            <p class="my-item-img pull-left"><img :src="equityImg[$index].ImgValue" width="216" height="152" alt=""/></p>
+            <div class="my-item-info pull-left" v-cloak>
+                <h3>${equity.Brand.BrandName}</h3>
+                <p>${equity.Slogan}</p>
+                <p>来自：日本</p>
+            </div>
+            <div class="my-item-status pull-left">
+                <div class="my-item-progress my-mar-t30  clearfix"> <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" :style="{width: equity.CompletePercent+'%'};">
+                        <span class="sr-only"></span>
+                    </div>
                 </div>
-            </div>
-                <span class="my-progress-num">62%</span>
-            </div>
-            <p class="my-p-status my-text-gray"><span>目标金额 <b>20万</b></span>         <span>已众筹 <b>2万</b></span>          <span>投资人数 <b>50人</b></span>   <span>剩余天数 <b>15天</b></span></p>
-        </div>
-    </div>
-    <!--  众筹项目结束-->
-
-    <!--  众筹项目开始-->
-    <div class="my-item-box clearfix">
-        <p class="my-item-img pull-left"><img src="/images/demo/index-img.gif" width="216" height="152" alt=""/></p>
-        <div class="my-item-info pull-left">
-            <h3>品牌名称品牌名称</h3>
-            <p>千万不要在一个模态框上重叠另一个模态框。要想同时支持多个模态框，需要自己写额外的代码来实现。千万不要在一个模态框上重叠另一个模态框。要想同时支持多个模态框，需要自己写额外的代码来实现。</p>
-            <p>来自：日本</p>
-        </div>
-        <div class="my-item-status pull-left">
-            <div class="my-item-progress my-mar-t30  clearfix"> <div class="progress">
-                <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
-                    <span class="sr-only">60% Complete</span>
+                    <span class="my-progress-num">${equity.CompletePercent}%</span>
                 </div>
+                <p class="my-p-status my-text-gray"><span>目标金额 <b>${equity.TargetAmount}</b></span>         <span>已众筹 <b>${equity.HaveCrowdFundingAmount}</b></span>          <span>投资人数 <b>50人</b></span>   <span>剩余天数 <b>${equity.RemainDay}天</b></span></p>
             </div>
-                <span class="my-progress-num">100%</span>
-            </div>
-            <p class="my-p-status my-text-gray"><span>目标金额 <b>20万</b></span>         <span>已众筹 <b>2万</b></span>          <span>投资人数 <b>50人</b></span>   <span>剩余天数 <b>15天</b></span></p>
         </div>
-    </div>
-    <!--  众筹项目结束-->
+    </template>
 
+    <!--  众筹项目结束-->
 
     <h2 class="my-h2">热门产品众筹 <a href="product/product-list">查看更多</a></h2>
     <!--  众筹项目开始-->
-    <div class="my-item-box clearfix">
-        <p class="my-item-img pull-left"><img src="/images/demo/index-img.gif" width="216" height="152" alt=""/></p>
-        <div class="my-item-info pull-left">
-            <h3>品牌名称品牌名称</h3>
-            <p>千万不要在一个模态框上重叠另一个模态框。要想同时支持多个模态框，需要自己写额外的代码来实现。千万不要在一个模态框上重叠另一个模态框。要想同时支持多个模态框，需要自己写额外的代码来实现。</p>
-            <p>来自：日本</p>
-        </div>
-        <div class="my-item-status pull-left">
-            <div class="my-item-progress my-mar-t30  clearfix"> <div class="progress">
-                <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 52%;">
-                    <span class="sr-only">60% Complete</span>
+    <template v-for="product in productList" track-by="SysNo">
+        <div class="my-item-box clearfix">
+            <p class="my-item-img pull-left"><img :src="productImg[$index].ImgValue" width="216" height="152" alt=""/></p>
+            <div class="my-item-info pull-left">
+                <h3>${product.Brand.BrandName}</h3>
+                <p>${product.Slogan}</p>
+                <p>来自：日本</p>
+            </div>
+            <div class="my-item-status pull-left">
+                <div class="my-item-progress my-mar-t30  clearfix"> <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" :style="{width: product.CompletePercent+'%'};">
+                        <span class="sr-only"></span>
+                    </div>
                 </div>
-            </div>
-                <span class="my-progress-num">52%</span>
-            </div>
-            <p class="my-p-status my-text-gray"><span>目标数量 <b>10000件</b></span>         <span>已众筹 <b>5200件</b></span>        <span>剩余天数 <b>9天</b></span></p>
-        </div>
-    </div>
-    <!--  众筹项目结束-->
-
-    <!--  众筹项目开始-->
-    <div class="my-item-box clearfix">
-        <p class="my-item-img pull-left"><img src="/images/demo/index-img.gif" width="216" height="152" alt=""/></p>
-        <div class="my-item-info pull-left">
-            <h3>品牌名称品牌名称</h3>
-            <p>千万不要在一个模态框上重叠另一个模态框。要想同时支持多个模态框，需要自己写额外的代码来实现。千万不要在一个模态框上重叠另一个模态框。要想同时支持多个模态框，需要自己写额外的代码来实现。</p>
-            <p>来自：日本</p>
-        </div>
-        <div class="my-item-status pull-left">
-            <div class="my-item-progress my-mar-t30  clearfix"> <div class="progress">
-                <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
-                    <span class="sr-only">60% Complete</span>
+                    <span class="my-progress-num">${product.CompletePercent}%</span>
                 </div>
+                <p class="my-p-status my-text-gray"><span>目标数量 <b>${product.Quantity}件</b></span>         <span>已众筹 <b>${product.HaveCrowdFundingCount}件</b></span>        <span>剩余天数 <b>${product.RemainDay}天</b></span></p>
             </div>
-                <span class="my-progress-num">100%</span>
-            </div>
-            <p class="my-p-status my-text-gray"><span>目标数量 <b>10000件</b></span>         <span>已众筹 <b>5200件</b></span>        <span>剩余天数 <b>3天</b></span></p>
         </div>
-    </div>
+    </template>
     <!--  众筹项目结束-->
 
 </div>

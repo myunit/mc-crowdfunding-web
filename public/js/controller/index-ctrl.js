@@ -4,8 +4,8 @@
 require.config({
 	baseUrl: './js',
 	paths: {
-		'Vue': './lib/vue.min',
-		'Utils': './lib/utils.min'
+		'Vue': '../lib/vue.min',
+		'Utils': '../lib/utils.min'
 	},
 	shim: {
 		'Vue': {

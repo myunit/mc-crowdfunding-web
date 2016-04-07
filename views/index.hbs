@@ -36,7 +36,7 @@
                 <p>${equity.Slogan}</p>
                 <p>来自：日本</p>
             </div>
-            <div class="my-item-status pull-left">
+            <div class="my-item-status pull-left" v-cloak>
                 <div class="my-item-progress my-mar-t30  clearfix"> <div class="progress">
                     <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" :style="{width: equity.CompletePercent+'%'};">
                         <span class="sr-only"></span>
@@ -44,7 +44,7 @@
                 </div>
                     <span class="my-progress-num">${equity.CompletePercent}%</span>
                 </div>
-                <p class="my-p-status my-text-gray"><span>目标金额 <b>${equity.TargetAmount}</b></span>         <span>已众筹 <b>${equity.HaveCrowdFundingAmount}</b></span>          <span>投资人数 <b>50人</b></span>   <span>剩余天数 <b>${equity.RemainDay}天</b></span></p>
+                <p class="my-p-status my-text-gray"><span>目标金额 <b>${equity.TargetAmount}</b></span>         <span>已众筹 <b>${equity.HaveCrowdFundingAmount}</b></span>          <span>投资人数 <b>${equity.CrowdFundingOrderCount}人</b></span>   <span>剩余天数 <b>${equity.RemainDay}天</b></span></p>
             </div>
         </div>
     </template>

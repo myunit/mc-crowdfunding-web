@@ -205,7 +205,7 @@ require(['Vue', 'Utils'],
 					vm.checkCode = createCode();
 				}
 
-				$('#sendActiveCode').click(function () {
+				$('#sendActiveCode').click(function (e) {
 					e.preventDefault();
 					var myreg = /^[1][358][0-9]{9}$/;
 					if (vm.isSendCaptcha) {
@@ -306,7 +306,7 @@ require(['Vue', 'Utils'],
 						return;
 					}
 
-					location.href = '/reg-info?phone=' + vm.phone + '&wechat=' + vm.wechat + '&password=' + vm.password + '&captcha=' + vm.captcha;
+					location.href = '/reg-info?phone=' + vm.phone + '&wechat=' + encodeURI(encodeURI(vm.wechat)) + '&password=' + vm.password + '&captcha=' + vm.captcha;
 				});
 
 			});
@@ -328,6 +328,7 @@ require(['Vue', 'Utils'],
 						id: '',
 						email: '',
 						address: '',
+						qq: '',
 						selectedP: null,
 						selectedC: null,
 						selectedD: null,
@@ -393,8 +394,8 @@ require(['Vue', 'Utils'],
 					}
 					var pcdCode = vm.selectedP.id + '-' + vm.selectedC.id + '-' + vm.selectedD.id;
 					var pcdDes = vm.selectedP.name + '-' + vm.selectedC.name + '-' + vm.selectedD.name;
-					location.href = '/reg-platform' + location.search + '&name=' + vm.name + '&cardID=' + vm.id
-					+ '&email=' + vm.email + '&pcdCode=' + pcdCode + '&pcdDes=' + pcdDes + '&address=' + vm.address;
+					location.href = '/reg-platform' + location.search + '&name=' + encodeURI(encodeURI(vm.name)) + '&cardID=' + vm.id
+					+ '&email=' + vm.email + '&pcdCode=' + pcdCode + '&pcdDes=' + encodeURI(encodeURI(pcdDes)) + '&address=' + vm.address + '&qq=' + vm.qq;
 				});
 			});
 		}
@@ -402,7 +403,7 @@ require(['Vue', 'Utils'],
 		if ($('#page-reg-platform').length > 0 ) {
 			var search = Utils.getSearch(location);
 			if (!search['phone'] || !search['wechat'] || !search['password'] || !search['captcha'] ||
-				!search['name'] || !search['cardID'] || !search['email'] || !search['pcdCode'] ||
+				!search['name'] || !search['cardID'] || !search['pcdCode'] ||
 				!search['pcdDes'] || !search['address']) {
 				location.href = '/reg-start';
 				return;
@@ -429,7 +430,7 @@ require(['Vue', 'Utils'],
 			$(document).ready(function () {
 				var search = Utils.getSearch(location);
 				if (!search['phone'] || !search['wechat'] || !search['password'] || !search['captcha'] ||
-					!search['name'] || !search['cardID'] || !search['email'] || !search['pcdCode'] ||
+					!search['name'] || !search['cardID'] || !search['pcdCode'] ||
 					!search['pcdDes'] || !search['address'] || !search['type'] || !search['categoryId']) {
 					location.href = '/reg-start';
 					return;
@@ -438,7 +439,15 @@ require(['Vue', 'Utils'],
 				var vm = new Vue({
 					el: '#page-reg-verify',
 					data: {
-						imgDate: ''
+						licenceImg: '',
+						workImg: '',
+						weixinImg: '',
+						storeType: '',
+						storeName: '',
+						productLink: '',
+						shopName: '',
+						platformName: '',
+						bossWeixin: ''
 					}
 				});
 				var type = parseInt(search['type']);
@@ -480,55 +489,201 @@ require(['Vue', 'Utils'],
 
 					lrz(this.files[0], function (results) {
 						// 你需要的数据都在这里，可以以字符串的形式传送base64给服务端转存为图片。
-						vm.imgDate = results.base64;
+						var base = results.base64.split(',');
+						vm.licenceImg = base[1];
+					});
+				});
+
+				$('#work-pic').change(function () {
+					if (!/\.(jpg|jpeg|png|bmp|JPG|PNG|BMP|JPEG)$/.test(this.value)) {
+						var a = document.getElementById("licence-alert");
+						var b = document.getElementById("shop-name");
+						a.innerHTML = '<label style="font-size:14px;color:red;">&nbsp;&nbsp;&nbsp;&nbsp;　　　照片格式不正确,请选择png,jpeg,bmp格式照片上传</label>';
+						b.focus();
+						return;
+					}
+
+					var fsize = this.files[0].size;
+					if (fsize > 5242880) //do something if file size more than 1 mb (1048576)
+					{
+						var a = document.getElementById("licence-alert");
+						var b = document.getElementById("shop-name");
+						a.innerHTML = '<label style="font-size:14px;color:red;">&nbsp;&nbsp;&nbsp;&nbsp;　　　照片大小不能超过5M</label>';
+						b.focus();
+						return;
+					}
+
+					lrz(this.files[0], function (results) {
+						// 你需要的数据都在这里，可以以字符串的形式传送base64给服务端转存为图片。
+						var base = results.base64.split(',');
+						vm.workImg = base[1];
+					});
+				});
+
+				$('#weixinPhoto').change(function () {
+					if (!/\.(jpg|jpeg|png|bmp|JPG|PNG|BMP|JPEG)$/.test(this.value)) {
+						var a = document.getElementById("licence-alert");
+						var b = document.getElementById("shop-name");
+						a.innerHTML = '<label style="font-size:14px;color:red;">&nbsp;&nbsp;&nbsp;&nbsp;　　　照片格式不正确,请选择png,jpeg,bmp格式照片上传</label>';
+						b.focus();
+						return;
+					}
+
+					var fsize = this.files[0].size;
+					if (fsize > 5242880) //do something if file size more than 1 mb (1048576)
+					{
+						var a = document.getElementById("licence-alert");
+						var b = document.getElementById("shop-name");
+						a.innerHTML = '<label style="font-size:14px;color:red;">&nbsp;&nbsp;&nbsp;&nbsp;　　　照片大小不能超过5M</label>';
+						b.focus();
+						return;
+					}
+
+					lrz(this.files[0], function (results) {
+						// 你需要的数据都在这里，可以以字符串的形式传送base64给服务端转存为图片。
+						var base = results.base64.split(',');
+						vm.weixinImg = base[1];
 					});
 				});
 
 				/*实体店验证*/
 				$("#submit-reg-realshop").click(function () {
-
-					location.href = '/reg-success';
+					$('.my-verify-content').loading({
+						message: '提交中...'
+					});
+					var obj = {
+						"phone": search['phone'],
+						"password": search['password'],
+						"captcha": search['captcha'],
+						"address": search['address'],
+						"IDNo": search['cardID'],
+						"categoryId": search['categoryId'],
+						"bossWeixin": '',
+						"categoryType": search['type'],
+						"detailCategory": '',
+						"storeName": vm.shopName,
+						"imgData": vm.licenceImg,
+						"productLink": '',
+						"email": search['email'] || '',
+						"name":  decodeURI(search['name']),
+						"pcdCode": search['pcdCode'],
+						"pcdDes": decodeURI(search['pcdDes']),
+						"qq": search['qq'] || '',
+						"weixin": decodeURI(search['wechat'])
+					};
+					ajaxPost('/register', obj, function (err, data) {
+						$('.my-verify-content').loading('stop');
+						if (err) {
+							toastr.error(err, '错误');
+						} else {
+							location.href = '/reg-success';
+						}
+					});
 				});
 
 				/* 网店验证*/
 				$("#submit-reg-shop").click(function () {
-
-					location.href = '/reg-success';
+					$('.my-verify-content').loading({
+						message: '提交中...'
+					});
+					var obj = {
+						"phone": search['phone'],
+						"password": search['password'],
+						"captcha": search['captcha'],
+						"address": search['address'],
+						"IDNo": search['cardID'],
+						"categoryId": search['categoryId'],
+						"bossWeixin": '',
+						"categoryType": search['type'],
+						"detailCategory": vm.storeType,
+						"storeName": vm.storeName,
+						"imgData": '',
+						"productLink": vm.productLink,
+						"email": search['email'] || '',
+						"name":  decodeURI(search['name']),
+						"pcdCode": search['pcdCode'],
+						"pcdDes": decodeURI(search['pcdDes']),
+						"qq": search['qq'] || '',
+						"weixin": search['wechat']
+					};
+					ajaxPost('/register', obj, function (err, data) {
+						$('.my-verify-content').loading('stop');
+						if (err) {
+							toastr.error(err, '错误');
+						} else {
+							location.href = '/reg-success';
+						}
+					});
 				});
 
 				/*平台采购验证*/
 				$("#submit-reg-purchase").click(function () {
-					if (window.File && window.FileReader && window.FileList && window.Blob) {
-						//get the file size and file type from file input field
-						if ($('#work-pic')[0].files[0]) {
-							if (!/\.(jpg|jpeg|png|bmp|JPG|PNG|BMP|JPEG)$/.test(document.getElementById("work-pic").value)) {
-								var a = document.getElementById("work-pic-alert");
-								var b = document.getElementById("platform-name");
-								a.innerHTML = '<label style="font-size:14px;color:red;">&nbsp;&nbsp;&nbsp;&nbsp;　　　请选择png,jpeg,bmp格式照片上传</label>';
-								b.focus();
-								return;
-							}
+					$('.my-verify-content').loading({
+						message: '提交中...'
+					});
+					var obj = {
+						"phone": search['phone'],
+						"password": search['password'],
+						"captcha": search['captcha'],
+						"address": search['address'],
+						"IDNo": search['cardID'],
+						"categoryId": search['categoryId'],
+						"bossWeixin": '',
+						"categoryType": search['type'],
+						"detailCategory": '',
+						"storeName": vm.platformName,
+						"imgData": vm.workImg,
+						"productLink": '',
+						"email": search['email'] || '',
+						"name":  decodeURI(search['name']),
+						"pcdCode": search['pcdCode'],
+						"pcdDes": decodeURI(search['pcdDes']),
+						"qq": search['qq'] || '',
+						"weixin": decodeURI(search['wechat'])
+					};
+					ajaxPost('/register', obj, function (err, data) {
+						$('.my-verify-content').loading('stop');
+						if (err) {
+							toastr.error(err, '错误');
+						} else {
+							location.href = '/reg-success';
 						}
-					}
-					location.href = '/reg-success';
+					});
 				});
 
 				/*微商验证*/
 				$("#submit-reg-weiChat").click(function () {
-
-					if (window.File && window.FileReader && window.FileList && window.Blob) {
-						//get the file size and file type from file input field
-						if ($('#picture')[0].files[0]) {
-							if (!/\.(jpg|jpeg|png|bmp|JPG|PNG|BMP|JPEG)$/.test(document.getElementById("picture").value)) {
-								var a = document.getElementById("picture-alert");
-								var b = document.getElementById("weiChat-id");
-								a.innerHTML = '<label style="font-size:14px;color:red;">&nbsp;&nbsp;&nbsp;&nbsp;　　　请选择png,jpeg,bmp格式照片上传</label>';
-								b.focus();
-								return;
-							}
+					$('.my-verify-content').loading({
+						message: '提交中...'
+					});
+					var obj = {
+						"phone": search['phone'],
+						"password": search['password'],
+						"captcha": search['captcha'],
+						"address": search['address'],
+						"IDNo": search['cardID'],
+						"categoryId": search['categoryId'],
+						"bossWeixin": vm.bossWeixin,
+						"categoryType": search['type'],
+						"detailCategory": '',
+						"storeName": '',
+						"imgData": vm.weixinImg,
+						"productLink": '',
+						"email": search['email'] || '',
+						"name":  decodeURI(search['name']),
+						"pcdCode": search['pcdCode'],
+						"pcdDes": decodeURI(search['pcdDes']),
+						"qq": search['qq'] || '',
+						"weixin": decodeURI(search['wechat'])
+					};
+					ajaxPost('/register', obj, function (err, data) {
+						$('.my-verify-content').loading('stop');
+						if (err) {
+							toastr.error(err, '错误');
+						} else {
+							location.href = '/reg-success';
 						}
-					}
-					location.href = '/reg-success';
+					});
 				});
 			});
 		}

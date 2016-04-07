@@ -1,8 +1,10 @@
 var express = require('express');
 var unirest = require('unirest');
 var ApiFactory = require('../common/api_config');
-
+var fs = require('fs');
+var Readable = require('stream').Readable;
 var router = express.Router();
+var path = require('path');
 
 var api = ApiFactory.CreateApi();
 
@@ -77,6 +79,73 @@ router.post('/send-captcha', function (req, res, next) {
 		.headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
 		.send({"phone": req.body.phone, "type": parseInt(req.body.type)})
 		.end(function (response) {
+			var data = response.body.repData;
+			if (data === undefined) {
+				res.json({status: 0, msg: '服务异常'});
+				return;
+			}
+			if (data.status) {
+				res.json({status: data.status});
+			} else {
+				res.json({status: data.status, msg: data.msg});
+			}
+		});
+});
+
+router.post('/register', function (req, res, next) {
+
+	//save into disk
+	var link = '';
+	if (req.body.imgData) {
+		var rs = new Readable;
+		var buf = new Buffer(req.body.imgData, 'base64');
+		rs.push(buf);
+		rs.push(null);
+		var opt = { flags: 'w', encoding: null,fd: null, mode: 0666, autoClose: true};
+		var filePath =  path.join(__dirname, '../public/images/verifty/');
+		if (!fs.existsSync(filePath)) {
+			fs.mkdirSync(filePath);
+		}
+		filePath += req.body.phone + '_' + (new Date()).getTime() + '.jpg';
+		var writeStream = fs.createWriteStream(filePath, opt);
+		rs.pipe(writeStream);
+		rs = null;
+
+		link = filePath.indexOf('/images');
+		link = filePath.substring(link);
+		link = 'http://wxp.xitie10.com:3100/' + link;
+	}
+
+	if (req.body.productLink) {
+		link = req.body.productLink;
+	}
+
+
+	var obj = {
+		"phone": req.body.phone,
+		"password": req.body.password,
+		"captcha": req.body.captcha,
+		"address": req.body.address,
+		"IDNo": req.body.IDNo,
+		"categoryId": parseInt(req.body.categoryId),
+		"bossWeixin": req.body.bossWeixin,
+		"categoryType": parseInt(req.body.categoryType),
+		"detailCategory": req.body.detailCategory,
+		"storeName": req.body.storeName,
+		"storeLink": link,
+		"email": req.body.email,
+		"name": req.body.name,
+		"pcdCode": req.body.pcdCode,
+		"pcd": req.body.pcdDes,
+		"qq": req.body.qq,
+		"weixin": req.body.weixin
+	};
+
+	unirest.post(api.register())
+		.headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
+		.send(obj)
+		.end(function (response) {
+			console.log('body: ' + JSON.stringify(response.body));
 			var data = response.body.repData;
 			if (data === undefined) {
 				res.json({status: 0, msg: '服务异常'});

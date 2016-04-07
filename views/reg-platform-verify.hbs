@@ -50,10 +50,10 @@
                             <div class="ui-platform-item">
                                 <h3>1.店铺信息</h3>
                                 <div class="ui-form-item p-item">
-                                    <label class="ui-label">店铺类型 </label> <input name="" type="text" validate="{required:'请输入店铺类型'}" class="ui-input" />
+                                    <label class="ui-label">店铺类型 </label> <input name="" type="text" validate="{required:'请输入店铺类型'}" class="ui-input" v-model="storeType"/>
                                 </div>
                                 <div class="ui-form-item p-item">
-                                    <label class="ui-label">店铺名称 </label> <input name="" type="text" validate="{required:'请输入店铺名称'}" class="ui-input" />
+                                    <label class="ui-label">店铺名称 </label> <input name="" type="text" validate="{required:'请输入店铺名称'}" class="ui-input" v-model="storeName"/>
                                 </div>
                             </div>
                             <div class="ui-platform-item">
@@ -65,7 +65,7 @@
                             <div class="ui-platform-item">
                                 <h3>3.店铺验证</h3>
                                 <div class="ui-form-item p-item ui-shop-input">
-                                    <label class="ui-label">店铺商品链接 </label> <input name="" type="text" validate="{required:'请输入店铺商品链接'}" class="ui-input" placeholder="请复制店铺有验证码商品链接粘贴在此处" />
+                                    <label class="ui-label">店铺商品链接 </label> <input name="" type="text" validate="{required:'请输入店铺商品链接'}" class="ui-input" placeholder="请复制店铺有验证码商品链接粘贴在此处" v-model="productLink"/>
                                 </div>
 
                             </div>
@@ -80,7 +80,7 @@
                             <div class="ui-platform-item">
                                 <h3>1.店铺信息</h3>
                                 <div class="ui-form-item p-item">
-                                    <label class="ui-label">店铺信息</label> <input name="" type="text" validate="{required:'请输入店铺信息'}" class="ui-input" id="shop-name"/>
+                                    <label class="ui-label">店铺信息</label> <input name="" type="text" validate="{required:'请输入店铺信息'}" class="ui-input" id="shop-name" v-model="shopName"/>
                                 </div>
                             </div>
                             <div class="ui-platform-item">
@@ -103,7 +103,7 @@
                             <div class="ui-platform-item">
                                 <h3>1.平台信息</h3>
                                 <div class="ui-form-item p-item">
-                                    <label class="ui-label">平台名称 </label> <input name="" type="text" validate="{required:'请输入企业名称'}" class="ui-input" id="platform-name"/>
+                                    <label class="ui-label">平台名称 </label> <input name="" type="text" validate="{required:'请输入企业名称'}" class="ui-input" id="platform-name" v-model="platformName"/>
                                 </div>
                             </div>
                             <div class="ui-platform-item">
@@ -125,12 +125,12 @@
                             <div class="ui-platform-item">
                                 <h3>1.微商信息</h3>
                                 <div class="ui-form-item p-item">
-                                    <label class="ui-label">微商号 </label> <input name="" type="text" validate="{required:'请输入微商号'}" class="ui-input" id="weiChat-id"/>
+                                    <label class="ui-label">微商号 </label> <input name="" type="text" validate="{required:'请输入微商号'}" class="ui-input" id="weiChat-id" v-model="bossWeixin"/>
                                 </div>
                             </div>
                             <div class="ui-platform-item">
                                 <h3>2.微商资质信息</h3>
-                                <p><input type="file" name="uploadFile" accept="image/png,image/jpeg,image/bmp" id="picture">上传微信相册截图</imput> <label id="picture-alert"></label></p>
+                                <p><input type="file" name="uploadFile" accept="image/png,image/jpeg,image/bmp" id="weixinPhoto">上传微信相册截图</imput> <label id="picture-alert"></label></p>
                                 <p>示例</p>
                                 <p><img src="/images/sample-weishang.gif" width="604" height="549" alt=""/></p>
                             </div>
@@ -159,4 +159,5 @@
 <script src="/js/lib/my.js"></script>
 <script src="/js/lib/toastr.min.js"></script>
 <script src="/js/lib/lrz.pc.min.js"></script>
+<script src="/js/lib/jquery.loading.min.js"></script>
 <script type='text/javascript' src='/js/lib/requirejs.min.js' data-main='/js/controller/index-ctrl'></script>

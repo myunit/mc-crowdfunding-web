@@ -26,5 +26,29 @@ ApiService.prototype = {
 	},
 	register: function () {
 		return api_config.apiService.baseUrl + api_config.apiService.method.register;
+	},
+	addFundingOrder: function () {
+		return api_config.apiService.baseUrl + api_config.apiService.method.addFundingOrder;
+	},
+	addFundingReserve: function () {
+		return api_config.apiService.baseUrl + api_config.apiService.method.addFundingReserve;
+	},
+	finishPayFunding: function () {
+		return api_config.apiService.baseUrl + api_config.apiService.method.finishPayFunding;
+	},
+	getAllFunding: function () {
+		return api_config.apiService.baseUrl + api_config.apiService.method.getAllFunding;
+	},
+	getFundingOrder: function () {
+		return api_config.apiService.baseUrl + api_config.apiService.method.getFundingOrder;
+	},
+	getFundingProgress: function () {
+		return api_config.apiService.baseUrl + api_config.apiService.method.getFundingProgress;
+	},
+	getFundingReserve: function () {
+		return api_config.apiService.baseUrl + api_config.apiService.method.getFundingReserve;
+	},
+	getHotFunding: function () {
+		return api_config.apiService.baseUrl + api_config.apiService.method.getHotFunding;
 	}
 };

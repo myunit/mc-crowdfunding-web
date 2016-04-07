@@ -4,7 +4,15 @@
     "method": {
       "sendCaptcha": "Customers/send-captcha",
       "register": "Customers/register",
-      "login": "Customers/login"
+      "login": "Customers/login",
+      "addFundingOrder": "Fundings/add-funding-order",
+      "addFundingReserve": "Fundings/add-funding-reserve",
+      "finishPayFunding": "Fundings/finish-pay-funding",
+      "getAllFunding": "Fundings/get-all-funding",
+      "getFundingOrder": "Fundings/get-funding-order",
+      "getFundingProgress": "Fundings/get-funding-progress",
+      "getFundingReserve": "Fundings/get-funding-reserve",
+      "getHotFunding": "Fundings/get-hot-funding"
     }
   }
 }

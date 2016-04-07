@@ -438,6 +438,7 @@ require(['Vue', 'Utils'],
 				var vm = new Vue({
 					el: '#page-reg-verify',
 					data: {
+						imgDate: ''
 					}
 				});
 				var type = parseInt(search['type']);
@@ -458,30 +459,34 @@ require(['Vue', 'Utils'],
 					$('.my-verify-content .tab-pane:eq(0)').addClass('active');
 				}
 
+				$('#licence').change(function () {
+					if (!/\.(jpg|jpeg|png|bmp|JPG|PNG|BMP|JPEG)$/.test(this.value)) {
+						var a = document.getElementById("licence-alert");
+						var b = document.getElementById("shop-name");
+						a.innerHTML = '<label style="font-size:14px;color:red;">&nbsp;&nbsp;&nbsp;&nbsp;　　　照片格式不正确,请选择png,jpeg,bmp格式照片上传</label>';
+						b.focus();
+						return;
+					}
+
+					var fsize = this.files[0].size;
+					if (fsize > 5242880) //do something if file size more than 1 mb (1048576)
+					{
+						var a = document.getElementById("licence-alert");
+						var b = document.getElementById("shop-name");
+						a.innerHTML = '<label style="font-size:14px;color:red;">&nbsp;&nbsp;&nbsp;&nbsp;　　　照片大小不能超过5M</label>';
+						b.focus();
+						return;
+					}
+
+					lrz(this.files[0], function (results) {
+						// 你需要的数据都在这里，可以以字符串的形式传送base64给服务端转存为图片。
+						vm.imgDate = results.base64;
+					});
+				});
+
 				/*实体店验证*/
 				$("#submit-reg-realshop").click(function () {
-					if (window.File && window.FileReader && window.FileList && window.Blob) {
-						//get the file size and file type from file input field
-						if ($('#licence')[0].files[0]) {
-							if (!/\.(jpg|jpeg|png|bmp|JPG|PNG|BMP|JPEG)$/.test(document.getElementById("licence").value)) {
-								var a = document.getElementById("licence-alert");
-								var b = document.getElementById("shop-name");
-								a.innerHTML = '<label style="font-size:14px;color:red;">&nbsp;&nbsp;&nbsp;&nbsp;　　　照片格式不正确,请选择png,jpeg,bmp格式照片上传</label>';
-								b.focus();
-								return;
-							} else {
-								var fsize = $('#licence')[0].files[0].size;
-								if (fsize > 5242880) //do something if file size more than 1 mb (1048576)
-								{
-									var a = document.getElementById("licence-alert");
-									var b = document.getElementById("shop-name");
-									a.innerHTML = '<label style="font-size:14px;color:red;">&nbsp;&nbsp;&nbsp;&nbsp;　　　照片大小不能超过5M</label>';
-									b.focus();
-									return;
-								}
-							}
-						}
-					}
+
 					location.href = '/reg-success';
 				});
 

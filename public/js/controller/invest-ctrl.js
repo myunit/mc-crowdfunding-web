@@ -330,13 +330,54 @@ require(['Vue', 'Utils'],
 						if (err) {
 							toastr.error(err, '错误');
 						} else {
-							location.href = '/invest/invest-booking-pay?amount=' + vm.amount;
+							location.href = '/invest/invest-booking-pay?p=' + encodeURI(encodeURI(vm.amount));
 						}
 					});
 				}
 			});
 
 			return;
+		}
+
+		if ($('#page-invest-pay').length > 0) {
+			$(document).ready(function () {
+				var search = Utils.getSearch(location);
+				if (!search['p']) {
+					location.href = '/invest/invest-list';
+					return;
+				}
+
+				var vm = new Vue({
+					el: '#page-invest-pay',
+					data: {
+						amount: decodeURI(search['p'])
+					},
+					methods: {
+						confirm: confirm
+					}
+				});
+
+				function confirm () {
+					location.href = '/invest/invest-booking-pay-confirm?p=' + search['p'];
+				}
+			});
+		}
+
+		if ($('#page-invest-confirm').length > 0) {
+			$(document).ready(function () {
+				var search = Utils.getSearch(location);
+				if (!search['p']) {
+					location.href = '/invest/invest-list';
+					return;
+				}
+
+				var vm = new Vue({
+					el: '#page-invest-confirm',
+					data: {
+						amount: decodeURI(search['p'])
+					}
+				});
+			});
 		}
 
 	});

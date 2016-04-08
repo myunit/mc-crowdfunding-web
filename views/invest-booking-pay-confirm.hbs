@@ -1,87 +1,92 @@
-<header class="my-header-default">
-    <div class=" my-login-header">
+<div class="page-group">
+    <div id="page-invest-confirm" class="page page-current my-white-bg">
+        <header class="my-header-default">
+            <div class=" my-login-header">
     	<span class="pull-left">
-         Hi,用户名  <a href="/">退出</a>
+         Hi,{{name}}  <a href="/">退出</a>
         </span>
-    </div>
-</header>
+            </div>
+        </header>
 
-<nav class="my-border-bottom">
-    <div class="my-wp-1200">
-        <a href="/login-suc" class="my-logo">美仓众筹</a>
-        <ul class="nav nav-pills pull-right">
-            <li role="presentation" class="active"><a href="../login-suc">首页</a></li>
-            <li role="presentation"><a href="../invest/invest-list">权益众筹</a></li>
-            <li role="presentation"><a href="../product/product-list">产品众筹</a></li>
-            <li role="presentation"><a href="../users/my-pre-order">我的预约</a></li>
-            <li role="presentation"><a href="../users/my-invest-list">我的众筹</a></li>
-        </ul>
-    </div>
-</nav>
+        <nav class="my-border-bottom">
+            <div class="my-wp-1200">
+                <a href="/login-suc" class="my-logo">美仓众筹</a>
+                <ul class="nav nav-pills pull-right">
+                    <li role="presentation" class="active"><a href="../login-suc">首页</a></li>
+                    <li role="presentation"><a href="../invest/invest-list">权益众筹</a></li>
+                    <li role="presentation"><a href="../product/product-list">产品众筹</a></li>
+                    <li role="presentation"><a href="../users/my-pre-order">我的预约</a></li>
+                    <li role="presentation"><a href="../users/my-invest-list">我的众筹</a></li>
+                </ul>
+            </div>
+        </nav>
 
 
-<div class="my-wp-1200">
-    <div class="cart-title-box ui-reg-nav clearfix">
-        <ul class="ui-nav">
-            <li class="ui-nav-item">
-                <span class="ui-nav-item-order">1</span>
-                <span class="ui-nav-item-text">提交订单</span>
-            </li>
-            <li class="ui-nav-item ui-nav-item-current">
-                <span class="ui-nav-item-order">2</span>
-                <span class="ui-nav-item-text">订单支付</span>
-            </li>
-            <li class="ui-nav-item">
-                <span class="ui-nav-item-order">3</span>
-                <span class="ui-nav-item-text">支付完成</span>
-            </li>
-        </ul>
+        <div class="my-wp-1200">
+            <div class="cart-title-box ui-reg-nav clearfix">
+                <ul class="ui-nav">
+                    <li class="ui-nav-item">
+                        <span class="ui-nav-item-order">1</span>
+                        <span class="ui-nav-item-text">提交订单</span>
+                    </li>
+                    <li class="ui-nav-item ui-nav-item-current">
+                        <span class="ui-nav-item-order">2</span>
+                        <span class="ui-nav-item-text">订单支付</span>
+                    </li>
+                    <li class="ui-nav-item">
+                        <span class="ui-nav-item-order">3</span>
+                        <span class="ui-nav-item-text">支付完成</span>
+                    </li>
+                </ul>
 
-    </div>
+            </div>
 
-    <div class="my-box">
-        <div class="my-booking-box">
-            <p class="clearfix">
-                <span class="pull-left">线下支付</span>
-                <span class="pull-right">支付金额 <span class="my-text-red">￥5500元</span></span>
-            </p>
-            <div class="my-p-booking-tip">
-                <p class="my-text-center"><strong>打款信息</strong></p>
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-5 my-text-right">收款人：</div>
-                        <div class="col-md-7"><strong>陈XX</strong></div>
+            <div class="my-box">
+                <div class="my-booking-box">
+                    <p class="clearfix">
+                        <span class="pull-left">线下支付</span>
+                        <span class="pull-right">支付金额 <span class="my-text-red" v-cloak>￥${amount}元</span></span>
+                    </p>
+                    <div class="my-p-booking-tip">
+                        <p class="my-text-center"><strong>打款信息</strong></p>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-5 my-text-right">收款人：</div>
+                                <div class="col-md-7"><strong>陈XX</strong></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 my-text-right">收款账号：</div>
+                                <div class="col-md-7"><strong>2222xxxxxxxxxxxxxxxx</strong></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 my-text-right">开户行：</div>
+                                <div class="col-md-7"><strong>中国建设银行xxx市分行</strong></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 my-text-right">支付金额：</div>
+                                <div class="col-md-7 my-text-red"><strong>￥5500元</strong></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-5 my-text-right">收款账号：</div>
-                        <div class="col-md-7"><strong>2222xxxxxxxxxxxxxxxx</strong></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-5 my-text-right">开户行：</div>
-                        <div class="col-md-7"><strong>中国建设银行xxx市分行</strong></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-5 my-text-right">支付金额：</div>
-                        <div class="col-md-7 my-text-red"><strong>￥5500元</strong></div>
-                    </div>
+                    <p class="my-text-center my-text-gray">打款信息已同步发送至您注册账户时使用的手机</p>
+                    <p class="my-text-center my-text-blue">转账成功后，项目发行结束前，我们若未收到您的确认，此订单将会被退款。<br>
+                        收到款项后，将短信通知您<br><br></p>
+                    <p class="my-text-center my-text-gray"><a href="../users/my-product-list"><button type="button" class="btn btn-long btn-default" >去我的众筹查看</button></a></p>
                 </div>
             </div>
-            <p class="my-text-center my-text-gray">打款信息已同步发送至您注册账户时使用的手机</p>
-            <p class="my-text-center my-text-blue">转账成功后，项目发行结束前，我们若未收到您的确认，此订单将会被退款。<br>
-                收到款项后，将短信通知您<br><br></p>
-            <p class="my-text-center my-text-gray"><a href="../users/my-product-list"><button type="button" class="btn btn-long btn-default" >去我的众筹查看</button></a></p>
+
+
+
         </div>
+
+        <footer>
+            <p class="my-p-footer">友情链接 - <a href="#">美仓供应链</a><br>
+                ©2015 xxxxxx众筹网络科技有限公司 zhongchou.com 版权所有 xxICP证1xxxxxxxx号</p>
+        </footer>
     </div>
 
-
-
-</div>
-
-<footer>
-    <p class="my-p-footer">友情链接 - <a href="#">美仓供应链</a><br>
-        ©2015 xxxxxx众筹网络科技有限公司 zhongchou.com 版权所有 xxICP证1xxxxxxxx号</p>
-</footer>
-
-<script src="/js/jquery.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
-<script src="/js/my.js"></script>
+<script src="../js/lib/jquery.min.js"></script>
+<script src="../js/lib/bootstrap.min.js"></script>
+<script src="../js/lib/toastr.min.js"></script>
+<script src="../js/lib/my.js"></script>
+<script type='text/javascript' src='../js/lib/requirejs.min.js' data-main='../js/controller/invest-ctrl' ></script>

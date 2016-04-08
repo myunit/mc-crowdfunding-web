@@ -42,7 +42,7 @@ router.get('/invest-booking', function(req, res, next) {
 });
 
 router.get('/invest-booking-pay', function(req, res, next) {
-    res.render('invest-booking-pay',{title:"美仓众筹", name: req.session.name, amount: req.query.amount});
+    res.render('invest-booking-pay',{title:"美仓众筹", name: req.session.name});
 });
 
 router.get('/invest-booking-pay-confirm', function(req, res, next) {

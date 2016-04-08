@@ -1,7 +1,7 @@
 <header class="my-header-default">
     <div class=" my-login-header">
     	<span class="pull-left">
-         Hi,用户名  <a href="/">退出</a>
+         Hi,{{name}}  <a href="/">退出</a>
         </span>
     </div>
 </header>
@@ -44,7 +44,7 @@
         <div class="my-booking-box">
             <p class="clearfix">
                 <span class="pull-left">线下支付</span>
-                <span class="pull-right">支付金额 <span class="my-text-red">￥5万元</span></span>
+                <span class="pull-right">支付金额 <span class="my-text-red">￥{{amount}}元</span></span>
             </p>
             <p class="my-p-booking-tip">为保证网上支付的安全性，各银行对用户都有不同程度的单次或单日限额
                 如您无法通过线上完成支付，可通过<span class="my-text-blue">网上银行或银行柜台转账</span>完成订单支付。</p>

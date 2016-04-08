@@ -42,11 +42,11 @@ router.get('/invest-booking', function(req, res, next) {
 });
 
 router.get('/invest-booking-pay', function(req, res, next) {
-    res.render('invest-booking-pay',{title:"美仓众筹", name: req.session.name});
+    res.render('invest-booking-pay',{title:"美仓众筹", name: req.session.name, amount: req.query.amount});
 });
 
 router.get('/invest-booking-pay-confirm', function(req, res, next) {
-    res.render('invest-booking-pay-confirm',{title:"美仓众筹", name: req.session.name});
+    res.render('invest-booking-pay-confirm',{title:"美仓众筹", name: req.session.name, amount: req.query.amount});
 });
 
 router.post('/get-all-funding', function (req, res, next) {
@@ -115,6 +115,31 @@ router.post('/add-funding-reserve', function (req, res, next) {
             }
             if (data.status) {
                 res.json({status: data.status, msg: data.msg});
+            } else {
+                res.json({status: data.status, msg: data.msg});
+            }
+        });
+});
+
+router.post('/add-funding-order', function (req, res, next) {
+    var obj = {
+        "userId": req.session.uid,
+        "fundingId": parseInt(req.body.fundingId),
+        "quantity": parseInt(req.body.quantity),
+        "price": parseInt(req.body.quantity)/100
+    };
+
+    unirest.post(api.addFundingOrder())
+        .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
+        .send(obj)
+        .end(function (response) {
+            var data = response.body.repData;
+            if (data === undefined) {
+                res.json({status: 0, msg: '服务异常'});
+                return;
+            }
+            if (data.status) {
+                res.json({status: data.status, count: data.count, funding: data.funding, img: data.img});
             } else {
                 res.json({status: data.status, msg: data.msg});
             }

@@ -99,4 +99,51 @@ router.post('/get-funding-detail', function (req, res, next) {
         });
 });
 
+router.post('/add-funding-reserve', function (req, res, next) {
+    var obj = {
+        "userId": req.session.uid,
+        "fundingId": parseInt(req.body.fundingId)
+    };
+    unirest.post(api.addFundingReserve())
+        .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
+        .send(obj)
+        .end(function (response) {
+            var data = response.body.repData;
+            if (data === undefined) {
+                res.json({status: 0, msg: '服务异常'});
+                return;
+            }
+            if (data.status) {
+                res.json({status: data.status, msg: data.msg});
+            } else {
+                res.json({status: data.status, msg: data.msg});
+            }
+        });
+});
+
+router.post('/add-funding-order', function (req, res, next) {
+    var obj = {
+        "userId": req.session.uid,
+        "fundingId": parseInt(req.body.fundingId),
+        "quantity": parseInt(req.body.quantity),
+        "price": parseInt(req.body.quantity)/100
+    };
+
+    unirest.post(api.addFundingOrder())
+        .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
+        .send(obj)
+        .end(function (response) {
+            var data = response.body.repData;
+            if (data === undefined) {
+                res.json({status: 0, msg: '服务异常'});
+                return;
+            }
+            if (data.status) {
+                res.json({status: data.status, count: data.count, funding: data.funding, img: data.img});
+            } else {
+                res.json({status: data.status, msg: data.msg});
+            }
+        });
+});
+
 module.exports = router;

@@ -43,7 +43,7 @@
                         <span><b class="my-text-red">${funding.UnitPrice}元</b><br />单价</span>
                     </p>
                     <p class="my-p-time">众筹时间:${funding.StartDate.substring(0, 16)} 到 ${funding.StartDate.substring(0, 16)}</p>
-                    <button type="button" class="btn btn-lg btn-primary" id="join-product" v-if="funding.CrowdFundingStatus === 1">我要支持</button>
+                    <button type="button" class="btn btn-lg btn-primary" id="join-product" @click.prevent="goToBuy()" v-if="funding.CrowdFundingStatus === 1">我要支持</button>
                     <button type="button" class="btn btn-lg btn-primary" @click.prevent="reserve()" v-if="funding.CrowdFundingStatus === 0">我要预约</button>
                     <button type="button" disabled class="btn btn-lg btn-primary" v-if="funding.CrowdFundingStatus === 10 || funding.CrowdFundingStatus === 11">已结束</button>
                 </div>

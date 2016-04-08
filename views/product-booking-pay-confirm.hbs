@@ -1,7 +1,7 @@
 <header class="my-header-default">
     <div class=" my-login-header">
     	<span class="pull-left">
-         Hi,用户名  <a href="/">退出</a>
+         Hi,{{name}}  <a href="/">退出</a>
         </span>
     </div>
 </header>
@@ -43,7 +43,7 @@
         <div class="my-booking-box">
             <p class="clearfix">
                 <span class="pull-left">线下支付</span>
-                <span class="pull-right">支付金额 <span class="my-text-red">￥5500元</span></span>
+                <span class="pull-right">支付金额 <span class="my-text-red">￥{amount}元</span></span>
             </p>
             <div class="my-p-booking-tip">
                 <p class="my-text-center"><strong>打款信息</strong></p>
@@ -82,6 +82,8 @@
         ©2015 xxxxxx众筹网络科技有限公司 zhongchou.com 版权所有 xxICP证1xxxxxxxx号</p>
 </footer>
 
-<script src="/js/jquery.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
-<script src="/js/my.js"></script>
+<script src="../js/lib/jquery.min.js"></script>
+<script src="../js/lib/bootstrap.min.js"></script>
+<script src="../js/lib/toastr.min.js"></script>
+<script src="../js/lib/my.js"></script>
+<script type='text/javascript' src='../js/lib/requirejs.min.js' data-main='../js/controller/product-ctrl' ></script>

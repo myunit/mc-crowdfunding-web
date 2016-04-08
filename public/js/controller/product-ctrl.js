@@ -188,12 +188,17 @@ require(['Vue', 'Utils'],
                         imgList: []
                     },
                     methods: {
-                        reserve: reserve
+                        reserve: reserve,
+                        goToBuy: goToBuy
                     }
                 });
 
+                function goToBuy() {
+                    location.href = '/product/product-booking?id=' + search['id'];
+                }
+
                 function reserve () {
-                    ajaxPost('/invest/get-funding-detail', {fundingId: parseInt(search['id'])}, function (err, data) {
+                    ajaxPost('/product/add-funding-reserve', {fundingId: parseInt(search['id'])}, function (err, data) {
                         if (err) {
                             toastr.error(err, '错误');
                         } else {
@@ -246,6 +251,117 @@ require(['Vue', 'Utils'],
 
             });
 
+            return;
+        }
+
+        if ($('#page-product-booking').length > 0) {
+            $(document).ready(function () {
+                var search = Utils.getSearch(location);
+                if (!search['id']) {
+                    location.href = '/product/product-list';
+                    return;
+                }
+
+                var vm = new Vue({
+                    el: '#page-product-booking',
+                    data: {
+                        check_pro: false,
+                        num: 1,
+                        funding: null
+                    },
+                    computed: {
+                        amount: function () {
+                            return this.num * this.funding.UnitPrice;
+                        }
+                    },
+                    methods: {
+                        submitOrder: submitOrder
+                    }
+                });
+
+                ajaxPost('/product/get-funding-detail', {fundingId: parseInt(search['id'])}, function (err, data) {
+                    if (err) {
+                        toastr.error(err, '错误');
+                    } else {
+                        if (data.count === 1) {
+                            vm.funding = Utils.clone(data.funding);
+                        }
+                    }
+                });
+
+                function submitOrder() {
+                    if (!vm.check_pro || !vm.funding) {
+                        return;
+                    }
+
+                    if (!vm.num) {
+                        toastr.warning('请填写正确的购买数量');
+                        return;
+                    }
+
+                    if (vm.num > vm.funding.PerCustomerLimit) {
+                        toastr.warning('超出限购数量');
+                        vm.num = oldVal;
+                        return;
+                    }
+
+                    ajaxPost('/product/add-funding-order', {
+                        fundingId: parseInt(search['id']),
+                        "quantity": vm.num,
+                        "price": vm.amount*100
+                    }, function (err, data) {
+                        if (err) {
+                            toastr.error(err, '错误');
+                        } else {
+                            location.href = '/product/product-booking-pay?p=' + encodeURI(encodeURI(vm.amount));
+                        }
+                    });
+                }
+            });
+
+            return;
+        }
+
+        if ($('#page-product-pay').length > 0) {
+            $(document).ready(function () {
+                var search = Utils.getSearch(location);
+                if (!search['p']) {
+                    location.href = '/product/product-list';
+                    return;
+                }
+
+                var vm = new Vue({
+                    el: '#page-product-pay',
+                    data: {
+                        amount: decodeURI(search['p'])
+                    },
+                    methods: {
+                        confirm: confirm
+                    }
+                });
+
+                function confirm () {
+                    location.href = '/product/product-booking-pay-confirm?p=' + search['p'];
+                }
+            });
+            return;
+        }
+
+        if ($('#page-product-confirm').length > 0) {
+            $(document).ready(function () {
+                var search = Utils.getSearch(location);
+                if (!search['p']) {
+                    location.href = '/product/product-list';
+                    return;
+                }
+
+                var vm = new Vue({
+                    el: '#page-product-confirm',
+                    data: {
+                        amount: decodeURI(search['p'])
+                    }
+                });
+            });
             return;
         }
 

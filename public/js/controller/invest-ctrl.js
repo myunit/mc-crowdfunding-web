@@ -361,6 +361,8 @@ require(['Vue', 'Utils'],
 					location.href = '/invest/invest-booking-pay-confirm?p=' + search['p'];
 				}
 			});
+
+			return;
 		}
 
 		if ($('#page-invest-confirm').length > 0) {
@@ -378,6 +380,7 @@ require(['Vue', 'Utils'],
 					}
 				});
 			});
+			return;
 		}
 
 	});

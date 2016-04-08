@@ -3,7 +3,7 @@
 <header class="my-header-default">
     <div class=" my-login-header">
     	<span class="pull-left">
-         Hi,用户名  <a href="/">退出</a>
+         Hi,{{name}}  <a href="/">退出</a>
         </span>
     </div>
 </header>
@@ -53,15 +53,15 @@
                     </div>
                     <div class="form-group">
                         <label for="inputPassword2" class="sr-only">订购数量</label>
-                        <input type="text" class="form-control input-sm" id="inputPassword2" v-model="inputPassword2">
+                        <input type="text" class="form-control input-sm" id="inputPassword2" v-model="num">
                     </div>
                     <span>件</span><label id="product-amount-label"></label>
                 </form>
                 <div class="my-form-item">
-                    <label>单价</label><span class="my-text-blue" v-model="price">55.5元</span>
+                    <label>单价</label><span class="my-text-blue">${funding.UnitPrice}元</span>
                 </div>
                 <div class="my-form-item">
-                    <label>需付金额</label><span class="my-text-red" v-model="total_price">5500元</span>
+                    <label>需付金额</label><span class="my-text-red">${amount}元</span>
                 </div>
             </div>
 
@@ -71,11 +71,11 @@
                     xxxxxxx</p>
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox" id="check-pro" v-model="check_pro" checked>我已详细阅读并同意 <label id="check_pro-label"></label>
+                        <input type="checkbox" id="check-pro" v-model="check_pro">我已详细阅读并同意 <label id="check_pro-label"></label>
                     </label>
                 </div>
             </div>
-            <p v-cloak class="my-text-center my-text-gray"><button type="button" class="btn btn-long btn-dark" id="submit-product-booking">提交订单</button></p>
+            <p v-cloak class="my-text-center my-text-gray"><button type="button" class="btn btn-long" :class="{'btn-dark': check_pro, 'btn-dark-disable': !check_pro}" id="submit-product-booking" @click.prevent="submitOrder()">提交订单</button></p>
         </div>
     </div>
 
@@ -90,5 +90,6 @@
 </div></div>
 <script src="../js/lib/jquery.min.js"></script>
 <script src="../js/lib/bootstrap.min.js"></script>
+<script src="../js/lib/toastr.min.js"></script>
 <script src="../js/lib/my.js"></script>
 <script type='text/javascript' src='../js/lib/requirejs.min.js' data-main='../js/controller/product-ctrl' ></script>

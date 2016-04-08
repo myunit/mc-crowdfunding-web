@@ -164,8 +164,9 @@ router.post('/get-hot-funding-index', function (req, res, next) {
 		"userId": req.session.uid,
 		"pageId": 0,
 		"pageSize": 2,
-		"fundingType": parseInt(req.body.fundingType)
+		"fundingType": JSON.parse(req.body.fundingType)
 	};
+	//console.log('obj: ' + JSON.stringify(obj));
 	unirest.post(api.getHotFunding())
 		.headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
 		.send(obj)

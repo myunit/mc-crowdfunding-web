@@ -82,10 +82,17 @@ require(['Vue', 'Utils'],
 						productList: [],
 						equityImg: [],
 						productImg: []
+					},
+					methods: {
+						goDetailEquity: goDetailEquity
 					}
 				});
 
-				ajaxPost('/get-hot-funding-index', {'fundingType': 2}, function (err, data) {
+				function goDetailEquity (index) {
+					location.href = '/invest/invest-ongoing?id=' + vm.equityList[index].SysNo;
+				}
+
+				ajaxPost('/get-hot-funding-index', {'fundingType': '[2]'}, function (err, data) {
 					if (err) {
 						toastr.error(err, '错误');
 					} else {
@@ -94,7 +101,7 @@ require(['Vue', 'Utils'],
 					}
 				});
 
-				ajaxPost('/get-hot-funding-index', {'fundingType': 3}, function (err, data) {
+				ajaxPost('/get-hot-funding-index', {'fundingType': '[1,3]'}, function (err, data) {
 					if (err) {
 						toastr.error(err, '错误');
 					} else {

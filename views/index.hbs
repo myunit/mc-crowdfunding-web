@@ -29,7 +29,7 @@
     <h2 class="my-h2">热门权益众筹 <a href="invest/invest-list">查看更多</a></h2>
     <!--  众筹项目开始-->
     <template v-for="equity in equityList" track-by="SysNo">
-        <div class="my-item-box clearfix">
+        <div class="my-item-box clearfix" @click.prevent="goDetailEquity($index)">
             <p class="my-item-img pull-left"><img :src="equityImg[$index].ImgValue" width="216" height="152" alt=""/></p>
             <div class="my-item-info pull-left" v-cloak>
                 <h3>${equity.Brand.BrandName}</h3>

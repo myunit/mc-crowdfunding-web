@@ -22,7 +22,7 @@ router.get('/invest-list', function(req, res, next) {
 });
 
 router.get('/invest-failed', function(req, res, next) {
-    res.render('invest-failed',{title:"美仓众筹"});
+    res.render('invest-failed',{title:"美仓众筹", name: req.session.name});
 });
 
 router.get('/invest-ongoing', function(req, res, next) {
@@ -30,19 +30,19 @@ router.get('/invest-ongoing', function(req, res, next) {
 });
 
 router.get('/invest-preheat', function(req, res, next) {
-    res.render('invest-preheat',{title:"美仓众筹"});
+    res.render('invest-preheat',{title:"美仓众筹", name: req.session.name});
 });
 
 router.get('/invest-success', function(req, res, next) {
-    res.render('invest-success',{title:"美仓众筹"});
+    res.render('invest-success',{title:"美仓众筹", name: req.session.name});
 });
 
 router.get('/invest-booking', function(req, res, next) {
-    res.render('invest-booking',{title:"美仓众筹"});
+    res.render('invest-booking',{title:"美仓众筹", name: req.session.name});
 });
 
 router.get('/invest-booking-pay', function(req, res, next) {
-    res.render('invest-booking-pay',{title:"美仓众筹"});
+    res.render('invest-booking-pay',{title:"美仓众筹", name: req.session.name});
 });
 
 router.post('/get-all-funding', function (req, res, next) {
@@ -50,9 +50,10 @@ router.post('/get-all-funding', function (req, res, next) {
         "userId": req.session.uid,
         "pageId": parseInt(req.body.pageId),
         "pageSize": parseInt(req.body.pageSize),
-        "fundingStatus": parseInt(req.body.fundingStatus),
-        "fundingType": parseInt(req.body.fundingType)
+        "fundingStatus": JSON.parse(req.body.fundingStatus),
+        "fundingType": JSON.parse(req.body.fundingType)
     };
+    console.log('obj: ' + JSON.stringify(obj));
 
     unirest.post(api.getAllFunding())
         .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})

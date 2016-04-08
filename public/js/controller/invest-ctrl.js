@@ -104,7 +104,7 @@ require(['Vue', 'Utils'],
                     location.href = '/invest/invest-ongoing?id=' + vm.equityList[index].SysNo;
                 }
 
-                var foundingItem = new FoundingItems('/invest/get-all-funding', 20, -1 , 3);
+                var foundingItem = new FoundingItems('/invest/get-all-funding', 20, '[0,1,10,11]' , '[1,3]');
                 foundingItem.addItems(function (err, data) {
                     if (err) {
                         toastr.error(err, '错误');
@@ -120,10 +120,21 @@ require(['Vue', 'Utils'],
                 });
 
                 $('#selectStatus').change(function(){
-                    var status = parseInt($(this).children('option:selected').val());
+                    var val = parseInt($(this).children('option:selected').val());
+                    var status = '';
+                    if (val === 0) {
+                        status = '[0]';
+                    } else if (val === 1) {
+                        status = '[1]';
+                    } else if (val === 2) {
+                        status = '[10,11]';
+                    } else {
+                        status = '[0,1,10,11]';
+                    }
                     foundingItem = null;
-                    foundingItem = new FoundingItems('/invest/get-all-funding', 20, status, 3);
+                    foundingItem = new FoundingItems('/invest/get-all-funding', 20, status, '[1,3]');
                     vm.equityList.splice(0, vm.equityList.length);
+                    vm.equityImg.splice(0, vm.proudctImg.length);
                     foundingItem.addItems(function (err, data) {
                         if (err) {
                             toastr.error(err, '错误');

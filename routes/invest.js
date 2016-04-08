@@ -45,6 +45,10 @@ router.get('/invest-booking-pay', function(req, res, next) {
     res.render('invest-booking-pay',{title:"美仓众筹", name: req.session.name});
 });
 
+router.get('/invest-booking-pay-confirm', function(req, res, next) {
+    res.render('invest-booking-pay-confirm',{title:"美仓众筹", name: req.session.name});
+});
+
 router.post('/get-all-funding', function (req, res, next) {
     var obj = {
         "userId": req.session.uid,

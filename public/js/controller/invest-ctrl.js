@@ -200,8 +200,21 @@ require(['Vue', 'Utils'],
                         count: 0,
                         funding: null,
                         imgList: []
+                    },
+                    methods: {
+                        reserve: reserve
                     }
                 });
+
+                function reserve () {
+                    ajaxPost('/invest/get-funding-detail', {fundingId: parseInt(search['id'])}, function (err, data) {
+                        if (err) {
+                            toastr.error(err, '错误');
+                        } else {
+                            $('.bs-example-modal-sm').modal('show');
+                        }
+                    });
+                }
 
                 $('.popup-video').magnificPopup({
                     disableOn: 700,

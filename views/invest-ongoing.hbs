@@ -47,7 +47,7 @@
                     </p>
                     <p class="my-p-time">众筹时间:${funding.StartDate.substring(0, 16)} 到 ${funding.StartDate.substring(0, 16)}</p>
                     <button type="button" class="btn btn-lg btn-primary" id="join-invest" v-if="funding.CrowdFundingStatus === 1">我要参与</button>
-                    <button type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm" v-if="funding.CrowdFundingStatus === 0">我要预约</button>
+                    <button type="button" class="btn btn-lg btn-primary" @click.prevent="reserve()" v-if="funding.CrowdFundingStatus === 0">我要预约</button>
                     <button type="button" disabled class="btn btn-lg btn-primary" v-if="funding.CrowdFundingStatus === 10 || funding.CrowdFundingStatus === 11">已结束</button>
                 </div>
                 <span class="my-item-success" v-if="funding.CrowdFundingStatus === 10"></span>

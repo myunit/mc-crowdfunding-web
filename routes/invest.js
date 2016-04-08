@@ -95,4 +95,26 @@ router.post('/get-funding-detail', function (req, res, next) {
         });
 });
 
+router.post('/add-funding-reserve', function (req, res, next) {
+    var obj = {
+        "userId": req.session.uid,
+        "fundingId": parseInt(req.body.fundingId)
+    };
+    unirest.post(api.addFundingReserve())
+        .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
+        .send(obj)
+        .end(function (response) {
+            var data = response.body.repData;
+            if (data === undefined) {
+                res.json({status: 0, msg: '服务异常'});
+                return;
+            }
+            if (data.status) {
+                res.json({status: data.status, msg: data.msg});
+            } else {
+                res.json({status: data.status, msg: data.msg});
+            }
+        });
+});
+
 module.exports = router;

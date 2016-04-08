@@ -115,24 +115,29 @@ require(['Vue', 'Utils'],
                     }
                 });
 
-                $('#selectSource').change(function(){
-
-                });
-
-                $('#selectStatus').change(function(){
-                    var val = parseInt($(this).children('option:selected').val());
-                    var status = '';
-                    if (val === 0) {
+                function changeSelect () {
+                    var status = parseInt($('#selectStatus').children('option:selected').val());
+                    if (status === 0) {
                         status = '[0]';
-                    } else if (val === 1) {
+                    } else if (status === 1) {
                         status = '[1]';
-                    } else if (val === 2) {
+                    } else if (status === 2) {
                         status = '[10,11]';
                     } else {
                         status = '[0,1,10,11]';
                     }
+
+                    var type = parseInt($('#selectType').children('option:selected').val());
+                    if (type === 0) {
+                        type = '[1]';
+                    } else if (type === 1) {
+                        type = '[3]';
+                    } else {
+                        type = '[1,3]';
+                    }
+
                     foundingItem = null;
-                    foundingItem = new FoundingItems('/invest/get-all-funding', 20, status, '[1,3]');
+                    foundingItem = new FoundingItems('/invest/get-all-funding', 20, status, type);
                     vm.equityList.splice(0, vm.equityList.length);
                     vm.equityImg.splice(0, vm.proudctImg.length);
                     foundingItem.addItems(function (err, data) {
@@ -144,6 +149,18 @@ require(['Vue', 'Utils'],
                             vm.count = data.count;
                         }
                     });
+                }
+
+                $('#selectSource').change(function(){
+                    changeSelect();
+                });
+
+                $('#selectType').change(function(){
+                    changeSelect();
+                });
+
+                $('#selectStatus').change(function(){
+                    changeSelect();
                 });
 
 

@@ -81,7 +81,7 @@ router.post('/get-funding-detail', function (req, res, next) {
         "userId": req.session.uid,
         "fundingId": parseInt(req.body.fundingId)
     };
-
+    console.log('obj: ' + JSON.stringify(obj));
     unirest.post(api.getFundingDetail())
         .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
         .send(obj)

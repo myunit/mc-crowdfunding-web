@@ -175,6 +175,16 @@ require(['Vue', 'Utils'],
                     }
                 });
 
+                $('.popup-video').magnificPopup({
+                    disableOn: 700,
+                    type: 'iframe',
+                    mainClass: 'mfp-fade',
+                    removalDelay: 160,
+                    preloader: false,
+
+                    fixedContentPos: false
+                });
+
                 ajaxPost('/invest/get-funding-detail', {fundingId: parseInt(search['id'])}, function (err, data) {
                     if (err) {
                         toastr.error(err, '错误');
@@ -183,17 +193,20 @@ require(['Vue', 'Utils'],
                             vm.funding = Utils.clone(data.funding);
                             vm.imgList = data.img.slice();
                             Vue.nextTick(function () {
-                                $('#my-carousel').carousel();
+                                $('#my-carousel').carousel({
+                                    interval: 4000
+                                });
+
                                 $('[id^=carousel-selector-]').click( function(){
                                     var id_selector = $(this).attr("id");
                                     var id = id_selector.substr(id_selector.length -1);
                                     id = parseInt(id);
-                                    $('#myCarousel').carousel(id);
+                                    $('#my-carousel').carousel(id);
                                     $('[id^=carousel-selector-]').removeClass('selected');
                                     $(this).addClass('selected');
                                 });
 
-                                $('#myCarousel').on('slid', function (e) {
+                                $('#my-carousel').on('slid', function (e) {
                                     var id = $('.item.active').data('slide-number');
                                     id = parseInt(id);
                                     $('[id^=carousel-selector-]').removeClass('selected');

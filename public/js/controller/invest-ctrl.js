@@ -208,7 +208,7 @@ require(['Vue', 'Utils'],
                 });
 
                 function goToBuy () {
-                    location.href = '/invest/invest-booking?id=' + search['id'] + '&price=' + vm.funding.UnitPrice + '&percent=' + vm.funding.UnitPercent*100;
+                    location.href = '/invest/invest-booking?id=' + search['id'] + '&price=' + vm.funding.UnitPrice + '&percent=' + vm.funding.UnitPercent*100 + '&limit=' + vm.funding.PerCustomerLimit;
                 }
 
                 function reserve () {
@@ -269,36 +269,56 @@ require(['Vue', 'Utils'],
         }
 
         if ($('#page-invest-booking').length > 0 ) {
-            var search = Utils.getSearch(location);
-            if (!search['id'] || !search['price'] || !search['percent']) {
-                location.href = '/invest/invest-list';
-                return;
-            }
-            var vm = new Vue({
-                el: '#page-invest-booking',
-                data: {
-                    check_pro: false,
-                    num: 1,
-                    unitPrice: Math.round(parseFloat(search['price'])),
-                    unitPercent: parseInt(search['percent'])
-                },
-                computed: {
-                    percent: function () {
-                        return this.num * this.unitPrice;
+            $(document).ready(function () {
+                var search = Utils.getSearch(location);
+                if (!search['id'] || !search['price'] || !search['percent']) {
+                    location.href = '/invest/invest-list';
+                    return;
+                }
+                var limit = parseInt(search['limit']);
+
+
+
+                var vm = new Vue({
+                    el: '#page-invest-booking',
+                    data: {
+                        check_pro: false,
+                        num: 1,
+                        unitPrice: Math.round(parseFloat(search['price'])),
+                        unitPercent: parseInt(search['percent'])
                     },
-                    amount: function () {
-                        return this.num * this.unitPercent;
+                    computed: {
+                        percent: function () {
+                            return this.num * this.unitPrice;
+                        },
+                        amount: function () {
+                            return this.num * this.unitPercent;
+                        }
+                    },
+                    methods: {
+                        submitOrder: submitOrder
+                    }
+                });
+
+                function submitOrder() {
+                    if (!vm.check_pro) {
+                        return;
+                    }
+
+                    if (!vm.num) {
+                        toastr.warning('请填写正确的购买数量');
+                        return;
+                    }
+
+                    if (vm.num > limit) {
+                        toastr.warning('超出限购数量');
+                        vm.num = oldVal;
+                        return;
                     }
                 }
             });
 
-            vm.$watch('num', function (newVal, oldVal) {
-                if (!newVal) {
-                    vm.num = oldVal;
-                }
-            });
-
-
+            return;
         }
 
     });

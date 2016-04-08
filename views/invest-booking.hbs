@@ -76,7 +76,7 @@
                         </div>
                     </div>
 
-                    <p v-cloak class="my-text-center my-text-gray"><button type="button" class="btn btn-long" :class="{'btn-dark': check_pro, 'btn-dark-disable': !check_pro}" id="submit-invest-booking">提交订单</button></p>
+                    <p v-cloak class="my-text-center my-text-gray"><button type="button" class="btn btn-long" :class="{'btn-dark': check_pro, 'btn-dark-disable': !check_pro}" id="submit-invest-booking" @click.prevent="submitOrder()">提交订单</button></p>
                 </div>
             </div>
         </div>

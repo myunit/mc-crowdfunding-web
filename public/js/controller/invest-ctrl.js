@@ -202,9 +202,14 @@ require(['Vue', 'Utils'],
                         imgList: []
                     },
                     methods: {
-                        reserve: reserve
+                        reserve: reserve,
+                        goToBuy: goToBuy
                     }
                 });
+
+                function goToBuy () {
+                    location.href = '/invest/invest-booking?id=' + search['id'] + '&price=' + vm.funding.UnitPrice + '&percent=' + vm.funding.UnitPercent*100;
+                }
 
                 function reserve () {
                     ajaxPost('/invest/get-funding-detail', {fundingId: parseInt(search['id'])}, function (err, data) {
@@ -261,6 +266,39 @@ require(['Vue', 'Utils'],
             });
 
             return;
+        }
+
+        if ($('#page-invest-booking').length > 0 ) {
+            var search = Utils.getSearch(location);
+            if (!search['id'] || !search['price'] || !search['percent']) {
+                location.href = '/invest/invest-list';
+                return;
+            }
+            var vm = new Vue({
+                el: '#page-invest-booking',
+                data: {
+                    check_pro: false,
+                    num: 1,
+                    unitPrice: Math.round(parseFloat(search['price'])),
+                    unitPercent: parseInt(search['percent'])
+                },
+                computed: {
+                    percent: function () {
+                        return this.num * this.unitPrice;
+                    },
+                    amount: function () {
+                        return this.num * this.unitPercent;
+                    }
+                }
+            });
+
+            vm.$watch('num', function (newVal, oldVal) {
+                if (!newVal) {
+                    vm.num = oldVal;
+                }
+            });
+
+
         }
 
     });

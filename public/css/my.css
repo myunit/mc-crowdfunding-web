@@ -54,6 +54,7 @@ footer{ height:74px; background:#525158; text-align:center;}
 .btn-primary{ background:#21b6b4; border-color:#21b6b4;}
 .btn-primary:hover{ background:#119795;border-color:#119795;}
 .btn-primary[disabled],.btn-primary[disabled]:hover{ background:#cfcfcf;border-color:#cfcfcf;}
+.btn-dark-disable{ background:#cfcfcf;border-color:#cfcfcf; color:#5b5a60;}
 .btn-dark{ background:#5b5a60;border-color:#5b5a60; color:#fff;}
 .btn-dark:hover{background:#21b6b4;border-color:#21b6b4; color:#fff; }
 .btn-long{ padding:6px 60px;}

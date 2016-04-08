@@ -3,7 +3,7 @@
         <header class="my-header-default">
             <div class=" my-login-header">
     	<span class="pull-left">
-         Hi,用户名  <a href="/">退出</a>
+         Hi,{{name}}  <a href="/">退出</a>
         </span>
             </div>
         </header>
@@ -53,15 +53,15 @@
                             </div>
                             <div class="form-group">
                                 <label for="inputPassword2" class="sr-only">投资份数</label>
-                                <input type="text" class="form-control input-sm" id="inputPassword2" v-model="amount">
+                                <input type="text" class="form-control input-sm" id="inputPassword2" v-model="num">
                             </div>
                             <span>份</span><label id="invest-amount-label"></label>
                         </form>
-                        <div class="my-form-item">
-                            <label>投资占比</label><span class="my-text-blue" >0.25%</span>
+                        <div class="my-form-item" v-cloak>
+                            <label>投资占比</label><span class="my-text-blue" >${percent}%</span>
                         </div>
-                        <div class="my-form-item">
-                            <label>需付金额</label><span class="my-text-red">5500元</span>
+                        <div class="my-form-item" v-cloak>
+                            <label>需付金额</label><span class="my-text-red">${amount}元</span>
                         </div>
                     </div>
 
@@ -71,12 +71,12 @@
                             xxxxxxx</p>
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" id="check_pro" checked v-model="check_pro">我已详细阅读并同意 <label id="check_pro-label"></label>
+                                <input type="checkbox" id="check_pro" v-model="check_pro">我已详细阅读并同意 <label id="check_pro-label"></label>
                             </label>
                         </div>
                     </div>
 
-                    <p v-cloak class="my-text-center my-text-gray"><button type="button" class="btn btn-long btn-dark" id="submit-invest-booking">提交订单</button></p>
+                    <p v-cloak class="my-text-center my-text-gray"><button type="button" class="btn btn-long" :class="{'btn-dark': check_pro, 'btn-dark-disable': !check_pro}" id="submit-invest-booking">提交订单</button></p>
                 </div>
             </div>
         </div>
@@ -86,7 +86,9 @@
                 ©2015 xxxxxx众筹网络科技有限公司 zhongchou.com 版权所有 xxICP证1xxxxxxxx号</p>
         </footer>
     </div></div>
-<script src="/js/jquery.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
-<script src="/js/my.js"></script>
-<script type='text/javascript' src='../js/lib/requirejs.min.js' data-main='/js/controller/invest-ctrl' ></script>
+<script src="../js/lib/jquery.min.js"></script>
+<script src="../js/lib/bootstrap.min.js"></script>
+<script src="../js/lib/toastr.min.js"></script>
+<script src="../js/lib/jquery.magnific-popup.min.js"></script>
+<script src="../js/lib/my.js"></script>
+<script type='text/javascript' src='../js/lib/requirejs.min.js' data-main='../js/controller/invest-ctrl' ></script>

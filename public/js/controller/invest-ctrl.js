@@ -17,6 +17,17 @@ require.config({
 	}
 });
 
+function toDecimal4(x) {
+	var f = parseFloat(x);
+
+	if (isNaN(f)) {
+		return;
+	}
+
+	f = Math.round(x*10000)/10000;
+	return f;
+}
+
 function ajaxPost(url, data, cb) {
 	$.ajax({
 		type: 'POST',
@@ -289,7 +300,7 @@ require(['Vue', 'Utils'],
 					},
 					computed: {
 						percent: function () {
-							return this.num * this.funding.UnitPercent*100;
+							return toDecimal4(this.num * this.funding.UnitPercent);
 						},
 						amount: function () {
 							return this.num * this.funding.UnitPrice;
@@ -332,7 +343,7 @@ require(['Vue', 'Utils'],
 					ajaxPost('/invest/add-funding-order', {
 						fundingId: parseInt(search['id']),
 						"quantity": vm.num,
-						"price": vm.amount*100
+						"price": vm.funding.UnitPrice*100
 					}, function (err, data) {
 						$('.my-booking-box').loading('stop');
 						if (err) {

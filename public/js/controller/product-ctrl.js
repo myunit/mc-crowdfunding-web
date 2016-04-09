@@ -299,9 +299,8 @@ require(['Vue', 'Utils'],
                         return;
                     }
 
-                    if (vm.num > vm.funding.PerCustomerLimit) {
-                        toastr.warning('超出限购数量');
-                        vm.num = oldVal;
+                    if (vm.num < vm.funding.MinBuyQuantity) {
+                        toastr.warning('该众筹起订数量为 ' + vm.funding.MinBuyQuantity);
                         return;
                     }
 

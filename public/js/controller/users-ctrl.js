@@ -300,4 +300,130 @@ require(['Vue', 'Utils'],
             });
             return;
         }
+
+        if ($('#page-product-list').length > 0) {
+            $(document).ready(function () {
+                var vm = new Vue({
+                    el: '#page-product-list',
+                    data: {
+                        count: 0,
+                        fundingList: [],
+                        funingImg: [],
+                        pageId: 1,
+                        curIndex: 0,
+                        payPhoto: null
+                    },
+                    methods: {
+                        goToDetail: goToDetail,
+                        cancelOrder: cancelOrder,
+                        wantCancel: wantCancel,
+                        wantPay: wantPay,
+                        finishPay: finishPay
+                    }
+                });
+
+                $('#payPhoto').change(function () {
+                    var a = document.getElementById("picture-alert");
+                    if (!/\.(jpg|jpeg|png|bmp|JPG|PNG|BMP|JPEG)$/.test(this.value)) {
+                        a.innerHTML = '<label style="font-size:14px;color:red;">&nbsp;&nbsp;&nbsp;&nbsp;　　　照片格式不正确,请选择png,jpeg,bmp格式照片上传</label>';
+                        return;
+                    }
+
+                    var fsize = this.files[0].size;
+                    if (fsize > 5242880) //do something if file size more than 1 mb (1048576)
+                    {
+                        a.innerHTML = '<label style="font-size:14px;color:red;">&nbsp;&nbsp;&nbsp;&nbsp;　　　照片大小不能超过5M</label>';
+                        return;
+                    }
+
+                    lrz(this.files[0], function (results) {
+                        // 你需要的数据都在这里，可以以字符串的形式传送base64给服务端转存为图片。
+                        var base = results.base64.split(',');
+                        vm.payPhoto = base[1];
+                    });
+                });
+
+                function wantCancel (index) {
+                    vm.curIndex = index;
+                    $('#cancelModal').modal('show');
+                }
+
+                function wantPay (index) {
+                    vm.curIndex = index;
+                    $('#updatePayModal').modal('show');
+                }
+
+                function finishPay () {
+                    $('#updatePayModal').modal('hide');
+                    var funding = vm.fundingList[vm.curIndex];
+                    $('#opt-box-'+funding.SysNo).loading({
+                        message: '提交中中...'
+                    });
+                    ajaxPost('/users/finish-order', {orderId: funding.SysNo, imgData: vm.payPhoto}, function (err, data) {
+                        $('#opt-box-'+funding.SysNo).loading('stop');
+                        if (err) {
+                            toastr.error(err, '错误');
+                        } else {
+                            funding.StatusTip = '审核中';
+                            funding.OrderStatus = 1;
+                            funding.PaymentStatus = 0;
+                        }
+                    });
+                }
+
+                function cancelOrder () {
+                    $('#cancelModal').modal('hide');
+                    var funding = vm.fundingList[vm.curIndex];
+                    $('#opt-box-'+funding.SysNo).loading({
+                        message: '取消中...'
+                    });
+                    ajaxPost('/users/cancel-order', {orderId: funding.SysNo}, function (err, data) {
+                        $('#opt-box-'+funding.SysNo).loading('stop');
+                        if (err) {
+                            toastr.error(err, '错误');
+                        } else {
+                            funding.StatusTip = '已取消';
+                            funding.OrderStatus = 11;
+                            funding.ReturnStatus = 0;
+                        }
+                    });
+                }
+
+                function goToDetail (index) {
+                    var funding = vm.fundingList[index];
+                    location.href = '/product/product-ongoing?id=' + funding.CrowdFunding.SysNo;
+                }
+
+                var foundingItem = new OrderItems('/users/get-order', 5, '[0,1,10,11]', '[2]', -1, -1, -1);
+                foundingItem.addItems(function (err, data) {
+                    if (err) {
+                        toastr.error(err, '错误');
+                    } else {
+                        vm.fundingList = data.funding.slice();
+                        vm.funingImg = data.img.slice();
+                        vm.count = data.count;
+                    }
+                });
+
+                $(window).scroll(function () {
+                    var $this = $(this),
+                        viewH = $(this).height(),//可见高度
+                        contentH = $(this).get(0).scrollHeight,//内容高度
+                        scrollTop = $(this).scrollTop();//滚动高度
+                    //if(contentH - viewH - scrollTop <= 100) { //到达底部100px时,加载新内容
+                    if (scrollTop / (contentH - viewH) >= 0.95 && vm.fundingList < vm.count) { //到达底部100px时,加载新内容
+                        foundingItem.addItems(function (err, data) {
+                            if (err) {
+                                toastr.error(err, '错误');
+                            } else {
+                                vm.fundingList = vm.fundingList.concat(data.funding);
+                                vm.funingImg = vm.funingImg.concat(data.img);
+                                vm.count = data.count;
+                            }
+                        });
+                    }
+                });
+            });
+            return;
+        }
     });

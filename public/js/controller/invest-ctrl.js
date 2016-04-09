@@ -331,9 +331,8 @@ require(['Vue', 'Utils'],
 						return;
 					}
 
-					if (vm.num > vm.funding.PerCustomerLimit) {
+					if (vm.funding.PerCustomerLimit > 0 && vm.num > vm.funding.PerCustomerLimit) {
 						toastr.warning('超出限购数量');
-						vm.num = oldVal;
 						return;
 					}
 

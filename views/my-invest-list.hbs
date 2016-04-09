@@ -70,7 +70,7 @@
             <tr>
                 <td width="28%" @click.prevent="goToDetail($index)"><span class="img-cart"><img :src="funingImg[$index].ImgValue" width="80" height="80"></span>
           <span class="title-cart title-middle">${funding.CrowdFunding.Brand.BrandName}</span></td>
-                <td width="10%" valign="top"><span class=" my-text-red">进行中</span></td>
+                <td width="10%" valign="top"><span class=" my-text-red" v-if="funding.CrowdFunding.CrowdFundingStatus === 1">进行中</span><span class=" my-text-black" v-if="funding.CrowdFunding.CrowdFundingStatus === 10">已成功</span><span class=" my-text-black" v-if="funding.CrowdFunding.CrowdFundingStatus === 11">已失败</span></td>
                 <td width="12%" valign="top">
                     <p>目标：${funding.CrowdFunding.TargetAmount}元</p>
                     <p>${funding.CrowdFunding.CompletePercent}%</p>
@@ -81,125 +81,18 @@
                         </div>
                     </div>
                 </td>
-                <td width="8%" valign="top">${funding.HaveCrowdFundingCount}份</td><td width="8%" valign="top">2%</td>
-                <td width="12%" valign="top">5.00万元</td>
-                <td width="10%" valign="top">待支付</td>
-                <td width="12%" valign="top"><button type="button" class="btn btn-dark">已完成转账</button><br>
-                    <button type="button" class="btn btn-default">取消订单</button>
+                <td width="8%" valign="top">${funding.CrowdFunding.HaveCrowdFundingCount}份</td><td width="8%" valign="top">${funding.CrowdFunding.HaveCrowdFundingPercent}%</td>
+                <td width="12%" valign="top">${funding.TotalAmount}元</td>
+                <td width="10%" valign="top">${funding.StatusTip}</td>
+                <td width="12%" valign="top">
+                    <button type="button" class="btn btn-dark" v-if="funding.OrderStatus === 0 && funding.PaymentStatus === 0">已完成转账</button><br  v-if="funding.OrderStatus === 0 && funding.PaymentStatus === 0">
+                    <button type="button" class="btn btn-default" v-if="funding.OrderStatus === 0 && funding.PaymentStatus === 0">取消订单</button>
+                    <button type="button" class="btn btn-default" id="view-invest-process"  v-if="funding.OrderStatus === 1 && funding.PaymentStatus === 1">查看项目进度</button>
                 </td>
             </tr>
         </table>
     </template>
-
-
-    <table width="100%" class="ui-table-cart-item ui-table-clear my-table-progress" border="0" cellspacing="0" cellpadding="0">
-        <tr>
-            <td colspan="8" class="my-order-num"><span>下单时间  2016-03-07  12:23</span><span>订单号  23222</span></td>
-        </tr>
-        <tr>
-            <td width="28%"><span class="img-cart"><a href="#"><img src="/images/demo/cart1.gif" width="80" height="80"></a></span>
-          <span class="title-cart title-middle">
-
-          <a href="#">香奈儿口红唇膏 炫亮魅力 可可小姐 丝</a></span></td>
-            <td width="10%" valign="top"><span>已完成</span></td>
-            <td width="12%" valign="top"> <p>目标：500万</p>
-                <p>100%</p>
-                <div class="progress">
-
-                    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
-                        <span class="sr-only">60% Complete</span>
-                    </div>
-                </div>
-            </td> <td width="8%" valign="top">2份</td><td width="8%" valign="top">2%</td>
-            <td width="12%" valign="top">5.00万元</td>
-            <td width="10%" valign="top">审核中</td>
-            <td width="12%" valign="top">
-            </td>
-        </tr>
-    </table>
-
-    <table width="100%" class="ui-table-cart-item ui-table-clear my-table-progress" border="0" cellspacing="0" cellpadding="0">
-        <tr>
-            <td colspan="8" class="my-order-num"><span>下单时间  2016-03-07  12:23</span><span>订单号  23222</span></td>
-        </tr>
-        <tr>
-            <td width="28%"><span class="img-cart"><a href="#"><img src="/images/demo/cart1.gif" width="80" height="80"></a></span>
-          <span class="title-cart title-middle">
-
-          <a href="#">香奈儿口红唇膏 炫亮魅力 可可小姐 丝</a></span></td>
-            <td width="10%" valign="top"><span>已完成</span></td>
-            <td width="12%" valign="top"> <p>目标：500万</p>
-                <p>100%</p>
-                <div class="progress">
-
-                    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
-                        <span class="sr-only">60% Complete</span>
-                    </div>
-                </div>
-            </td> <td width="8%" valign="top">2份</td><td width="8%" valign="top">2%</td>
-            <td width="12%" valign="top">5.00万元</td>
-            <td width="10%" valign="top">审核中</td>
-            <td width="12%" valign="top">
-            </td>
-        </tr>
-    </table>
-
-    <table width="100%" class="ui-table-cart-item ui-table-clear my-table-progress" border="0" cellspacing="0" cellpadding="0">
-        <tr>
-            <td colspan="8" class="my-order-num"><span>下单时间  2016-03-07  12:23</span><span>订单号  23222</span></td>
-        </tr>
-        <tr>
-            <td width="28%"><span class="img-cart"><a href="#"><img src="/images/demo/cart1.gif" width="80" height="80"></a></span>
-          <span class="title-cart title-middle">
-
-          <a href="#">香奈儿口红唇膏 炫亮魅力 可可小姐 丝</a></span></td>
-            <td width="10%" valign="top"><span>已完成</span></td>
-            <td width="12%" valign="top"> <p>目标：500万</p>
-                <p>100%</p>
-                <div class="progress">
-
-                    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
-                        <span class="sr-only">60% Complete</span>
-                    </div>
-                </div>
-            </td> <td width="8%" valign="top">2份</td><td width="8%" valign="top">2%</td>
-            <td width="12%" valign="top">5.00万元</td>
-            <td width="10%" valign="top">已支付</td>
-            <td width="12%" valign="top"><button type="button" class="btn btn-default" id="view-invest-process">查看项目进度</button>
-            </td>
-        </tr>
-    </table>
-
-    <table width="100%" class="ui-table-cart-item ui-table-clear my-table-progress" border="0" cellspacing="0" cellpadding="0">
-        <tr>
-            <td colspan="8" class="my-order-num"><span>下单时间  2016-03-07  12:23</span><span>订单号  23222</span></td>
-        </tr>
-        <tr>
-            <td width="28%"><span class="img-cart"><a href="#"><img src="/images/demo/cart1.gif" width="80" height="80"></a></span>
-          <span class="title-cart title-middle">
-
-          <a href="#">香奈儿口红唇膏 炫亮魅力 可可小姐 丝</a></span></td>
-            <td width="10%" valign="top"><span>已完成</span></td>
-            <td width="12%" valign="top"> <p>目标：500万</p>
-                <p>100%</p>
-                <div class="progress">
-
-                    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
-                        <span class="sr-only">60% Complete</span>
-                    </div>
-                </div>
-            </td> <td width="8%" valign="top">2份</td><td width="8%" valign="top">2%</td>
-            <td width="12%" valign="top">5.00万元</td>
-            <td width="10%" valign="top">已支付</td>
-            <td width="12%" valign="top"><button type="button" class="btn btn-default">查看项目进度</button>
-            </td>
-        </tr>
-    </table>
-    <div class="digg my-mar-b50">
-        <span class="disabled">&lt; 上一页</span><span class="current">1</span><a href="#">2</a><a href="#">3</a><a href="#">4</a>
-        ...
-        <a href="#">5</a><a href="#" class="next">下一页 &gt;</a><a href="#">末页</a>
-    </div>
+    <div class="digg my-mar-b50"></div>
 </div>
 
 <footer>
@@ -207,7 +100,9 @@
         ©2015 xxxxxx众筹网络科技有限公司 zhongchou.com 版权所有 xxICP证1xxxxxxxx号</p>
 </footer>
 </div></div>
-<script src="/js/jquery.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
-<script src="/js/my.js"></script>
-<script type='text/javascript' src='../js/lib/requirejs.min.js' data-main='/js/controller/users-ctrl' ></script>
+<script src="../js/lib/jquery.min.js"></script>
+<script src="../js/lib/bootstrap.min.js"></script>
+<script src="../js/lib/toastr.min.js"></script>
+<script src="../js/lib/jquery.loading.min.js"></script>
+<script src="../js/lib/my.js"></script>
+<script type='text/javascript' src='../js/lib/requirejs.min.js' data-main='../js/controller/users-ctrl' ></script>

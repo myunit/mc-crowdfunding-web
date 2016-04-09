@@ -184,9 +184,6 @@ require(['Vue', 'Utils'],
                         fundingList: [],
                         funingImg: [],
                         pageId: 1
-                    },
-                    methods: {
-                        goToDetail: goToDetail
                     }
                 });
 

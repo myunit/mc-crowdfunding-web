@@ -212,7 +212,11 @@ require(['Vue', 'Utils'],
 				}
 
 				function reserve() {
-					ajaxPost('/invest/get-funding-detail', {fundingId: parseInt(search['id'])}, function (err, data) {
+					$('.my-wp-1200').loading({
+						message: '提交中...'
+					});
+					ajaxPost('/invest/add-funding-reserve', {fundingId: parseInt(search['id'])}, function (err, data) {
+						//$('.my-wp-1200').loading('stop');
 						if (err) {
 							toastr.error(err, '错误');
 						} else {

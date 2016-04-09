@@ -1,0 +1,167 @@
+<div class="page-group">
+    <div id="page-product-list" class="page page-current my-white-bg">
+        <header class="my-header-default">
+            <div class=" my-login-header">
+    	<span class="pull-left">
+         Hi,{{name}}  <a href="/">退出</a>
+        </span>
+            </div>
+        </header>
+
+        <nav class="my-border-bottom">
+            <div class="my-wp-1200">
+                <a href="/login-suc" class="my-logo">美仓众筹</a>
+                <ul class="nav nav-pills pull-right">
+
+                    <li role="presentation" class="active"><a href="../login-suc">首页</a></li>
+                    <li role="presentation"><a href="../invest/invest-list">权益众筹</a></li>
+                    <li role="presentation"><a href="../product/product-list">产品众筹</a></li>
+                    <li role="presentation"><a href="../users/my-pre-order">我的预约</a></li>
+                    <li role="presentation"><a href="../users/my-invest-list">我的众筹</a></li>
+                </ul>
+            </div>
+        </nav>
+
+
+        <div class="my-wp-1200">
+            <ul class="my-nav-product-list clearfix">
+                <li><a href="my-invest-list">权益众筹</a></li>
+                <li class="active"><a href="#">产品众筹 </a></li>
+            </ul>
+
+            <div class="my-top-product-list my-mar-0">
+                <label>项目状态</label>
+                <select class="dropdown" name="" id="selectStatus">
+                    <option value="-1">全部</option>
+                    <option value="1">进行中</option>
+                    <option value="10">已成功</option>
+                    <option value="11">已失败</option>
+                </select>
+                <label>支付状态</label>
+                <select class="dropdown" name="" id="selectOrderStatus">
+                    <option value="-1">全部</option>
+                    <option value="0">待支付</option>
+                    <option value="1">审核中</option>
+                    <option value="2">已支付</option>
+                    <option value="3">已取消</option>
+                    <option value="4">已退款</option>
+                </select>
+            </div>
+
+            <table class="ui-table-cart-header  my-mar-0" width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tbody>
+                <tr>
+                    <td width="28%" align="left">项目信息</td>
+                    <td width="12%" >项目状态</td>
+                    <td width="12%" >进度</td>
+                    <td width="12%" >众筹数量</td>
+                    <td width="12%" >实付金额</td>
+                    <td width="12%">状态</td>
+                    <td width="12%" >操作</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <template v-for="funding in fundingList" track-by="SysNo">
+                <table width="100%" class="ui-table-cart-item ui-table-clear my-table-progress" border="0" cellspacing="0" cellpadding="0" v-cloak>
+                    <tr>
+                        <td colspan="7" class="my-order-num"><span>下单时间  ${funding.InDate.substring(0, 16)}</span><span>订单号  ${funding.SysNo}</span></td>
+                    </tr>
+                    <tr>
+                        <td width="28%" @click.prevent="goToDetail($index)"><span class="img-cart"><a href="#"><img :src="fundingImg[$index].ImgValue" width="80" height="80"></a></span>
+          <span class="title-cart title-middle">
+
+          <a href="#">${funding.CrowdFunding.Brand.BrandName}</a></span></td>
+                        <td width="12%" valign="top"><span class=" my-text-red" v-if="funding.CrowdFunding.CrowdFundingStatus === 1">进行中</span><span class=" my-text-black" v-if="funding.CrowdFunding.CrowdFundingStatus === 10">已成功</span><span class=" my-text-black" v-if="funding.CrowdFunding.CrowdFundingStatus === 11">已失败</span></td>
+                        <td width="12%" valign="top">
+                            <p>目标：${funding.CrowdFunding.Quantity}件</p>
+                            <p>${funding.CrowdFunding.CompletePercent}%</p>
+                            <div class="progress">
+
+                                <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" :style="{width: funding.CrowdFunding.CompletePercent+'%'};">
+                                    <span class="sr-only"></span>
+                                </div>
+                            </div>
+                        </td>
+                        <td width="12%" valign="top">${funding.Quantity}件</td>
+                        <td width="12%" valign="top">${funding.TotalAmount}元</td>
+                        <td width="12%" valign="top">${funding.StatusTip}</td>
+                        <td width="12%" valign="top">
+                            <button type="button" class="btn btn-dark" v-if="funding.OrderStatus === 0 && funding.PaymentStatus === 0" @click.prevent="wantPay($index)">已完成转账</button><br  v-if="funding.OrderStatus === 0 && funding.PaymentStatus === 0">
+                            <button type="button" class="btn btn-default" v-if="funding.OrderStatus === 0 && funding.PaymentStatus === 0" @click.prevent="wantCancel($index)">取消订单</button>
+                            <button type="button" class="btn btn-default" id="view-invest-process"  v-if="funding.OrderStatus === 1 && funding.PaymentStatus === 1" @click.prevent="goToProgress($index)">查看项目进度</button>
+                        </td>
+                    </tr>
+                </table>
+            </template>
+            <div class="digg my-mar-b50"></div>
+            <div class="modal modal_align fade bs-example-modal-sm" id="cancelModal" tabindex="-1" role="dialog"
+                 aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close"
+                                    data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">
+                                取消订单
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            您确定要取消改订单吗？
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default"
+                                    data-dismiss="modal">关闭
+                            </button>
+                            <button type="button" class="btn btn-primary" @click.prevent="cancelOrder()">
+                                确定
+                            </button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+
+            <div class="modal modal_align fade bs-example-modal-sm" id="updatePayModal" tabindex="-1" role="dialog"
+                 aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close"
+                                    data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">
+                                上传支付凭证
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <p><input type="file" name="uploadFile" accept="image/png,image/jpeg,image/bmp" id="payPhoto">上传支付凭证</input> <label id="picture-alert"></label></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default"
+                                    data-dismiss="modal">关闭
+                            </button>
+                            <button type="button" class="btn btn-primary" @click.prevent="finishPay()">
+                                确定
+                            </button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+        </div>
+
+        <footer>
+            <p class="my-p-footer">友情链接 - <a href="#">美仓供应链</a><br>
+                ©2015 xxxxxx众筹网络科技有限公司 zhongchou.com 版权所有 xxICP证1xxxxxxxx号</p>
+        </footer>
+    </div>
+</div>
+<script src="../js/lib/jquery.min.js"></script>
+<script src="../js/lib/bootstrap.min.js"></script>
+<script src="../js/lib/toastr.min.js"></script>
+<script src="../js/lib/jquery.loading.min.js"></script>
+<script src="/js/lib/lrz.pc.min.js"></script>
+<script src="../js/lib/my.js"></script>
+<script type='text/javascript' src='../js/lib/requirejs.min.js' data-main='../js/controller/users-ctrl' ></script>

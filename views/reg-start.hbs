@@ -1,0 +1,77 @@
+<div class="page-group">
+    <div id="page-reg-start" class="page page-current my-white-bg">
+<nav class="my-border-bottom">
+    <div class="my-wp-1200">
+        <a href="/" class="my-logo">美仓众筹</a>
+        <div class="my-top-login pull-right">
+            <a href="login">登录</a>  | <a href="reg-start">注册</a>
+        </div>
+    </div>
+</nav>
+
+
+<div class="my-wp-1200">
+    <div class="cart-title-box ui-reg-nav clearfix">
+        <ul class="ui-nav">
+            <li class="ui-nav-item ui-nav-item-current">
+                <span class="ui-nav-item-order">1</span>
+                <span class="ui-nav-item-text">账户注册</span>
+            </li>
+            <li class="ui-nav-item">
+                <span class="ui-nav-item-order">2</span>
+                <span class="ui-nav-item-text">填写基本信息</span>
+            </li>
+            <li class="ui-nav-item">
+                <span class="ui-nav-item-order">3</span>
+                <span class="ui-nav-item-text">店铺/平台验证</span>
+            </li>
+            <li class="ui-nav-item">
+                <span class="ui-nav-item-order">4</span>
+                <span class="ui-nav-item-text">注册成功</span>
+            </li>
+        </ul>
+
+    </div>
+
+    <div class="my-box">
+        <form class="ui-form ui-reg-form" name="" method="post" action="#">
+            <div class="ui-form-item p-item">
+                <label class="ui-label"><span class="ui-text-red">*</span> 手机号</label> <input type="text" class="ui-input ui-no-tborder ui-address-name ui-login-name" validate="{required:'请填写手机号',mobile:true}"  placeholder="可用于账号用户名以及激活码获取"  v-model="phone" > <label id="phone"></label>
+            </div>
+            <div class="ui-form-item p-item">
+                <label class="ui-label"><span class="ui-text-red">*</span> 微信号</label> <input name="" type="text" validate="{required:'请输入微信号'}" class="ui-input" v-model="wechat"/><label id="wechat"></label>
+            </div>
+            <div class="ui-form-item p-item">
+                <label class="ui-label"><span class="ui-text-red">*</span> 设置密码</label> <input type="password" class="ui-input ui-no-tborder ui-login-psw" validate="{required:'请输入密码'}" placeholder="可设置6~15位密码" v-model="password"><label id="password"></label>
+            </div>
+            <div class="ui-form-item p-item">
+                <label class="ui-label"><span class="ui-text-red">*</span> 重置密码</label> <input type="password" class="ui-input ui-no-tborder ui-login-psw" validate="{required:'请输入密码'}"  v-model="repassword"><label id="repassword"></label>
+            </div>
+            <div class="ui-form-item p-item ui-vertify">
+                <label class="ui-label"><span class="ui-text-red">*</span> 验证码</label> <input name="" type="text" validate="{required:'请输入验证码'}" class="ui-input" v-model="validate"/><label id="validate"></label>
+                <input type="text" readonly="readonly" v-model="checkCode" class="ui-vertify-button" style="width: 80px"/>  <a href="#" class="ui-a-vertify" @click.prevent="changeCode()">换一张</a>
+            </div>
+            <div class="ui-form-item p-item ui-active">
+                <label class="ui-label"><span class="ui-text-red">*</span> 激活码</label> <input name="" type="text" validate="{required:'请输入激活码'}" class="ui-input" v-model="captcha"/><label id="captcha"></label>
+               <!-- <a href="#" class="ui-active-button">获取激活码</a>-->
+                <a v-cloak href="#" id="sendActiveCode" class="ui-active-button" :class= "{'my-black-text':!isSendCaptcha , 'my-gray-text':isSendCaptcha}">${captchaTip}</a>
+            </div>
+            <p id="captchaMsg" class="my-gray-text" v-cloak>${captchaMsg}</p>
+            <p v-cloak class="my-text-center my-mar-t30"><button type="button" class="btn btn-long btn-dark" id="reg-start-next">下一步</button></p>
+    </form>
+    </div>
+
+
+
+</div>
+
+<footer>
+    <p class="my-p-footer">友情链接 - <a href="#">美仓供应链</a><br>
+        ©2015 xxxxxx众筹网络科技有限公司 zhongchou.com 版权所有 xxICP证1xxxxxxxx号</p>
+</footer>
+</div></div>
+<script src="/js/lib/jquery.min.js"></script>
+<script src="/js/lib/bootstrap.min.js"></script>
+<script src="/js/lib/my.js"></script>
+<script src="/js/lib/toastr.min.js"></script>
+<script type='text/javascript' src='/js/lib/requirejs.min.js' data-main='/js/controller/index-ctrl'></script>

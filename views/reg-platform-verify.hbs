@@ -1,0 +1,163 @@
+<div class="page-group">
+    <div id="page-reg-verify" class="page page-current my-white-bg">
+        <nav class="my-border-bottom">
+            <div class="my-wp-1200">
+                <a href="/" class="my-logo">美仓众筹</a>
+                <div class="my-top-login pull-right">
+                    <a href="login">登录</a>  | <a href="reg-start">注册</a>
+                </div>
+            </div>
+        </nav>
+
+
+        <div class="my-wp-1200">
+            <div class="cart-title-box ui-reg-nav my-verify-top  clearfix">
+                <ul class="ui-nav">
+                    <li class="ui-nav-item">
+                        <span class="ui-nav-item-order">1</span>
+                        <span class="ui-nav-item-text">账户注册</span>
+                    </li>
+                    <li class="ui-nav-item">
+                        <span class="ui-nav-item-order">2</span>
+                        <span class="ui-nav-item-text">填写基本信息</span>
+                    </li>
+                    <li class="ui-nav-item ui-nav-item-current">
+                        <span class="ui-nav-item-order">3</span>
+                        <span class="ui-nav-item-text">店铺/平台验证</span>
+                    </li>
+                    <li class="ui-nav-item">
+                        <span class="ui-nav-item-order">4</span>
+                        <span class="ui-nav-item-text">注册成功</span>
+                    </li>
+                </ul>
+
+            </div>
+
+            <div>
+
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs my-verify-nav" role="tablist">
+                    <li role="presentation"><a href="#shopOnline" aria-controls="shopOnline" role="tab" data-toggle="tab">网店验证</a></li>
+                    <li role="presentation"><a href="#shopOffline" aria-controls="shopOffline" role="tab" data-toggle="tab">实体店验证</a></li>
+                    <li role="presentation"><a href="#purchase" aria-controls="purchase" role="tab" data-toggle="tab">平台采购验证</a></li>
+                    <li role="presentation"><a href="#weiChat" aria-controls="weiChat" role="tab" data-toggle="tab">微商验证</a></li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content my-verify-content">
+                    <div role="tabpanel" class="tab-pane" id="shopOnline">
+                        <div class="ui-reg-platform-box">
+                            <div class="ui-platform-item">
+                                <h3>1.店铺信息</h3>
+                                <div class="ui-form-item p-item">
+                                    <label class="ui-label">店铺类型 </label> <input name="" type="text" validate="{required:'请输入店铺类型'}" class="ui-input" v-model="storeType"/>
+                                </div>
+                                <div class="ui-form-item p-item">
+                                    <label class="ui-label">店铺名称 </label> <input name="" type="text" validate="{required:'请输入店铺名称'}" class="ui-input" v-model="storeName"/>
+                                </div>
+                            </div>
+                            <div class="ui-platform-item">
+                                <h3>2.为商品添加美仓店铺验证码</h3>
+                                <p >美仓店铺验证码：<span class="ui-text-red">meicang518919</span></p>
+                                <p>示例</p>
+                                <p><img src="/images/sample-onlineshop.gif" width="604" height="330" alt=""/></p>
+                            </div>
+                            <div class="ui-platform-item">
+                                <h3>3.店铺验证</h3>
+                                <div class="ui-form-item p-item ui-shop-input">
+                                    <label class="ui-label">店铺商品链接 </label> <input name="" type="text" validate="{required:'请输入店铺商品链接'}" class="ui-input" placeholder="请复制店铺有验证码商品链接粘贴在此处" v-model="productLink"/>
+                                </div>
+
+                            </div>
+                            <div class="my-text-center">
+                                <button type="button" class="btn btn-long btn-dark" id="submit-reg-shop">提交</button>
+                                <p >如有任何疑问，<a href="#">请联系客服</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="shopOffline">
+                        <div class="ui-reg-platform-box">
+                            <div class="ui-platform-item">
+                                <h3>1.店铺信息</h3>
+                                <div class="ui-form-item p-item">
+                                    <label class="ui-label">店铺信息</label> <input name="" type="text" validate="{required:'请输入店铺信息'}" class="ui-input" id="shop-name" v-model="shopName"/>
+                                </div>
+                            </div>
+                            <div class="ui-platform-item">
+                                <h3>2.店铺资质信息</h3>
+                                <p><input type="file" name="uploadFile" accept="image/png,image/jpeg,image/bmp,image/jpg" id="licence" value="上传营业执照">上传营业执照</input> <label id="licence-alert"></label> </p>
+
+                                <p class="ui-text-999 pad-0">照片支持png,jpeg,bmp格式，大小不超过5M</p>
+                                <p>示例</p>
+                                <p><img src="/images/sample-offlineshop.gif" width="604" height="496" alt=""/></p>
+                            </div>
+
+                            <div class="my-text-center">
+                                <button type="button" class="btn btn-long btn-dark" id="submit-reg-realshop">提交</button>
+                                <p >如有任何疑问，<a href="#">请联系客服</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="purchase">
+                        <div class="ui-reg-platform-box">
+                            <div class="ui-platform-item">
+                                <h3>1.平台信息</h3>
+                                <div class="ui-form-item p-item">
+                                    <label class="ui-label">平台名称 </label> <input name="" type="text" validate="{required:'请输入企业名称'}" class="ui-input" id="platform-name" v-model="platformName"/>
+                                </div>
+                            </div>
+                            <div class="ui-platform-item">
+                                <h3>2.采购资质信息</h3>
+                                <p><input type="file" name="uploadFile" accept="image/png,image/jpeg,image/bmp" id="work-pic">上传工号牌照片</input> <label id="work-pic-alert"></label></p>
+                                <p class="ui-text-999 pad-0">备注：能证明平台采购身份的证件，如：名片，桌牌等也可以</p>
+                                <p>示例</p>
+                                <p><img src="/images/sample-purchase.gif" width="604" height="409" alt=""/></p>
+                            </div>
+
+                            <div class="my-text-center">
+                                <button type="button" class="btn btn-long btn-dark" id="submit-reg-purchase">提交</button>
+                                <p >如有任何疑问，<a href="#">请联系客服</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="weiChat">
+                        <div class="ui-reg-platform-box">
+                            <div class="ui-platform-item">
+                                <h3>1.微商信息</h3>
+                                <div class="ui-form-item p-item">
+                                    <label class="ui-label">微商号 </label> <input name="" type="text" validate="{required:'请输入微商号'}" class="ui-input" id="weiChat-id" v-model="bossWeixin"/>
+                                </div>
+                            </div>
+                            <div class="ui-platform-item">
+                                <h3>2.微商资质信息</h3>
+                                <p><input type="file" name="uploadFile" accept="image/png,image/jpeg,image/bmp" id="weixinPhoto">上传微信相册截图</input> <label id="picture-alert"></label></p>
+                                <p>示例</p>
+                                <p><img src="/images/sample-weishang.gif" width="604" height="549" alt=""/></p>
+                            </div>
+
+                            <div class="my-text-center">
+                                <button type="button" class="btn btn-long btn-dark" id="submit-reg-weiChat">提交</button>
+                                <p >如有任何疑问，<a href="#">请联系客服</a></p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <footer>
+            <p class="my-p-footer">友情链接 - <a href="#">美仓供应链</a><br>
+                ©2015 xxxxxx众筹网络科技有限公司 zhongchou.com 版权所有 xxICP证1xxxxxxxx号</p>
+        </footer>
+    </div>
+</div>
+<script src="/js/lib/jquery.min.js"></script>
+<script src="/js/lib/bootstrap.min.js"></script>
+<script src="/js/lib/my.js"></script>
+<script src="/js/lib/toastr.min.js"></script>
+<script src="/js/lib/lrz.pc.min.js"></script>
+<script src="/js/lib/jquery.loading.min.js"></script>
+<script type='text/javascript' src='/js/lib/requirejs.min.js' data-main='/js/controller/index-ctrl'></script>

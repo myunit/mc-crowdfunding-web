@@ -1,0 +1,59 @@
+<div class="page-group">
+    <div id="page-reg-platform" class="page page-current my-white-bg">
+        <nav class="my-border-bottom">
+            <div class="my-wp-1200">
+                <a href="/" class="my-logo">美仓众筹</a>
+                <div class="my-top-login pull-right">
+                    <a href="login">登录</a>  | <a href="reg-start">注册</a>
+                </div>
+            </div>
+        </nav>
+
+
+        <div class="my-wp-1200">
+            <div class="cart-title-box ui-reg-nav clearfix">
+                <ul class="ui-nav">
+                    <li class="ui-nav-item">
+                        <span class="ui-nav-item-order">1</span>
+                        <span class="ui-nav-item-text">账户注册</span>
+                    </li>
+                    <li class="ui-nav-item">
+                        <span class="ui-nav-item-order">2</span>
+                        <span class="ui-nav-item-text">填写基本信息</span>
+                    </li>
+                    <li class="ui-nav-item ui-nav-item-current">
+                        <span class="ui-nav-item-order">3</span>
+                        <span class="ui-nav-item-text">店铺/平台验证</span>
+                    </li>
+                    <li class="ui-nav-item">
+                        <span class="ui-nav-item-order">4</span>
+                        <span class="ui-nav-item-text">注册成功</span>
+                    </li>
+                </ul>
+
+            </div>
+
+            <div class="my-box">
+                <ul class="ui-list-platform">
+                    <li><a href="#" @click.prevent="goToVerify(1,1)">我有网店</a></li>
+                    <li><a href="#" @click.prevent="goToVerify(2,2)">我有实体店</a></li>
+                    <li><a href="#" @click.prevent="goToVerify(6,3)">我是平台采购</a></li>
+                    <li><a href="#" @click.prevent="goToVerify(7,4)">我是微商</a></li>
+                </ul>
+            </div>
+
+
+
+        </div>
+
+        <footer>
+            <p class="my-p-footer">友情链接 - <a href="#">美仓供应链</a><br>
+                ©2015 xxxxxx众筹网络科技有限公司 zhongchou.com 版权所有 xxICP证1xxxxxxxx号</p>
+        </footer>
+    </div>
+</div>
+<script src="/js/lib/jquery.min.js"></script>
+<script src="/js/lib/bootstrap.min.js"></script>
+<script src="/js/lib/my.js"></script>
+<script src="/js/lib/toastr.min.js"></script>
+<script type='text/javascript' src='/js/lib/requirejs.min.js' data-main='/js/controller/index-ctrl'></script>

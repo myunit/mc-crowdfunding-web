@@ -1,2 +1,88 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<div class="page-group">
+    <div id="page-index" class="page page-current my-white-bg">
+<header class="my-header-default">
+    <div class=" my-login-header">
+    	<span class="pull-left">
+         Hi,{{name}}  <a href="/">退出</a>
+        </span>
+    </div>
+</header>
+
+<nav class="my-border-bottom">
+    <div class="my-wp-1200">
+        <a href="/login-suc" class="my-logo">美仓众筹</a>
+        <ul class="nav nav-pills pull-right">
+            <li role="presentation" class="active"><a href="login-suc">首页</a></li>
+            <li role="presentation"><a href="invest/invest-list">权益众筹</a></li>
+            <li role="presentation"><a href="product/product-list">产品众筹</a></li>
+            <li role="presentation"><a href="users/my-pre-order">我的预约</a></li>
+            <li role="presentation"><a href="users/my-invest-list">我的众筹</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="my-index-top">
+    <div class="my-wp-1200"><a href="#" class="my-a-index-top">进入美仓供应 &gt;&gt; </a></div>
+</div>
+
+<div class="my-wp-1200">
+    <h2 class="my-h2">热门权益众筹 <a href="invest/invest-list">查看更多</a></h2>
+    <!--  众筹项目开始-->
+    <template v-for="equity in equityList" track-by="SysNo">
+        <div class="my-item-box clearfix" @click.prevent="goDetailEquity($index)">
+            <p class="my-item-img pull-left"><img :src="equityImg[$index].ImgValue" width="216" height="152" alt=""/></p>
+            <div class="my-item-info pull-left" v-cloak>
+                <h3>${equity.Brand.BrandName}</h3>
+                <p>${equity.Slogan}</p>
+                <p>来自：日本</p>
+            </div>
+            <div class="my-item-status pull-left" v-cloak>
+                <div class="my-item-progress my-mar-t30  clearfix"> <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" :style="{width: equity.CompletePercent+'%'};">
+                        <span class="sr-only"></span>
+                    </div>
+                </div>
+                    <span class="my-progress-num">${equity.CompletePercent}%</span>
+                </div>
+                <p class="my-p-status my-text-gray"><span>目标金额 <b>${equity.TargetAmount}</b></span>         <span>已众筹 <b>${equity.HaveCrowdFundingAmount}</b></span>          <span>投资人数 <b>${equity.CrowdFundingOrderCount}人</b></span>   <span>剩余天数 <b>${equity.RemainDay}天</b></span></p>
+            </div>
+        </div>
+    </template>
+
+    <!--  众筹项目结束-->
+
+    <h2 class="my-h2">热门产品众筹 <a href="product/product-list">查看更多</a></h2>
+    <!--  众筹项目开始-->
+    <template v-for="product in productList" track-by="SysNo">
+        <div class="my-item-box clearfix">
+            <p class="my-item-img pull-left"><img :src="productImg[$index].ImgValue" width="216" height="152" alt=""/></p>
+            <div class="my-item-info pull-left">
+                <h3>${product.Brand.BrandName}</h3>
+                <p>${product.Slogan}</p>
+                <p>来自：日本</p>
+            </div>
+            <div class="my-item-status pull-left">
+                <div class="my-item-progress my-mar-t30  clearfix"> <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" :style="{width: product.CompletePercent+'%'};">
+                        <span class="sr-only"></span>
+                    </div>
+                </div>
+                    <span class="my-progress-num">${product.CompletePercent}%</span>
+                </div>
+                <p class="my-p-status my-text-gray"><span>目标数量 <b>${product.Quantity}件</b></span>         <span>已众筹 <b>${product.HaveCrowdFundingCount}件</b></span>        <span>剩余天数 <b>${product.RemainDay}天</b></span></p>
+            </div>
+        </div>
+    </template>
+    <!--  众筹项目结束-->
+
+</div>
+
+<footer>
+    <p class="my-p-footer">友情链接 - <a href="#">美仓供应链</a><br>
+        ©2015 xxxxxx众筹网络科技有限公司 zhongchou.com 版权所有 xxICP证1xxxxxxxx号</p>
+</footer>
+</div></div>
+<script src="/js/lib/jquery.min.js"></script>
+<script src="/js/lib/bootstrap.min.js"></script>
+<script src="/js/lib/toastr.min.js"></script>
+<script type='text/javascript' src='/js/lib/requirejs.min.js' data-main='/js/controller/index-ctrl'></script>

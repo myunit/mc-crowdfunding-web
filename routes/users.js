@@ -1,7 +1,10 @@
 var express = require('express');
 var unirest = require('unirest');
 var ApiFactory = require('../common/api_config');
+var fs = require('fs');
+var Readable = require('stream').Readable;
 var router = express.Router();
+var path = require('path');
 
 var api = ApiFactory.CreateApi();
 
@@ -105,6 +108,55 @@ router.post('/cancel-order', function (req, res, next) {
           res.json({status: data.status, msg: data.msg});
         }
       });
+});
+
+router.post('/finish-order', function (req, res, next) {
+
+  //save into disk
+  if (req.body.imgData) {
+    var link = '';
+    var rs = new Readable;
+    var buf = new Buffer(req.body.imgData, 'base64');
+    rs.push(buf);
+    rs.push(null);
+    var opt = {flags: 'w', encoding: null, fd: null, mode: 0666, autoClose: true};
+    var filePath = path.join(__dirname, '../public/images/pay/');
+    if (!fs.existsSync(filePath)) {
+      fs.mkdirSync(filePath);
+    }
+
+    filePath += req.session.uid + '_' + req.body.orderId + '_' + (new Date()).getTime() + '.jpg';
+    var writeStream = fs.createWriteStream(filePath, opt);
+    rs.pipe(writeStream);
+    rs = null;
+
+    link = filePath.indexOf('/images');
+    link = filePath.substring(link);
+    link = 'http://wxp.xitie10.com:3100/' + link;
+
+    var obj = {
+      "userId": req.session.uid,
+      "orderId": parseInt(req.body.orderId)
+    };
+
+    unirest.post(api.finishPayFunding())
+        .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
+        .send(obj)
+        .end(function (response) {
+          var data = response.body.repData;
+          if (data === undefined) {
+            res.json({status: 0, msg: '服务异常'});
+            return;
+          }
+          if (data.status) {
+            res.json({status: data.status});
+          } else {
+            res.json({status: data.status, msg: data.msg});
+          }
+        });
+  } else {
+    res.json({status: 0, msg: '支付凭证未上传'});
+  }
 });
 
 module.exports = router;

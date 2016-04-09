@@ -184,22 +184,69 @@ require(['Vue', 'Utils'],
                         fundingList: [],
                         funingImg: [],
                         pageId: 1,
-                        curIndex: 0
+                        curIndex: 0,
+                        payPhoto: null
                     },
                     methods: {
                         goToDetail: goToDetail,
                         cancelOrder: cancelOrder,
-                        wantCancel: wantCancel
+                        wantCancel: wantCancel,
+                        wantPay: wantPay,
+                        finishPay: finishPay
                     }
+                });
+
+                $('#payPhoto').change(function () {
+                    var a = document.getElementById("picture-alert");
+                    if (!/\.(jpg|jpeg|png|bmp|JPG|PNG|BMP|JPEG)$/.test(this.value)) {
+                        a.innerHTML = '<label style="font-size:14px;color:red;">&nbsp;&nbsp;&nbsp;&nbsp;　　　照片格式不正确,请选择png,jpeg,bmp格式照片上传</label>';
+                        return;
+                    }
+
+                    var fsize = this.files[0].size;
+                    if (fsize > 5242880) //do something if file size more than 1 mb (1048576)
+                    {
+                        a.innerHTML = '<label style="font-size:14px;color:red;">&nbsp;&nbsp;&nbsp;&nbsp;　　　照片大小不能超过5M</label>';
+                        return;
+                    }
+
+                    lrz(this.files[0], function (results) {
+                        // 你需要的数据都在这里，可以以字符串的形式传送base64给服务端转存为图片。
+                        var base = results.base64.split(',');
+                        vm.payPhoto = base[1];
+                    });
                 });
 
                 function wantCancel (index) {
                     vm.curIndex = index;
-                    $('.bs-example-modal-sm').modal('show');
+                    $('#cancelModal').modal('show');
+                }
+
+                function wantPay (index) {
+                    vm.curIndex = index;
+                    $('#updatePayModal').modal('show');
+                }
+
+                function finishPay () {
+                    $('#updatePayModal').modal('hide');
+                    var funding = vm.fundingList[vm.curIndex];
+                    $('#opt-box-'+funding.SysNo).loading({
+                        message: '提交中中...'
+                    });
+                    ajaxPost('/users/finish-order', {orderId: funding.SysNo, imgData: vm.payPhoto}, function (err, data) {
+                        $('#opt-box-'+funding.SysNo).loading('stop');
+                        if (err) {
+                            toastr.error(err, '错误');
+                        } else {
+                            funding.StatusTip = '审核中';
+                            funding.OrderStatus = 1;
+                            funding.PaymentStatus = 0;
+                        }
+                    });
                 }
 
                 function cancelOrder () {
-                    $('.bs-example-modal-sm').modal('hide');
+                    $('#cancelModal').modal('hide');
                     var funding = vm.fundingList[vm.curIndex];
                     $('#opt-box-'+funding.SysNo).loading({
                         message: '取消中...'

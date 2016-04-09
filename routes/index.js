@@ -145,7 +145,6 @@ router.post('/register', function (req, res, next) {
 		.headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
 		.send(obj)
 		.end(function (response) {
-			console.log('body: ' + JSON.stringify(response.body));
 			var data = response.body.repData;
 			if (data === undefined) {
 				res.json({status: 0, msg: '服务异常'});

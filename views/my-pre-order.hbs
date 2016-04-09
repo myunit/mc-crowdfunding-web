@@ -43,7 +43,7 @@
     <template v-for="funding in fundingList" track-by="CrowdFundingSysNo">
         <table width="100%" class="ui-table-cart-item ui-table-clear" border="0" cellspacing="0" cellpadding="0" v-cloak>
             <tr>
-                <td width="36%"><span class="img-cart"><img :src="funingImg[$index].ImgValue" width="80" height="80"></span>
+                <td width="36%"><span class="img-cart"><img :src="fundingImg[$index].ImgValue" width="80" height="80"></span>
           <span class="title-cart title-middle">
           <h4><strong v-if="funding.CrowdFunding.CrowdFundingType === 1">品牌权益众筹</strong><strong v-if="funding.CrowdFunding.CrowdFundingType === 3">单品权益众筹</strong><strong v-if="funding.CrowdFunding.CrowdFundingType === 2">产品众筹</strong></h4>
           ${funding.CrowdFunding.Brand.BrandName}</span></td>

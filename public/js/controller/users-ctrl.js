@@ -122,7 +122,7 @@ require(['Vue', 'Utils'],
                     data: {
                         count: 0,
                         fundingList: [],
-                        funingImg: [],
+                        fundingImg: [],
                         pageId: 1
                     },
                     methods: {
@@ -147,7 +147,7 @@ require(['Vue', 'Utils'],
                         toastr.error(err, '错误');
                     } else {
                         vm.fundingList = data.funding.slice();
-                        vm.funingImg = data.img.slice();
+                        vm.fundingImg = data.img.slice();
                         vm.count = data.count;
                     }
                 });
@@ -164,7 +164,7 @@ require(['Vue', 'Utils'],
                                 toastr.error(err, '错误');
                             } else {
                                 vm.fundingList = vm.fundingList.concat(data.funding);
-                                vm.funingImg = vm.funingImg.concat(data.img);
+                                vm.fundingImg = vm.fundingImg.concat(data.img);
                                 vm.count = data.count;
                             }
                         });
@@ -354,7 +354,7 @@ require(['Vue', 'Utils'],
                                 toastr.error(err, '错误');
                             } else {
                                 vm.fundingList = vm.fundingList.concat(data.funding);
-                                vm.funingImg = vm.funingImg.concat(data.img);
+                                vm.fundingImg = vm.fundingImg.concat(data.img);
                                 vm.count = data.count;
                             }
                         });
@@ -371,7 +371,7 @@ require(['Vue', 'Utils'],
                     data: {
                         count: 0,
                         fundingList: [],
-                        funingImg: [],
+                        fundingImg: [],
                         pageId: 1,
                         curIndex: 0,
                         payPhoto: null
@@ -463,15 +463,72 @@ require(['Vue', 'Utils'],
                     location.href = '/users/my-process-view?id=' + funding.CrowdFunding.SysNo;
                 }
 
-                var foundingItem = new OrderItems('/users/get-order', 5, '[0,1,10,11]', '[2]', -1, -1, -1);
+                var foundingItem = new OrderItems('/users/get-order', 5, '[1,10,11]', '[2]', -1, -1, -1);
                 foundingItem.addItems(function (err, data) {
                     if (err) {
                         toastr.error(err, '错误');
                     } else {
                         vm.fundingList = data.funding.slice();
-                        vm.funingImg = data.img.slice();
+                        vm.fundingImg = data.img.slice();
                         vm.count = data.count;
                     }
+                });
+
+                function changeSelect() {
+                    var selectStatus = parseInt($('#selectStatus').children('option:selected').val());
+                    if (selectStatus === 1) {
+                        selectStatus = '[1]';
+                    } else if (selectStatus === 10) {
+                        selectStatus = '[10]';
+                    } else if (selectStatus === 11) {
+                        selectStatus = '[11]';
+                    } else {
+                        selectStatus = '[1,10,11]';
+                    }
+
+                    var selectOrderStatus = parseInt($('#selectOrderStatus').children('option:selected').val());
+                    var orderStatus = -1;
+                    var payStatus = -1;
+                    var returnStatus = -1;
+
+                    if (selectOrderStatus === 0) {
+                        orderStatus = 0;
+                        payStatus = 0;
+                    } else if (selectOrderStatus === 1) {
+                        orderStatus = 1;
+                        payStatus = 0;
+                    } else if (selectOrderStatus === 2) {
+                        orderStatus = 1;
+                        payStatus = 1;
+                    } else if (selectOrderStatus === 3) {
+                        orderStatus = 11;
+                        returnStatus = 0;
+                    } else if (selectOrderStatus === 4) {
+                        orderStatus = 11;
+                        returnStatus = 1;
+                    }
+
+                    foundingItem = null;
+                    foundingItem = new OrderItems('/users/get-order', 5, selectStatus, '[2]', orderStatus, payStatus, returnStatus);
+                    vm.fundingList.splice(0, vm.fundingList.length);
+                    vm.fundingImg.splice(0, vm.fundingImg.length);
+                    foundingItem.addItems(function (err, data) {
+                        if (err) {
+                            toastr.error(err, '错误');
+                        } else {
+                            vm.fundingList = data.funding.slice();
+                            vm.fundingImg = data.img.slice();
+                            vm.count = data.count;
+                        }
+                    });
+                }
+
+                $('#selectOrderStatus').change(function () {
+                    changeSelect();
+                });
+
+                $('#selectStatus').change(function () {
+                    changeSelect();
                 });
 
                 $(window).scroll(function () {
@@ -486,7 +543,7 @@ require(['Vue', 'Utils'],
                                 toastr.error(err, '错误');
                             } else {
                                 vm.fundingList = vm.fundingList.concat(data.funding);
-                                vm.funingImg = vm.funingImg.concat(data.img);
+                                vm.fundingImg = vm.fundingImg.concat(data.img);
                                 vm.count = data.count;
                             }
                         });
@@ -509,7 +566,7 @@ require(['Vue', 'Utils'],
                     data: {
                         count: 0,
                         fundingList: [],
-                        funingImg: [],
+                        fundingImg: [],
                         fundingType: 0
                     }
                 });
@@ -523,7 +580,7 @@ require(['Vue', 'Utils'],
                         toastr.error(err, '错误');
                     } else {
                         vm.fundingList = vm.fundingList.concat(data.funding);
-                        vm.funingImg = vm.funingImg.concat(data.img);
+                        vm.fundingImg = vm.fundingImg.concat(data.img);
                         vm.count = data.count;
                         vm.fundingType = data.fundingType;
                     }

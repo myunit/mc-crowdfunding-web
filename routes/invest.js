@@ -57,7 +57,6 @@ router.post('/get-all-funding', function (req, res, next) {
         "fundingStatus": JSON.parse(req.body.fundingStatus),
         "fundingType": JSON.parse(req.body.fundingType)
     };
-    console.log('obj: ' + JSON.stringify(obj));
 
     unirest.post(api.getAllFunding())
         .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})

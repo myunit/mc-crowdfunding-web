@@ -159,4 +159,30 @@ router.post('/finish-order', function (req, res, next) {
   }
 });
 
+router.post('/get-progress', function (req, res, next) {
+  var obj = {
+    "userId": req.session.uid,
+    "pageId": parseInt(req.body.pageId),
+    "pageSize": parseInt(req.body.pageSize),
+    "fundingId": JSON.parse(req.body.fundingId)
+  };
+
+  unirest.post(api.getFundingProgress())
+      .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
+      .send(obj)
+      .end(function (response) {
+        var data = response.body.repData;
+        if (data === undefined) {
+          res.json({status: 0, msg: '服务异常'});
+          return;
+        }
+        if (data.status) {
+          res.json({status: data.status, count: data.count, fundingType: data.fundingType, funding: data.funding, img: data.img});
+        } else {
+          res.json({status: data.status, msg: data.msg});
+        }
+      });
+});
+
+
 module.exports = router;

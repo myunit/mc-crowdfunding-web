@@ -192,7 +192,8 @@ require(['Vue', 'Utils'],
                         cancelOrder: cancelOrder,
                         wantCancel: wantCancel,
                         wantPay: wantPay,
-                        finishPay: finishPay
+                        finishPay: finishPay,
+                        goToProgress: goToProgress
                     }
                 });
 
@@ -268,6 +269,11 @@ require(['Vue', 'Utils'],
                     location.href = '/invest/invest-ongoing?id=' + funding.CrowdFunding.SysNo;
                 }
 
+                function goToProgress (index) {
+                    var funding = vm.fundingList[index];
+                    location.href = '/product/product-ongoing?id=' + funding.CrowdFunding.SysNo;
+                }
+
                 var foundingItem = new OrderItems('/users/get-order', 5, '[0,1,10,11]', '[1,3]', -1, -1, -1);
                 foundingItem.addItems(function (err, data) {
                     if (err) {
@@ -318,7 +324,8 @@ require(['Vue', 'Utils'],
                         cancelOrder: cancelOrder,
                         wantCancel: wantCancel,
                         wantPay: wantPay,
-                        finishPay: finishPay
+                        finishPay: finishPay,
+                        goToProgress: goToProgress
                     }
                 });
 
@@ -394,6 +401,11 @@ require(['Vue', 'Utils'],
                     location.href = '/product/product-ongoing?id=' + funding.CrowdFunding.SysNo;
                 }
 
+                function goToProgress (index) {
+                    var funding = vm.fundingList[index];
+                    location.href = '/product/product-ongoing?id=' + funding.CrowdFunding.SysNo;
+                }
+
                 var foundingItem = new OrderItems('/users/get-order', 5, '[0,1,10,11]', '[2]', -1, -1, -1);
                 foundingItem.addItems(function (err, data) {
                     if (err) {
@@ -425,5 +437,42 @@ require(['Vue', 'Utils'],
                 });
             });
             return;
+        }
+
+        if ($('#page-progress-view').length > 0) {
+            $(document).ready(function () {
+                var search = Utils.getSearch(location);
+                if (!search['id']) {
+                    location.href = '/invest/invest-list';
+                    return;
+                }
+
+                var vm = new Vue({
+                    el: '#page-progress-view',
+                    data: {
+                        count: 0,
+                        fundingList: [],
+                        funingImg: [],
+                        fundingType: 0
+                    }
+                });
+
+                ajaxPost('/users/get-progress', {
+                    fundingId: parseInt(search['id']),
+                    pageId: 0,
+                    pageSize: 200
+                }, function (err, data) {
+                    if (err) {
+                        toastr.error(err, '错误');
+                    } else {
+                        vm.fundingList = vm.fundingList.concat(data.funding);
+                        vm.funingImg = vm.funingImg.concat(data.img);
+                        vm.count = data.count;
+                        vm.fundingType = data.fundingType;
+                    }
+                });
+            });
+
+
         }
     });

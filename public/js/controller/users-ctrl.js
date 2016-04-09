@@ -77,7 +77,14 @@ require(['Vue', 'Utils'],
                 });
 
                 function goToDetail (index) {
-
+                    var funding = vm.fundingList[index];
+                    if (funding.CrowdFunding.CrowdFundingType === 1 && funding.CrowdFunding.CrowdFundingType === 3) {
+                        location.href = '/invest/invest-ongoing?id=' + funding.CrowdFunding.SysNo;
+                    } else if (funding.CrowdFunding.CrowdFundingType === 2) {
+                        location.href = '/product/product-ongoing?id=' + funding.CrowdFunding.SysNo;
+                    } else {
+                        return;
+                    }
                 }
 
                 function getReserve (pageId) {

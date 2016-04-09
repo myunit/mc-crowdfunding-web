@@ -37,6 +37,28 @@ function ajaxPost(url, data, cb) {
     });
 }
 
+function FoundingItems(url, number) {
+    var o = {};
+    o.url = url;
+    o.pageSize = number;
+    o.pageId = 0;
+    o.addItems = function (cb) {
+        var self = this;
+        ajaxPost(this.url, {
+            pageId: this.pageId,
+            pageSize: this.pageSize
+        }, function (err, data) {
+            if (err) {
+                cb(err, null);
+            } else {
+                self.pageId++;
+                cb(null, data);
+            }
+        });
+    };
+    return o;
+}
+
 
 require(['Vue', 'Utils'],
     function (Vue, Utils) {
@@ -87,21 +109,35 @@ require(['Vue', 'Utils'],
                     }
                 }
 
-                function getReserve (pageId) {
-                    ajaxPost('/users/get-reserve', {pageId: pageId, pageSize: 5}, function (err, data) {
-                        if (err) {
-                            toastr.error(err, '错误');
-                        } else {
-                            vm.fundingList.splice(0, vm.fundingList.length);
-                            vm.funingImg.splice(0, vm.funingImg.length);
-                            vm.fundingList = data.funding.slice();
-                            vm.funingImg = data.img.slice();
-                            vm.count = data.count;
-                        }
-                    });
-                }
+                var foundingItem = new FoundingItems('/users/get-reserve', 5);
+                foundingItem.addItems(function (err, data) {
+                    if (err) {
+                        toastr.error(err, '错误');
+                    } else {
+                        vm.fundingList = data.funding.slice();
+                        vm.funingImg = data.img.slice();
+                        vm.count = data.count;
+                    }
+                });
 
-                getReserve(vm.pageId - 1);
+                $(window).scroll(function () {
+                    var $this = $(this),
+                        viewH = $(this).height(),//可见高度
+                        contentH = $(this).get(0).scrollHeight,//内容高度
+                        scrollTop = $(this).scrollTop();//滚动高度
+                    //if(contentH - viewH - scrollTop <= 100) { //到达底部100px时,加载新内容
+                    if (scrollTop / (contentH - viewH) >= 0.95 && vm.fundingList < vm.count) { //到达底部100px时,加载新内容
+                        foundingItem.addItems(function (err, data) {
+                            if (err) {
+                                toastr.error(err, '错误');
+                            } else {
+                                vm.fundingList = vm.fundingList.concat(data.funding);
+                                vm.funingImg = vm.funingImg.concat(data.img);
+                                vm.count = data.count;
+                            }
+                        });
+                    }
+                });
 
             });
             return;

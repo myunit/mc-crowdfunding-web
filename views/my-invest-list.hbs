@@ -84,21 +84,49 @@
                 <td width="8%" valign="top">${funding.CrowdFunding.HaveCrowdFundingCount}份</td><td width="8%" valign="top">${funding.CrowdFunding.HaveCrowdFundingPercent}%</td>
                 <td width="12%" valign="top">${funding.TotalAmount}元</td>
                 <td width="10%" valign="top">${funding.StatusTip}</td>
-                <td width="12%" valign="top">
+                <td width="12%" valign="top" :id="'opt-box-'+funding.SysNo">
                     <button type="button" class="btn btn-dark" v-if="funding.OrderStatus === 0 && funding.PaymentStatus === 0">已完成转账</button><br  v-if="funding.OrderStatus === 0 && funding.PaymentStatus === 0">
-                    <button type="button" class="btn btn-default" v-if="funding.OrderStatus === 0 && funding.PaymentStatus === 0">取消订单</button>
+                    <button type="button" class="btn btn-default" v-if="funding.OrderStatus === 0 && funding.PaymentStatus === 0" @click.prevent="wantCancel($index)">取消订单</button>
                     <button type="button" class="btn btn-default" id="view-invest-process"  v-if="funding.OrderStatus === 1 && funding.PaymentStatus === 1">查看项目进度</button>
                 </td>
             </tr>
         </table>
     </template>
     <div class="digg my-mar-b50"></div>
+    <div class="modal modal_align fade bs-example-modal-sm" id="cancelModal" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        取消订单
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    您确定要取消改订单吗？
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"
+                            data-dismiss="modal">关闭
+                    </button>
+                    <button type="button" class="btn btn-primary" @click.prevent="cancelOrder()">
+                        确定
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
 </div>
 
 <footer>
     <p class="my-p-footer">友情链接 - <a href="#">美仓供应链</a><br>
         ©2015 xxxxxx众筹网络科技有限公司 zhongchou.com 版权所有 xxICP证1xxxxxxxx号</p>
 </footer>
+
 </div></div>
 <script src="../js/lib/jquery.min.js"></script>
 <script src="../js/lib/bootstrap.min.js"></script>

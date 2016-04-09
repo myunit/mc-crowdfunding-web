@@ -53,5 +53,8 @@ ApiService.prototype = {
 	},
 	getFundingDetail: function () {
 		return api_config.apiService.baseUrl + api_config.apiService.method.getFundingDetail;
+	},
+	cancelFundingOrder: function () {
+		return api_config.apiService.baseUrl + api_config.apiService.method.cancelFundingOrder;
 	}
 };

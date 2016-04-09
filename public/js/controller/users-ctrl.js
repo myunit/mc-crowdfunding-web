@@ -183,9 +183,43 @@ require(['Vue', 'Utils'],
                         count: 0,
                         fundingList: [],
                         funingImg: [],
-                        pageId: 1
+                        pageId: 1,
+                        curIndex: 0
+                    },
+                    methods: {
+                        goToDetail: goToDetail,
+                        cancelOrder: cancelOrder,
+                        wantCancel: wantCancel
                     }
                 });
+
+                function wantCancel (index) {
+                    vm.curIndex = index;
+                    $('.bs-example-modal-sm').modal('show');
+                }
+
+                function cancelOrder () {
+                    $('.bs-example-modal-sm').modal('hide');
+                    var funding = vm.fundingList[vm.curIndex];
+                    $('#opt-box-'+funding.SysNo).loading({
+                        message: '取消中...'
+                    });
+                    ajaxPost('/users/cancel-order', {orderId: funding.SysNo}, function (err, data) {
+                        $('#opt-box-'+funding.SysNo).loading('stop');
+                        if (err) {
+                            toastr.error(err, '错误');
+                        } else {
+                            funding.StatusTip = '已取消';
+                            funding.OrderStatus = 11;
+                            funding.ReturnStatus = 0;
+                        }
+                    });
+                }
+
+                function goToDetail (index) {
+                    var funding = vm.fundingList[index];
+                    location.href = '/invest/invest-ongoing?id=' + funding.CrowdFunding.SysNo;
+                }
 
                 var foundingItem = new OrderItems('/users/get-order', 5, '[0,1,10,11]', '[1,3]', -1, -1, -1);
                 foundingItem.addItems(function (err, data) {

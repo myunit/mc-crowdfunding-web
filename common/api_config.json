@@ -13,7 +13,8 @@
       "getFundingProgress": "Fundings/get-funding-progress",
       "getFundingReserve": "Fundings/get-funding-reserve",
       "getHotFunding": "Fundings/get-hot-funding",
-      "getFundingDetail": "Fundings/get-funding-detail"
+      "getFundingDetail": "Fundings/get-funding-detail",
+      "cancelFundingOrder":"Fundings/cancel-funding-order"
     }
   }
 }

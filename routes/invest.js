@@ -125,8 +125,9 @@ router.post('/add-funding-order', function (req, res, next) {
         "userId": req.session.uid,
         "fundingId": parseInt(req.body.fundingId),
         "quantity": parseInt(req.body.quantity),
-        "price": parseInt(req.body.quantity)/100
+        "price": parseInt(req.body.price)/100
     };
+    console.log('obj: ' + JSON.stringify(obj));
 
     unirest.post(api.addFundingOrder())
         .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})

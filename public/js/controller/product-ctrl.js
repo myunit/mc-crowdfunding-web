@@ -305,11 +305,15 @@ require(['Vue', 'Utils'],
                         return;
                     }
 
+                    $('.my-booking-box').loading({
+                        message: '提交订单...'
+                    });
                     ajaxPost('/product/add-funding-order', {
                         fundingId: parseInt(search['id']),
                         "quantity": vm.num,
                         "price": vm.amount*100
                     }, function (err, data) {
+                        $('.my-booking-box').loading('stop');
                         if (err) {
                             toastr.error(err, '错误');
                         } else {

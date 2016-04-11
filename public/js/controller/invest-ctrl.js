@@ -210,7 +210,8 @@ require(['Vue', 'Utils'],
 					data: {
 						count: 0,
 						funding: null,
-						imgList: []
+						imgList: [],
+						videoUrl: ''
 					},
 					methods: {
 						reserve: reserve,
@@ -236,15 +237,7 @@ require(['Vue', 'Utils'],
 					});
 				}
 
-				$('.popup-video').magnificPopup({
-					disableOn: 700,
-					type: 'iframe',
-					mainClass: 'mfp-fade',
-					removalDelay: 160,
-					preloader: false,
-
-					fixedContentPos: false
-				});
+				var flowPlayer = null;
 
 				ajaxPost('/invest/get-funding-detail', {fundingId: parseInt(search['id'])}, function (err, data) {
 					if (err) {
@@ -253,7 +246,32 @@ require(['Vue', 'Utils'],
 						if (data.count === 1) {
 							vm.funding = Utils.clone(data.funding);
 							vm.imgList = data.img.slice();
+							if (vm.imgList.length >= 8) {
+								var $video = $('.ui-video-content video');
+								$('source', $video).attr('src', vm.imgList[7].ImgValue.length > 0 ? vm.imgList[7].ImgValue[0]:'');
+								$video[0].load();
+							}
+
+							$('#fn-video').click(function(e){
+								e.preventDefault();
+								$('#my-carousel').hide();
+								$('.ui-video-content').show();
+								var $video = $('.ui-video-content video');
+								$video[0].play();
+							});
+
+							$('.my-thumbnail-item.swiper-img').click(function(e){
+								e.preventDefault();
+								$('#my-carousel').show();
+								$('.ui-video-content').hide();
+								var $video = $('.ui-video-content video');
+								$video[0].currentTime = 0;
+								$video[0].pause();
+							});
+
 							Vue.nextTick(function () {
+
+
 								$('#my-carousel').carousel({
 									interval: 4000
 								});

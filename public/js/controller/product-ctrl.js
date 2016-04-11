@@ -302,6 +302,7 @@ require(['Vue', 'Utils'],
                     } else {
                         if (data.count === 1) {
                             vm.funding = Utils.clone(data.funding);
+                            vm.num = vm.funding.MinBuyQuantity;
                         }
                     }
                 });

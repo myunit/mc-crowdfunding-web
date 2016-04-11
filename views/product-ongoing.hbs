@@ -50,33 +50,26 @@
                 <span class="my-item-success" v-if="funding.CrowdFundingStatus === 10"></span>
                 <span class="my-item-failed" v-if="funding.CrowdFundingStatus === 11"></span>
             </div>
+            <div class="ui-video-content">
+                <video width="1200" height="537" controls="controls">
+                    <source src="" type="video/mp4">
+                </video>
+            </div>
             <div id="my-carousel" class="carousel slide my-carousel" data-ride="carousel">
                 <!-- Indicators -->
                 <ol class="carousel-indicators">
-                    <li data-target="#my-carousel" data-slide-to="0" class="active"></li>
-                    <li data-target="#my-carousel" data-slide-to="1"></li>
-                    <li data-target="#my-carousel" data-slide-to="2"></li>
-                    <li data-target="#my-carousel" data-slide-to="3"></li>
-                    <li data-target="#my-carousel" data-slide-to="4"></li>
+                    <template v-for="img in swiperImg">
+                        <li data-target="#my-carousel" :data-slide-to="$index" :class="{'active': $index === 0}"></li>
+                    </template>
                 </ol>
 
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner" role="listbox">
-                    <div class="item active" data-slide-number="0">
-                        <img :src="imgList[2].ImgValue" alt="..." class="img-responsive">
-                    </div>
-                    <div class="item" data-slide-number="1">
-                        <img :src="imgList[3].ImgValue" alt="..." class="img-responsive">
-                    </div>
-                    <div class="item" data-slide-number="2">
-                        <img :src="imgList[4].ImgValue" alt="..." class="img-responsive">
-                    </div>
-                    <div class="item" data-slide-number="3">
-                        <img :src="imgList[5].ImgValue" alt="..." class="img-responsive">
-                    </div>
-                    <div class="item" data-slide-number="4">
-                        <img :src="imgList[6].ImgValue" alt="..." class="img-responsive">
-                    </div>
+                    <template v-for="img in swiperImg">
+                        <div class="item" :class="{'active': $index === 0}" :data-slide-number="$index">
+                            <img :src="img" alt="..." class="img-responsive">
+                        </div>
+                    </template>
                 </div>
 
                 <!-- Controls -->
@@ -92,27 +85,27 @@
             <div class="my-thumbnail-box">
                 <ul class="clearfix">
                     <li class="my-thumbnail-item">
-                        <a href="http://myuntest.oss-cn-hangzhou.aliyuncs.com/668_uie/160407175614_668.mp4" class="popup-video" ><img :src="imgList[7].ImgValue" width="185" height="130" alt=""/>
+                        <a href="#" id="fn-video"><img :src="" width="185" height="130" alt=""/>
                             <span>宣传视频</span></a>
                     </li>
-                    <li class="my-thumbnail-item">
-                        <a id="carousel-selector-0"><img :src="imgList[2].ImgValue" width="185" height="130" alt=""/>
+                    <li class="my-thumbnail-item" @click.prevent="switchSwiper(2)">
+                        <a id="carousel-selector-0"><img :src="imgList[2].ImgValue.length > 0 ? imgList[2].ImgValue[0]:''" width="185" height="130" alt=""/>
                             <span>品牌及产品介绍</span></a>
                     </li>
-                    <li class="my-thumbnail-item">
-                        <a id="carousel-selector-1"><img :src="imgList[3].ImgValue" width="185" height="130" alt=""/>
+                    <li class="my-thumbnail-item" @click.prevent="switchSwiper(3)">
+                        <a id="carousel-selector-1"><img :src="imgList[3].ImgValue.length > 0 ? imgList[3].ImgValue[0]:''" width="185" height="130" alt=""/>
                             <span>营销策划方案</span></a>
                     </li>
-                    <li class="my-thumbnail-item">
-                        <a id="carousel-selector-2"><img :src="imgList[4].ImgValue" width="185" height="130" alt=""/>
+                    <li class="my-thumbnail-item" @click.prevent="switchSwiper(4)">
+                        <a id="carousel-selector-2"><img :src="imgList[4].ImgValue.length > 0 ? imgList[4].ImgValue[0]:''" width="185" height="130" alt=""/>
                             <span>投资回报</span></a>
                     </li>
-                    <li class="my-thumbnail-item">
-                        <a id="carousel-selector-3"><img :src="imgList[5].ImgValue" width="185" height="130" alt=""/>
+                    <li class="my-thumbnail-item" @click.prevent="switchSwiper(5)">
+                        <a id="carousel-selector-3"><img :src="imgList[5].ImgValue.length > 0 ? imgList[5].ImgValue[0]:''" width="185" height="130" alt=""/>
                             <span>权利与义务</span></a>
                     </li>
-                    <li class="my-thumbnail-item">
-                        <a id="carousel-selector-4"><img :src="imgList[6].ImgValue" width="185" height="130" alt=""/>
+                    <li class="my-thumbnail-item" @click.prevent="switchSwiper(6)">
+                        <a id="carousel-selector-4"><img :src="imgList[6].ImgValue.length > 0 ? imgList[6].ImgValue[0]:''" width="185" height="130" alt=""/>
                             <span>淘汰机制</span></a>
                     </li>
                 </ul>
@@ -159,5 +152,5 @@
 <script src="../js/lib/jquery.min.js"></script>
 <script src="../js/lib/bootstrap.min.js"></script>
 <script src="../js/lib/toastr.min.js"></script>
-<script src="../js/lib/jquery.magnific-popup.min.js"></script>
+<script src="../js/lib/jquery.loading.min.js"></script>
 <script type='text/javascript' src='../js/lib/requirejs.min.js' data-main='/js/controller/product-ctrl' ></script>

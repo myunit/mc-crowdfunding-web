@@ -211,11 +211,12 @@ require(['Vue', 'Utils'],
 						count: 0,
 						funding: null,
 						imgList: [],
-						videoUrl: ''
+						swiperImg: []
 					},
 					methods: {
 						reserve: reserve,
-						goToBuy: goToBuy
+						goToBuy: goToBuy,
+						switchSwiper : switchSwiper
 					}
 				});
 
@@ -237,7 +238,15 @@ require(['Vue', 'Utils'],
 					});
 				}
 
-				var flowPlayer = null;
+				function switchSwiper (index) {
+					$('#my-carousel').show();
+					$('.ui-video-content').hide();
+					var $video = $('.ui-video-content video');
+					$video[0].currentTime = 0;
+					$video[0].pause();
+					vm.swiperImg.splice(0, vm.swiperImg.length);
+					vm.swiperImg = vm.imgList[index].ImgValue.slice();
+				}
 
 				ajaxPost('/invest/get-funding-detail', {fundingId: parseInt(search['id'])}, function (err, data) {
 					if (err) {
@@ -252,6 +261,7 @@ require(['Vue', 'Utils'],
 								$video[0].load();
 							}
 
+							vm.swiperImg = vm.imgList[2].ImgValue.slice();
 							$('#fn-video').click(function(e){
 								e.preventDefault();
 								$('#my-carousel').hide();
@@ -260,18 +270,7 @@ require(['Vue', 'Utils'],
 								$video[0].play();
 							});
 
-							$('.my-thumbnail-item.swiper-img').click(function(e){
-								e.preventDefault();
-								$('#my-carousel').show();
-								$('.ui-video-content').hide();
-								var $video = $('.ui-video-content video');
-								$video[0].currentTime = 0;
-								$video[0].pause();
-							});
-
 							Vue.nextTick(function () {
-
-
 								$('#my-carousel').carousel({
 									interval: 4000
 								});

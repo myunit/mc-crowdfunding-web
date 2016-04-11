@@ -1,6 +1,6 @@
 {
   "apiService": {
-    "baseUrl": "http://120.27.148.53:3001/api/",
+    "baseUrl": "http://120.27.148.53:3002/api/",
     "method": {
       "sendCaptcha": "Customers/send-captcha",
       "register": "Customers/register",

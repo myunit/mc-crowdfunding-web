@@ -60,6 +60,7 @@ router.post('/get-reserve', function (req, res, next) {
 router.post('/get-order', function (req, res, next) {
   var obj = {
     "userId": req.session.uid,
+    "orderId": parseInt(req.body.orderId) || -1,
     "pageId": parseInt(req.body.pageId),
     "pageSize": parseInt(req.body.pageSize),
     "fundingStatus": JSON.parse(req.body.fundingStatus),
@@ -136,7 +137,8 @@ router.post('/finish-order', function (req, res, next) {
 
     var obj = {
       "userId": req.session.uid,
-      "orderId": parseInt(req.body.orderId)
+      "orderId": parseInt(req.body.orderId),
+      "imgUrl": link
     };
 
     unirest.post(api.finishPayFunding())

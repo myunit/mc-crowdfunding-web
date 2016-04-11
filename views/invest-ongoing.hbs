@@ -30,7 +30,7 @@
                 <div class="my-item-status my-item-status-b pull-left" v-cloak>
                     <p class="my-item-preheat" v-if="funding.CrowdFundingStatus === 0">预热中</p>
                     <p class="my-item-num" v-if="funding.CrowdFundingStatus === 1">累计众筹金额：<span>￥${funding.HaveCrowdFundingAmount}</span></p>
-                    <p class="my-item-num" v-if="funding.CrowdFundingStatus === 1">累计出让比例：<span class="my-text-black">${funding.UnitPercent*funding.HaveCrowdFundingCount*100}%</span></p>
+                    <p class="my-item-num" v-if="funding.CrowdFundingStatus === 1">累计出让比例：<span class="my-text-black">${funding.HaveCrowdFundingPercent}%</span></p>
                     <div class="my-item-progress clearfix">
                         <div class="progress">
                             <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" :style="{width: funding.CompletePercent+'%'};">

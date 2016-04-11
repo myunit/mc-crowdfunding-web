@@ -232,7 +232,7 @@ footer.my-footer-home{position:fixed; bottom:40px; height:auto; background:none;
 .cart-title-box .ui-nav-item .ui-nav-item-order{ display:inline-block; height:34px; min-width:36px; background-position:20px -420px; padding-left:10px; font-weight:bold; }
 
 .cart-title-box .ui-nav-item-current {  background:#5b5a60; color:#fff;}
-.cart-title-box .ui-nav-item-current .ui-nav-item-order{ background-position:20px -297px;overflow:hidden;}
+.cart-title-box .ui-nav-item-current .ui-nav-item-order{ background-position:20px -297px;}
 
 .my-box{ border:1px solid #dfdfdf; padding:30px; margin-bottom:50px;}
 .my-booking-box{ width:501px; margin:0 auto;}

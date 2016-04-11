@@ -150,7 +150,7 @@ require(['Vue', 'Utils'],
 					foundingItem = null;
 					foundingItem = new FoundingItems('/invest/get-all-funding', 20, status, type);
 					vm.equityList.splice(0, vm.equityList.length);
-					vm.equityImg.splice(0, vm.proudctImg.length);
+					vm.equityImg.splice(0, vm.equityImg.length);
 					foundingItem.addItems(function (err, data) {
 						if (err) {
 							toastr.error(err, '错误');

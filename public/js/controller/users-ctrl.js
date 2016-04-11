@@ -243,16 +243,33 @@ require(['Vue', 'Utils'],
                     $('#updatePayModal').modal('hide');
                     var funding = vm.fundingList[vm.curIndex];
                     $('#opt-box-'+funding.SysNo).loading({
-                        message: '提交中中...'
+                        message: '提交中...'
                     });
                     ajaxPost('/users/finish-order', {orderId: funding.SysNo, imgData: vm.payPhoto}, function (err, data) {
                         $('#opt-box-'+funding.SysNo).loading('stop');
                         if (err) {
                             toastr.error(err, '错误');
                         } else {
-                            funding.StatusTip = '审核中';
-                            funding.OrderStatus = 1;
-                            funding.PaymentStatus = 0;
+                            var obj = {
+                                "orderId": funding.SysNo,
+                                "pageId": 0,
+                                "pageSize": 1,
+                                "fundingStatus": -1,
+                                "fundingType": -1,
+                                "orderStatus": -1,
+                                "payStatus": -1,
+                                "returnStatus": -1
+                            };
+                            ajaxPost('/users/get-order', obj, function (err, data) {
+                                if (err) {
+                                    toastr.error(err, '错误');
+                                } else {
+                                    if (data.count > 0) {
+                                        vm.fundingList.splice(vm.curIndex, 1, data.funding[0]);
+                                        vm.fundingImg.splice(vm.curIndex, 1, data.img[0]);
+                                    }
+                                }
+                            });
                         }
                     });
                 }
@@ -428,9 +445,26 @@ require(['Vue', 'Utils'],
                         if (err) {
                             toastr.error(err, '错误');
                         } else {
-                            funding.StatusTip = '审核中';
-                            funding.OrderStatus = 1;
-                            funding.PaymentStatus = 0;
+                            var obj = {
+                                "orderId": funding.SysNo,
+                                "pageId": 0,
+                                "pageSize": 1,
+                                "fundingStatus": -1,
+                                "fundingType": -1,
+                                "orderStatus": -1,
+                                "payStatus": -1,
+                                "returnStatus": -1
+                            };
+                            ajaxPost('/users/get-order', obj, function (err, data) {
+                                if (err) {
+                                    toastr.error(err, '错误');
+                                } else {
+                                    if (data.count > 0) {
+                                        vm.fundingList.splice(vm.curIndex, 1, data.funding[0]);
+                                        vm.fundingImg.splice(vm.curIndex, 1, data.img[0]);
+                                    }
+                                }
+                            });
                         }
                     });
                 }

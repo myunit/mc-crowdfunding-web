@@ -22,8 +22,7 @@ html, body {height: 100%; font-family:Microsoft YaHei;}
 .my-mar-b50{ margin-bottom:50px;}
 
 .my-border-bottom{ border-bottom:1px solid #cecece;}
-.my-gray-text{ color:#999 !important;}
-.my-black-text{ color:#333 !important;}
+
 
 .ui-icon,
 nav .my-logo,
@@ -54,7 +53,6 @@ footer{ height:74px; background:#525158; text-align:center;}
 .btn-primary{ background:#21b6b4; border-color:#21b6b4;}
 .btn-primary:hover{ background:#119795;border-color:#119795;}
 .btn-primary[disabled],.btn-primary[disabled]:hover{ background:#cfcfcf;border-color:#cfcfcf;}
-.btn-dark-disable{ background:#cfcfcf;border-color:#cfcfcf; color:#5b5a60;}
 .btn-dark{ background:#5b5a60;border-color:#5b5a60; color:#fff;}
 .btn-dark:hover{background:#21b6b4;border-color:#21b6b4; color:#fff; }
 .btn-long{ padding:6px 60px;}
@@ -188,7 +186,7 @@ footer.my-footer-home{position:fixed; bottom:40px; height:auto; background:none;
 .my-carousel .carousel-control.left,.my-carousel .carousel-control.right{ background:none;}
 .my-carousel .carousel-control .ui-icon{ background-color:rgba(0,0,0,0.2); width:50px; height:102px; position:absolute; top:50%;}
 .my-carousel .carousel-control.left .ui-icon-arrow-left{ left:0; background-position:-130px -50px; margin-top:-51px;}
-.my-carousel .carousel-control.right .ui-icon-arrow-right{ right:0; background-position:-266px -50px; margin-top:-51px;}
+.my-carousel .carousel-control.right .ui-icon-arrow-right{ right:0; margin-right:0;background-position:-266px -50px; margin-top:-51px;}
 
 .my-carousel .carousel-indicators li{ background:#888; border-color:#888;}
 .my-carousel .carousel-indicators .active{ background:#fff;border-color:#fff;}
@@ -234,7 +232,7 @@ footer.my-footer-home{position:fixed; bottom:40px; height:auto; background:none;
 .cart-title-box .ui-nav-item .ui-nav-item-order{ display:inline-block; height:34px; min-width:36px; background-position:20px -420px; padding-left:10px; font-weight:bold; }
 
 .cart-title-box .ui-nav-item-current {  background:#5b5a60; color:#fff;}
-.cart-title-box .ui-nav-item-current .ui-nav-item-order{ background-position:20px -297px;}
+.cart-title-box .ui-nav-item-current .ui-nav-item-order{ background-position:20px -297px;overflow:hidden;}
 
 .my-box{ border:1px solid #dfdfdf; padding:30px; margin-bottom:50px;}
 .my-booking-box{ width:501px; margin:0 auto;}
@@ -253,10 +251,10 @@ footer.my-footer-home{position:fixed; bottom:40px; height:auto; background:none;
 .my-top-login a:last-child{ padding-right:0;}
 
 .ui-reg-form{ width:492px; margin:0 auto;}
-.ui-reg-form .ui-input{ float:left; padding:6px 9px; width:284px;}
+.ui-reg-form .ui-input{ float:left; padding:6px 9px; width:308px;}
 .ui-reg-form .ui-label{ padding-right:10px; width:90px;}
 .ui-reg-form .ui-vertify .ui-input{ width:168px;}
-.ui-reg-form .ui-vertify .ui-vertify-button{ background:url(../images/demo/code-temp.gif);float:left;margin-left:10px;line-height: 18px; border: 1px solid #d1dbe4; color:#cc0000;font-weight:bold;font-style:italic;}
+.ui-reg-form .ui-vertify .ui-vertify-button{ float:left;margin-left:10px;line-height: 18px; border: 1px solid #d1dbe4; color:#333;}
 .ui-reg-form .ui-vertify .ui-a-vertify{ padding:5px 0 0 6px; float:left;}
 
 .ui-reg-form .ui-active .ui-input{ width:168px;}
@@ -404,6 +402,10 @@ DIV.digg SPAN.current {FONT-WEIGHT: bold;MARGIN: 2px 2px; COLOR: #363636; paddin
 DIV.digg A {padding: 10px 10px; border: 1px solid #f0f0f0;MARGIN: 2px 2px; COLOR: #333;TEXT-DECORATION: none; }
 DIV.digg A:hover{ background:#21b5b5;border: 1px solid #21b5b5; color:#fff; }
 DIV.digg  .next{ margin:2px 6px 2px 6px;}
+
+/*视频样式*/
+.ui-video-content{ background:#000; display:none;}
+.ui-video-content #player{ width:1200px; height:537px; display:block;}
 
 [v-cloak] {
 	display: none;

@@ -84,12 +84,17 @@ require(['Vue', 'Utils'],
 						productImg: []
 					},
 					methods: {
-						goDetailEquity: goDetailEquity
+						goDetailEquity: goDetailEquity,
+						goDetailProduct: goDetailProduct
 					}
 				});
 
 				function goDetailEquity (index) {
 					location.href = '/invest/invest-ongoing?id=' + vm.equityList[index].SysNo;
+				}
+
+				function goDetailProduct (index) {
+					location.href = '/product/product-ongoing?id=' + vm.productList[index].SysNo;
 				}
 
 				ajaxPost('/get-hot-funding-index', {'fundingType': '[2]'}, function (err, data) {

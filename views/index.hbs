@@ -32,7 +32,7 @@
         <div class="my-item-box clearfix" @click.prevent="goDetailEquity($index)">
             <p class="my-item-img pull-left"><img :src="equityImg[$index].ImgValue" width="216" height="152" alt=""/></p>
             <div class="my-item-info pull-left" v-cloak>
-                <h3>${equity.Brand.BrandName}</h3>
+                <h3>${equity.CrowdFundingName}</h3>
                 <p>${equity.Slogan}</p>
                 <p>来自：日本</p>
             </div>
@@ -54,10 +54,10 @@
     <h2 class="my-h2">热门产品众筹 <a href="product/product-list">查看更多</a></h2>
     <!--  众筹项目开始-->
     <template v-for="product in productList" track-by="SysNo">
-        <div class="my-item-box clearfix">
+        <div class="my-item-box clearfix" @click.prevent="goDetailProduct($index)">
             <p class="my-item-img pull-left"><img :src="productImg[$index].ImgValue" width="216" height="152" alt=""/></p>
             <div class="my-item-info pull-left">
-                <h3>${product.Brand.BrandName}</h3>
+                <h3>${product.CrowdFundingName}</h3>
                 <p>${product.Slogan}</p>
                 <p>来自：日本</p>
             </div>

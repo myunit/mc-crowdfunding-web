@@ -22,7 +22,7 @@ function ajaxPost(url, data, cb) {
         type: 'POST',
         url: url,
         data: data,
-        timeout: 15000,
+        timeout: 25000,
         success: function (data, status, xhr) {
             if (data.status) {
                 cb(null, data);
@@ -404,7 +404,9 @@ require(['Vue', 'Utils'],
                 });
 
                 $('#payPhoto').change(function () {
+                    vm.payPhoto = '';
                     var a = document.getElementById("picture-alert");
+                    a.innerHTML = '<label style="font-size:14px;color:red;">&nbsp;&nbsp;&nbsp;&nbsp;　　　</label>';
                     if (!/\.(jpg|jpeg|png|bmp|JPG|PNG|BMP|JPEG)$/.test(this.value)) {
                         a.innerHTML = '<label style="font-size:14px;color:red;">&nbsp;&nbsp;&nbsp;&nbsp;　　　照片格式不正确,请选择png,jpeg,bmp格式照片上传</label>';
                         return;
@@ -435,10 +437,13 @@ require(['Vue', 'Utils'],
                 }
 
                 function finishPay () {
+                    if (!vm.payPhoto) {
+                        return;
+                    }
                     $('#updatePayModal').modal('hide');
                     var funding = vm.fundingList[vm.curIndex];
                     $('#opt-box-'+funding.SysNo).loading({
-                        message: '提交中中...'
+                        message: '提交中...'
                     });
                     ajaxPost('/users/finish-order', {orderId: funding.SysNo, imgData: vm.payPhoto}, function (err, data) {
                         $('#opt-box-'+funding.SysNo).loading('stop');

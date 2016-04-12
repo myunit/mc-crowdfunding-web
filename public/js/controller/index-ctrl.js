@@ -22,7 +22,7 @@ function ajaxPost(url, data, cb) {
 		type: 'POST',
 		url: url,
 		data: data,
-		timeout: 15000,
+		timeout: 25000,
 		success: function (data, status, xhr) {
 			if (data.status) {
 				cb(null, data);
@@ -208,11 +208,16 @@ require(['Vue', 'Utils'],
 						return;
 					}
 
+					$('.home-login-box').loading({
+						message: '登录中...'
+					});
+
 					ajaxPost('/login', {
 						'phone': vm.username,
 						'password': vm.password,
 						'captcha': vm.captcha
 					}, function (err, data) {
+						$('.home-login-box').loading('stop');
 						if (err) {
 							toastr.error(err, '错误');
 						} else {

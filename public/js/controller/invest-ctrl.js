@@ -33,7 +33,7 @@ function ajaxPost(url, data, cb) {
 		type: 'POST',
 		url: url,
 		data: data,
-		timeout: 15000,
+		timeout: 25000,
 		success: function (data, status, xhr) {
 			if (data.status) {
 				cb(null, data);

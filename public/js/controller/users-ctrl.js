@@ -324,9 +324,9 @@ require(['Vue', 'Utils'],
                         payStatus = 0;
                     } else if (selectOrderStatus === 1) {
                         orderStatus = 1;
-                        payStatus = 0;
+                        payStatus = 1;
                     } else if (selectOrderStatus === 2) {
-                        orderStatus = 1;
+                        orderStatus = 2;
                         payStatus = 1;
                     } else if (selectOrderStatus === 3) {
                         orderStatus = 11;
@@ -535,9 +535,9 @@ require(['Vue', 'Utils'],
                         payStatus = 0;
                     } else if (selectOrderStatus === 1) {
                         orderStatus = 1;
-                        payStatus = 0;
+                        payStatus = 1;
                     } else if (selectOrderStatus === 2) {
-                        orderStatus = 1;
+                        orderStatus = 2;
                         payStatus = 1;
                     } else if (selectOrderStatus === 3) {
                         orderStatus = 11;

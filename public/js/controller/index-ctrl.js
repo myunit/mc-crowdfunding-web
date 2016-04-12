@@ -143,6 +143,7 @@ require(['Vue', 'Utils'],
 						return;
 					}
 					var a = document.getElementById("id-label");
+					a.innerHTML = '';
 					if (!vm.username) {
 						a.innerHTML = '<label style="font-size:14px;color:red;">11位手机号码</label>';
 						return;
@@ -152,6 +153,7 @@ require(['Vue', 'Utils'],
 						a.innerHTML = '<label style="font-size:14px;color:red;">手机号码不正确</label>';
 						return;
 					}
+
 
 					ajaxPost('/send-captcha', {'phone': vm.username, 'type': 2}, function (err, data) {
 						if (err) {

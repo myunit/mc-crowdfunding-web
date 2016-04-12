@@ -86,7 +86,7 @@
                         <td width="12%" valign="top">${funding.Quantity}件</td>
                         <td width="12%" valign="top">${funding.TotalAmount}元</td>
                         <td width="12%" valign="top">${funding.StatusTip}</td>
-                        <td width="12%" valign="top">
+                        <td width="12%" valign="top" :id="'opt-box-'+funding.SysNo">
                             <button type="button" class="btn btn-dark" v-if="funding.OrderStatus === 0 && funding.PaymentStatus === 0" @click.prevent="wantPay($index)">已完成转账</button><br  v-if="funding.OrderStatus === 0 && funding.PaymentStatus === 0">
                             <button type="button" class="btn btn-default" v-if="funding.OrderStatus === 0 && funding.PaymentStatus === 0" @click.prevent="wantCancel($index)">取消订单</button>
                             <button type="button" class="btn btn-default" id="view-invest-process"  v-if="funding.OrderStatus === 1 && funding.PaymentStatus === 1" @click.prevent="goToProgress($index)">查看项目进度</button>

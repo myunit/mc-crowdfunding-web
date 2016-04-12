@@ -93,7 +93,8 @@ require(['Vue', 'Utils'],
                     data: {
                         count: 0,
                         productList: [],
-                        productImg: []
+                        productImg: [],
+                        district: []
                     },
                     methods: {
                         goToDetail: goToDetail
@@ -103,6 +104,31 @@ require(['Vue', 'Utils'],
                 function goToDetail(index) {
                     location.href = '/product/product-ongoing?id=' + vm.productList[index].SysNo;
                 }
+
+                ajaxPost('/invest/get-district', {}, function (err, data) {
+                    if (err) {
+                        toastr.error(err, '错误');
+                    } else {
+                        vm.district = data.district.slice();
+
+                        var el = '<select class="dropdown" name="" id="selectDistrict">';
+                        el += '<option value="-1">全部</option>';
+                        for (var i = 0;i < vm.district.length; i++) {
+                            var dis = vm.district[i];
+                            el += '<option value="'+ dis.districtId +'">' + dis.districtName + '</option>';
+                        }
+                        el += '</select>';
+                        $("#brand").after(el);
+
+                        Vue.nextTick(function () {
+                            $('#selectDistrict').easyDropDown();
+                            $('#selectDistrict').change(function () {
+                                changeSelect();
+                            });
+                        });
+
+                    }
+                });
 
                 var foundingItem = new FoundingItems('/invest/get-all-funding', 20, '[0,1,10,11]' , '[2]');
                 foundingItem.addItems(function (err, data) {
@@ -115,11 +141,13 @@ require(['Vue', 'Utils'],
                     }
                 });
 
-                $('#selectSource').change(function(){
+                $('#selectStatus').change(function(){
                     changeSelect ();
                 });
 
                 function changeSelect () {
+                    var district = parseInt($('#selectDistrict').children('option:selected').val());
+
                     var status = parseInt($('#selectStatus').children('option:selected').val());
                     if (status === 0) {
                         status = '[0]';
@@ -145,10 +173,6 @@ require(['Vue', 'Utils'],
                         }
                     });
                 }
-
-                $('#selectStatus').change(function(){
-                    changeSelect ();
-                });
 
 
                 $(window).scroll(function(){

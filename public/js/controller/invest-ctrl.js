@@ -104,7 +104,8 @@ require(['Vue', 'Utils'],
 					data: {
 						count: 0,
 						equityList: [],
-						equityImg: []
+						equityImg: [],
+						district: []
 					},
 					methods: {
 						goToDetail: goToDetail
@@ -114,6 +115,31 @@ require(['Vue', 'Utils'],
 				function goToDetail(index) {
 					location.href = '/invest/invest-ongoing?id=' + vm.equityList[index].SysNo;
 				}
+
+				ajaxPost('/invest/get-district', {}, function (err, data) {
+					if (err) {
+						toastr.error(err, '错误');
+					} else {
+						vm.district = data.district.slice();
+
+						var el = '<select class="dropdown" name="" id="selectDistrict">';
+						el += '<option value="-1">全部</option>';
+						for (var i = 0;i < vm.district.length; i++) {
+							var dis = vm.district[i];
+							el += '<option value="'+ dis.districtId +'">' + dis.districtName + '</option>';
+						}
+						el += '</select>';
+						$("#brand").after(el);
+
+						Vue.nextTick(function () {
+							$('#selectDistrict').easyDropDown();
+							$('#selectDistrict').change(function () {
+								changeSelect();
+							});
+						});
+
+					}
+				});
 
 				var foundingItem = new FoundingItems('/invest/get-all-funding', 20, '[0,1,10,11]', '[1,3]');
 				foundingItem.addItems(function (err, data) {
@@ -127,6 +153,8 @@ require(['Vue', 'Utils'],
 				});
 
 				function changeSelect() {
+					var district = parseInt($('#selectDistrict').children('option:selected').val());
+
 					var status = parseInt($('#selectStatus').children('option:selected').val());
 					if (status === 0) {
 						status = '[0]';
@@ -161,10 +189,6 @@ require(['Vue', 'Utils'],
 						}
 					});
 				}
-
-				$('#selectSource').change(function () {
-					changeSelect();
-				});
 
 				$('#selectType').change(function () {
 					changeSelect();

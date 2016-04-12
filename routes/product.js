@@ -146,4 +146,23 @@ router.post('/add-funding-order', function (req, res, next) {
         });
 });
 
+router.post('/get-district', function (req, res, next) {
+    var obj = {};
+    unirest.post(api.getDistrict())
+        .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
+        .send(obj)
+        .end(function (response) {
+            var data = response.body.repData;
+            if (data === undefined) {
+                res.json({status: 0, msg: '服务异常'});
+                return;
+            }
+            if (data.status) {
+                res.json({status: data.status, count: data.count, district: data.district});
+            } else {
+                res.json({status: data.status, msg: data.msg});
+            }
+        });
+});
+
 module.exports = router;

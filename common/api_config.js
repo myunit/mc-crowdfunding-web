@@ -56,5 +56,8 @@ ApiService.prototype = {
 	},
 	cancelFundingOrder: function () {
 		return api_config.apiService.baseUrl + api_config.apiService.method.cancelFundingOrder;
+	},
+	getDistrict: function () {
+		return api_config.apiService.baseUrl + api_config.apiService.method.getDistrict;
 	}
 };

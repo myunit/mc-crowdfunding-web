@@ -14,7 +14,8 @@
       "getFundingReserve": "Fundings/get-funding-reserve",
       "getHotFunding": "Fundings/get-hot-funding",
       "getFundingDetail": "Fundings/get-funding-detail",
-      "cancelFundingOrder":"Fundings/cancel-funding-order"
+      "cancelFundingOrder":"Fundings/cancel-funding-order",
+      "getDistrict": "Fundings/get-district"
     }
   }
 }

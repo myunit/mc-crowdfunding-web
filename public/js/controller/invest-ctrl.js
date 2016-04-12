@@ -48,18 +48,20 @@ function ajaxPost(url, data, cb) {
 	});
 }
 
-function FoundingItems(url, number, status, type) {
+function FoundingItems(url, number, district, status, type) {
 	var o = {};
 	o.url = url;
 	o.status = status;
 	o.type = type;
+	o.district = district;
 	o.pageSize = number;
 	o.pageId = 0;
 	o.addItems = function (cb) {
 		var self = this;
 		ajaxPost(this.url, {
-			fundingStatus: o.status,
-			fundingType: o.type,
+			fundingStatus: this.status,
+			fundingType: this.type,
+			districtId: this.district,
 			pageId: this.pageId,
 			pageSize: this.pageSize
 		}, function (err, data) {
@@ -141,7 +143,7 @@ require(['Vue', 'Utils'],
 					}
 				});
 
-				var foundingItem = new FoundingItems('/invest/get-all-funding', 20, '[0,1,10,11]', '[1,3]');
+				var foundingItem = new FoundingItems('/invest/get-all-funding', 20, -1, '[0,1,10,11]', '[1,3]');
 				foundingItem.addItems(function (err, data) {
 					if (err) {
 						toastr.error(err, '错误');
@@ -176,7 +178,7 @@ require(['Vue', 'Utils'],
 					}
 
 					foundingItem = null;
-					foundingItem = new FoundingItems('/invest/get-all-funding', 20, status, type);
+					foundingItem = new FoundingItems('/invest/get-all-funding', 20, district, status, type);
 					vm.equityList.splice(0, vm.equityList.length);
 					vm.equityImg.splice(0, vm.equityImg.length);
 					foundingItem.addItems(function (err, data) {
@@ -189,6 +191,10 @@ require(['Vue', 'Utils'],
 						}
 					});
 				}
+
+				$('#selectDistrict').change(function () {
+					changeSelect();
+				});
 
 				$('#selectType').change(function () {
 					changeSelect();

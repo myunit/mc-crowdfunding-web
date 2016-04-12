@@ -37,18 +37,20 @@ function ajaxPost(url, data, cb) {
     });
 }
 
-function FoundingItems(url, number, status, type) {
+function FoundingItems(url, number, district, status, type) {
     var o = {};
     o.url = url;
     o.status = status;
     o.type = type;
+    o.district = district;
     o.pageSize = number;
     o.pageId = 0;
     o.addItems = function (cb) {
         var self = this;
         ajaxPost(this.url, {
-            fundingStatus: o.status,
-            fundingType: o.type,
+            fundingStatus: this.status,
+            fundingType: this.type,
+            districtId: this.district,
             pageId: this.pageId,
             pageSize: this.pageSize
         }, function (err, data) {
@@ -105,7 +107,7 @@ require(['Vue', 'Utils'],
                     location.href = '/product/product-ongoing?id=' + vm.productList[index].SysNo;
                 }
 
-                ajaxPost('/invest/get-district', {}, function (err, data) {
+                ajaxPost('/product/get-district', {}, function (err, data) {
                     if (err) {
                         toastr.error(err, '错误');
                     } else {
@@ -130,7 +132,7 @@ require(['Vue', 'Utils'],
                     }
                 });
 
-                var foundingItem = new FoundingItems('/invest/get-all-funding', 20, '[0,1,10,11]' , '[2]');
+                var foundingItem = new FoundingItems('/invest/get-all-funding', 20, -1, '[0,1,10,11]' , '[2]');
                 foundingItem.addItems(function (err, data) {
                     if (err) {
                         toastr.error(err, '错误');
@@ -139,6 +141,10 @@ require(['Vue', 'Utils'],
                         vm.productImg = data.img.slice();
                         vm.count = data.count;
                     }
+                });
+
+                $('#selectDistrict').change(function () {
+                    changeSelect();
                 });
 
                 $('#selectStatus').change(function(){
@@ -160,7 +166,7 @@ require(['Vue', 'Utils'],
                     }
 
                     foundingItem = null;
-                    foundingItem = new FoundingItems('/invest/get-all-funding', 20, status, '[2]');
+                    foundingItem = new FoundingItems('/invest/get-all-funding', 20, district, status, '[2]');
                     vm.productList.splice(0, vm.productList.length);
                     vm.productImg.splice(0, vm.productImg.length);
                     foundingItem.addItems(function (err, data) {

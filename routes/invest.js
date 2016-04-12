@@ -55,7 +55,8 @@ router.post('/get-all-funding', function (req, res, next) {
         "pageId": parseInt(req.body.pageId),
         "pageSize": parseInt(req.body.pageSize),
         "fundingStatus": JSON.parse(req.body.fundingStatus),
-        "fundingType": JSON.parse(req.body.fundingType)
+        "fundingType": JSON.parse(req.body.fundingType),
+        "districtId": parseInt(req.body.districtId)
     };
 
     unirest.post(api.getAllFunding())

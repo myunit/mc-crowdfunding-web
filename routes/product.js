@@ -26,7 +26,7 @@ router.get('/product-booking-pay', function(req, res, next) {
 });
 
 router.get('/product-booking-pay-confirm', function(req, res, next) {
-    res.render('product-booking-pay-confirm',{title:"美仓众筹", name: req.session.name});
+    res.render('product-booking-pay-confirm',{title:"美仓众筹", name: req.session.name, amount: req.query.amount});
 });
 
 router.get('/product-failed', function(req, res, next) {

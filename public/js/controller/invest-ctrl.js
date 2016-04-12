@@ -272,6 +272,13 @@ require(['Vue', 'Utils'],
 					vm.swiperImg = vm.imgList[index].ImgValue.slice();
 				}
 
+				function draw(video, thecanvas) {
+					// get the canvas context for drawing
+					var context = thecanvas.getContext('2d');
+					// draw the video contents into the canvas x, y, width, height
+					context.drawImage(video, 0, 0, thecanvas.width, thecanvas.height);
+				}
+
 				ajaxPost('/invest/get-funding-detail', {fundingId: parseInt(search['id'])}, function (err, data) {
 					if (err) {
 						toastr.error(err, '错误');
@@ -282,7 +289,12 @@ require(['Vue', 'Utils'],
 							if (vm.imgList.length >= 8) {
 								var $video = $('.ui-video-content video');
 								$('source', $video).attr('src', vm.imgList[7].ImgValue.length > 0 ? vm.imgList[7].ImgValue[0]:'');
+								var $videoCanvas = $('#videoCanvas');
+								$video[0].onloadeddata=function () {
+									draw($video[0], $videoCanvas[0]);
+								};
 								$video[0].load();
+								$video[0].currentTime = 0;
 							}
 
 							vm.swiperImg = vm.imgList[2].ImgValue.slice();

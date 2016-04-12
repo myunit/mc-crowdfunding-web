@@ -51,7 +51,7 @@
                 <span class="my-item-failed" v-if="funding.CrowdFundingStatus === 11"></span>
             </div>
             <div class="ui-video-content">
-                <video width="1200" height="537" controls="controls">
+                <video width="1200" height="537" controls preload>
                     <source src="" type="video/mp4">
                 </video>
             </div>
@@ -85,7 +85,8 @@
             <div class="my-thumbnail-box">
                 <ul class="clearfix">
                     <li class="my-thumbnail-item">
-                        <a href="#" id="fn-video"><img :src="" width="185" height="130" alt=""/>
+                        <a href="#" id="fn-video">
+                            <canvas id="videoCanvas" width="185" height="130"></canvas>
                             <span>宣传视频</span></a>
                     </li>
                     <li class="my-thumbnail-item" @click.prevent="switchSwiper(2)">

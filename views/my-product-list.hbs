@@ -71,7 +71,7 @@
                         <td width="28%" @click.prevent="goToDetail($index)"><span class="img-cart"><a href="#"><img :src="fundingImg[$index].ImgValue" width="80" height="80"></a></span>
           <span class="title-cart title-middle">
 
-          <a href="#">${funding.CrowdFunding.Brand.BrandName}</a></span></td>
+          <a href="#">${funding.CrowdFunding.CrowdFundingName}</a></span></td>
                         <td width="12%" valign="top"><span class=" my-text-red" v-if="funding.CrowdFunding.CrowdFundingStatus === 1">进行中</span><span class=" my-text-black" v-if="funding.CrowdFunding.CrowdFundingStatus === 10">已成功</span><span class=" my-text-black" v-if="funding.CrowdFunding.CrowdFundingStatus === 11">已失败</span></td>
                         <td width="12%" valign="top">
                             <p>目标：${funding.CrowdFunding.Quantity}件</p>

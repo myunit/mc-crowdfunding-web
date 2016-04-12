@@ -46,7 +46,7 @@
                 <td width="36%"><span class="img-cart"><img :src="fundingImg[$index].ImgValue" width="80" height="80"></span>
           <span class="title-cart title-middle">
           <h4><strong v-if="funding.CrowdFunding.CrowdFundingType === 1">品牌权益众筹</strong><strong v-if="funding.CrowdFunding.CrowdFundingType === 3">单品权益众筹</strong><strong v-if="funding.CrowdFunding.CrowdFundingType === 2">产品众筹</strong></h4>
-          ${funding.CrowdFunding.Brand.BrandName}</span></td>
+          ${funding.CrowdFunding.CrowdFundingName}</span></td>
                 <td width="12%"><span class=" my-text-red" v-if="funding.CrowdFunding.CrowdFundingStatus === 1">进行中</span><span class=" my-text-blue" v-if="funding.CrowdFunding.CrowdFundingStatus === 0">预热中</span><span class=" my-text-gray" v-if="funding.CrowdFunding.CrowdFundingStatus === 10 || funding.CrowdFunding.CrowdFundingStatus === 11">已结束</span></td>
                 <td width="20%">${funding.CrowdFunding.StartDate.substring(0, 16)}</td>
                 <td width="20%">${funding.CrowdFunding.EndDate.substring(0, 16)}</td>

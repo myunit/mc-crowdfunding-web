@@ -250,9 +250,9 @@ require(['Vue', 'Utils'],
                         if (data.count === 1) {
                             vm.funding = Utils.clone(data.funding);
                             vm.imgList = data.img.slice();
-                            if (vm.imgList.length >= 8) {
+                            if (vm.imgList.length >= 6) {
                                 var $video = $('.ui-video-content video');
-                                $('source', $video).attr('src', vm.imgList[7].ImgValue.length > 0 ? vm.imgList[7].ImgValue[0]:'');
+                                $('source', $video).attr('src', vm.imgList[5].ImgValue.length > 0 ? vm.imgList[5].ImgValue[0]:'');
                                 $video[0].load();
                             }
 

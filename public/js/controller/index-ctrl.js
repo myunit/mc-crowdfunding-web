@@ -399,6 +399,48 @@ require(['Vue', 'Utils'],
 				vm.selectedP = Utils.clone(vm.province[0]);
 				vm.selectedC = Utils.clone(vm.city[0]);
 				vm.selectedD = Utils.clone(vm.district[0]);
+				var i = 0;
+				var el = '<select class="dropdown" name="" id="selectedP"  size=1>';
+				for (i = 0;i < vm.province.length; i++) {
+					var p = vm.province[i];
+					el += '<option value="'+ p.id +'">' + p.name + '</option>';
+				}
+				el += '</select>';
+				$("#userArea").after(el);
+
+				el = '<select class="dropdown" name="" id="selectedC" size=1>';
+				for (i = 0;i < vm.city.length; i++) {
+					var c = vm.city[i];
+					el += '<option value="'+ c.id +'">' + c.name + '</option>';
+				}
+				el += '</select>';
+				$("#selectedP").after(el);
+
+				el = '<select class="dropdown" name="" id="selectedD"  size=1>';
+				for (i = 0;i < vm.district.length; i++) {
+					var d = vm.district[i];
+					el += '<option value="'+ d.id +'">' + d.name + '</option>';
+				}
+				el += '</select>';
+				$("#selectedC").after(el);
+
+				Vue.nextTick(function () {
+					$('#selectedP').easyDropDown({cutOff: 5});
+					$('#selectedC').easyDropDown({cutOff: 5});
+					$('#selectedD').easyDropDown({cutOff: 5});
+				});
+
+				$('#selectedP').change(function () {
+					changeSelect();
+				});
+
+				$('#selectedC').change(function () {
+					changeSelect();
+				});
+
+				$('#selectedD').change(function () {
+					changeSelect();
+				});
 
 				vm.$watch('selectedP', function (newVal, oldVal) {
 					vm.city = Utils.getCity(newVal.id).slice();

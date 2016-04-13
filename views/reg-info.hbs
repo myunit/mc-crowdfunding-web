@@ -48,22 +48,7 @@
                 <label class="ui-label">QQ</label> <input type="text" class="ui-input ui-no-tborder ui-login-psw" validate="{required:'请填写你的QQ',number:true}" placeholder="请填写你的QQ"  v-model="qq"><label id="qq"></label>
             </div>
             <div class="ui-form-item p-item">
-                <label class="ui-label"><span class="ui-text-red">*</span> 所在地区</label>
-                <select class="dropdown" name="" size="1" v-model="selectedP">
-                    <template v-for="item in province" track-by="id">
-                        <option :value="{id: item.id, name: item.name}">${item.name}</option>
-                    </template>
-                </select>
-                <select class="dropdown" name="" size="1" v-model="selectedC">
-                    <template v-for="item in city" track-by="id">
-                        <option :value="{id: item.id, name: item.name}">${item.name}</option>
-                    </template>
-                </select>
-                <select class="dropdown" name="" size="1" v-model="selectedD">
-                    <template v-for="item in district" track-by="id">
-                        <option :value="{id: item.id, name: item.name}">${item.name}</option>
-                    </template>
-                </select>
+                <label class="ui-label" id="userArea"><span class="ui-text-red">*</span> 所在地区</label>
             </div>
             <div class="ui-form-item p-item">
                 <label class="ui-label"><span class="ui-text-red">*</span> 详细地址</label> <input type="text" class="ui-input ui-no-tborder ui-address-name ui-login-name" validate="{required:'请填写详细地址'}"  placeholder="请填写详细地址" v-model="address"><label id="address"></label>

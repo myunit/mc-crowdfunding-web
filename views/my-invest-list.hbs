@@ -71,7 +71,7 @@
             <tr>
                 <td width="28%" @click.prevent="goToDetail($index)"><span class="img-cart"><img :src="fundingImg[$index].ImgValue" width="80" height="80"></span>
           <span class="title-cart title-middle">${funding.CrowdFunding.CrowdFundingName}</span></td>
-                <td width="10%" valign="top"><span class=" my-text-red" v-if="funding.CrowdFunding.CrowdFundingStatus === 1">进行中</span><span class=" my-text-black" v-if="funding.CrowdFunding.CrowdFundingStatus === 10">已成功</span><span class=" my-text-black" v-if="funding.CrowdFunding.CrowdFundingStatus === 11">已失败</span></td>
+                <td width="10%" valign="top"><span class=" my-text-red" v-if="funding.CrowdFunding.AcitveStatus === 1">进行中</span><span class=" my-text-black" v-if="funding.CrowdFunding.CrowdFundingStatus === 10">已成功</span><span class=" my-text-black" v-if="funding.CrowdFunding.CrowdFundingStatus === 11">已失败</span></td>
                 <td width="12%" valign="top">
                     <p>目标：${funding.CrowdFunding.TargetAmount}元</p>
                     <p>${funding.CrowdFunding.CompletePercent}%</p>
@@ -82,13 +82,13 @@
                         </div>
                     </div>
                 </td>
-                <td width="8%" valign="top">${funding.CrowdFunding.HaveCrowdFundingCount}份</td><td width="8%" valign="top">${funding.CrowdFunding.HaveCrowdFundingPercent}%</td>
+                <td width="8%" valign="top">${funding.Quantity}份</td><td width="8%" valign="top">${funding.BuyPercent}%</td>
                 <td width="12%" valign="top">${funding.TotalAmount}元</td>
                 <td width="10%" valign="top">${funding.StatusTip}</td>
                 <td width="12%" valign="top" :id="'opt-box-'+funding.SysNo">
                     <button type="button" class="btn btn-dark" v-if="funding.OrderStatus === 0 && funding.PaymentStatus === 0" @click.prevent="wantPay($index)">已完成转账</button><br  v-if="funding.OrderStatus === 0 && funding.PaymentStatus === 0">
                     <button type="button" class="btn btn-default" v-if="funding.OrderStatus === 0 && funding.PaymentStatus === 0" @click.prevent="wantCancel($index)">取消订单</button>
-                    <button type="button" class="btn btn-default" id="view-invest-process"  v-if="funding.OrderStatus === 2 && funding.PaymentStatus === 1 && funding.CrowdFunding.CrowdFundingStatus === 10" @click.prevent="goToProgress($index)">查看项目进度</button>
+                    <button type="button" class="btn btn-default" id="view-invest-process"  v-if="funding.OrderStatus === 2 && funding.PaymentStatus === 1 && funding.CrowdFunding.AcitveStatus === 10 && funding.CrowdFunding.CrowdFundingStatus === 10" @click.prevent="goToProgress($index)">查看项目进度</button>
                 </td>
             </tr>
         </table>

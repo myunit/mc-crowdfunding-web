@@ -72,9 +72,9 @@
           <span class="title-cart title-middle">
 
           <a href="#">${funding.CrowdFunding.CrowdFundingName}</a></span></td>
-                        <td width="12%" valign="top"><span class=" my-text-red" v-if="funding.CrowdFunding.CrowdFundingStatus === 1">进行中</span><span class=" my-text-black" v-if="funding.CrowdFunding.CrowdFundingStatus === 10">已成功</span><span class=" my-text-black" v-if="funding.CrowdFunding.CrowdFundingStatus === 11">已失败</span></td>
+                        <td width="12%" valign="top"><span class=" my-text-red" v-if="funding.CrowdFunding.AcitveStatus === 1">进行中</span><span class=" my-text-black" v-if="funding.CrowdFunding.CrowdFundingStatus === 10">已成功</span><span class=" my-text-black" v-if="funding.CrowdFunding.CrowdFundingStatus === 11">已失败</span></td>
                         <td width="12%" valign="top">
-                            <p>目标：${funding.CrowdFunding.Quantity}件</p>
+                            <p>目标：${funding.Quantity}件</p>
                             <p>${funding.CrowdFunding.CompletePercent}%</p>
                             <div class="progress">
 
@@ -89,7 +89,7 @@
                         <td width="12%" valign="top" :id="'opt-box-'+funding.SysNo">
                             <button type="button" class="btn btn-dark" v-if="funding.OrderStatus === 0 && funding.PaymentStatus === 0" @click.prevent="wantPay($index)">已完成转账</button><br  v-if="funding.OrderStatus === 0 && funding.PaymentStatus === 0">
                             <button type="button" class="btn btn-default" v-if="funding.OrderStatus === 0 && funding.PaymentStatus === 0" @click.prevent="wantCancel($index)">取消订单</button>
-                            <button type="button" class="btn btn-default" id="view-invest-process"  v-if="funding.OrderStatus === 2 && funding.PaymentStatus === 1 && funding.CrowdFunding.CrowdFundingStatus === 10" @click.prevent="goToProgress($index)">查看项目进度</button>
+                            <button type="button" class="btn btn-default" id="view-invest-process"  v-if="funding.OrderStatus === 2 && funding.PaymentStatus === 1 && funding.CrowdFunding.AcitveStatus === 10  && funding.CrowdFunding.CrowdFundingStatus === 10" @click.prevent="goToProgress($index)">查看项目进度</button>
                         </td>
                     </tr>
                 </table>

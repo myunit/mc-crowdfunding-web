@@ -28,8 +28,8 @@
             <div class="my-item-box my-produtc-box clearfix">
                 <p class="my-item-img pull-left"><img :src="imgList[1].ImgValue" width="490" height="330" alt=""/></p>
                 <div class="my-item-status pull-left" v-cloak>
-                    <p class="my-item-preheat" v-if="funding.CrowdFundingStatus === 0">预热中</p>
-                    <p class="my-item-num" v-if="funding.CrowdFundingStatus === 1 || funding.CrowdFundingStatus === 10 || funding.CrowdFundingStatus === 11">累计众筹数量：<span>${funding.HaveCrowdFundingCount}件</span></p>
+                    <p class="my-item-preheat" v-if="funding.AcitveStatus === 0">预热中</p>
+                    <p class="my-item-num" v-if="funding.AcitveStatus === 1 || funding.AcitveStatus === 10">累计众筹数量：<span>${funding.HaveCrowdFundingCount}件</span></p>
                     <div class="my-item-progress clearfix">
                         <div class="progress">
                             <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" :style="{width: funding.CompletePercent+'%'};">
@@ -43,12 +43,12 @@
                         <span><b class="my-text-red">${funding.UnitPrice}元</b><br />单价</span>
                     </p>
                     <p class="my-p-time">众筹时间:${funding.StartDate.substring(0, 16)} 到 ${funding.EndDate.substring(0, 16)}</p>
-                    <button type="button" class="btn btn-lg btn-primary" id="join-product" @click.prevent="goToBuy()" v-if="funding.CrowdFundingStatus === 1">我要支持</button>
-                    <button type="button" class="btn btn-lg btn-primary" @click.prevent="reserve()" v-if="funding.CrowdFundingStatus === 0">我要预约</button>
-                    <button type="button" disabled class="btn btn-lg btn-primary" v-if="funding.CrowdFundingStatus === 10 || funding.CrowdFundingStatus === 11">已结束</button>
+                    <button type="button" class="btn btn-lg btn-primary" id="join-product" @click.prevent="goToBuy()" v-if="funding.AcitveStatus === 1">我要支持</button>
+                    <button type="button" class="btn btn-lg btn-primary" @click.prevent="reserve()" v-if="funding.AcitveStatus === 0">我要预约</button>
+                    <button type="button" disabled class="btn btn-lg btn-primary" v-if="funding.AcitveStatus === 10">已结束</button>
                 </div>
-                <span class="my-item-success" v-if="funding.CrowdFundingStatus === 10"></span>
-                <span class="my-item-failed" v-if="funding.CrowdFundingStatus === 11"></span>
+                <span class="my-item-success" v-if="funding.AcitveStatus === 10 && funding.CrowdFundingStatus === 10"></span>
+                <span class="my-item-failed" v-if="funding.AcitveStatus === 10 && funding.CrowdFundingStatus === 11"></span>
             </div>
             <div class="ui-video-content">
                 <video width="1200" height="537" controls preload>

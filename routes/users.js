@@ -65,6 +65,7 @@ router.post('/get-order', function (req, res, next) {
     "pageSize": parseInt(req.body.pageSize),
     "fundingStatus": JSON.parse(req.body.fundingStatus),
     "fundingType": JSON.parse(req.body.fundingType),
+    "fundingActive": parseInt(req.body.fundingActive),
     "orderStatus": parseInt(req.body.orderStatus),
     "payStatus": parseInt(req.body.payStatus),
     "returnStatus": parseInt(req.body.returnStatus)

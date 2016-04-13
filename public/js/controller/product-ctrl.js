@@ -17,6 +17,17 @@ require.config({
     }
 });
 
+function toDecimal2(x) {
+    var f = parseFloat(x);
+
+    if (isNaN(f)) {
+        return;
+    }
+
+    f = Math.round(x*100)/100;
+    return f;
+}
+
 function ajaxPost(url, data, cb) {
     $.ajax({
         type: 'POST',
@@ -37,11 +48,12 @@ function ajaxPost(url, data, cb) {
     });
 }
 
-function FoundingItems(url, number, district, status, type) {
+function FoundingItems(url, number, district, status, type, active) {
     var o = {};
     o.url = url;
     o.status = status;
     o.type = type;
+    o.active = active;
     o.district = district;
     o.pageSize = number;
     o.pageId = 0;
@@ -50,6 +62,7 @@ function FoundingItems(url, number, district, status, type) {
         ajaxPost(this.url, {
             fundingStatus: this.status,
             fundingType: this.type,
+            fundingActive: this.active,
             districtId: this.district,
             pageId: this.pageId,
             pageSize: this.pageSize
@@ -132,7 +145,7 @@ require(['Vue', 'Utils'],
                     }
                 });
 
-                var foundingItem = new FoundingItems('/invest/get-all-funding', 20, -1, '[0,1,10,11]' , '[2]');
+                var foundingItem = new FoundingItems('/invest/get-all-funding', 20, -1, '[0,10,11]', '[2]', '[0,1,10]');
                 foundingItem.addItems(function (err, data) {
                     if (err) {
                         toastr.error(err, '错误');
@@ -154,19 +167,19 @@ require(['Vue', 'Utils'],
                 function changeSelect () {
                     var district = parseInt($('#selectDistrict').children('option:selected').val());
 
-                    var status = parseInt($('#selectStatus').children('option:selected').val());
-                    if (status === 0) {
-                        status = '[0]';
-                    } else if (status === 1) {
-                        status = '[1]';
-                    } else if (status === 2) {
-                        status = '[10,11]';
+                    var active = parseInt($('#selectStatus').children('option:selected').val());
+                    if (active === 0) {
+                        active = '[0]';
+                    } else if (active === 1) {
+                        active = '[1]';
+                    } else if (active === 2) {
+                        active = '[10]';
                     } else {
-                        status = '[0,1,10,11]';
+                        active = '[0,1,10]';
                     }
 
                     foundingItem = null;
-                    foundingItem = new FoundingItems('/invest/get-all-funding', 20, district, status, '[2]');
+                    foundingItem = new FoundingItems('/invest/get-all-funding', 20, district, '[0,10,11]', '[2]', active);
                     vm.productList.splice(0, vm.productList.length);
                     vm.productImg.splice(0, vm.productImg.length);
                     foundingItem.addItems(function (err, data) {
@@ -304,6 +317,11 @@ require(['Vue', 'Utils'],
                                     $('[id=carousel-selector-'+id+']').addClass('selected');
                                 });
                             });
+                        } else {
+                            toastr.warning('该众筹已下架', '警告');
+                            setTimeout(function () {
+                                location.href = '/product/product-list';
+                            }, 2500);
                         }
                     }
                 });
@@ -330,7 +348,7 @@ require(['Vue', 'Utils'],
                     },
                     computed: {
                         amount: function () {
-                            return this.num * this.funding.UnitPrice;
+                            return toDecimal2(this.num * this.funding.UnitPrice);
                         }
                     },
                     methods: {

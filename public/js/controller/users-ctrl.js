@@ -59,11 +59,12 @@ function ReserveItems(url, number) {
     return o;
 }
 
-function OrderItems(url, number, fundingStatus, fundingType, orderStatus, payStatus, returnStatus) {
+function OrderItems(url, number, fundingStatus, fundingType, fundingActive, orderStatus, payStatus, returnStatus) {
     var o = {};
     o.url = url;
     o.fundingStatus = fundingStatus;
     o.fundingType = fundingType;
+    o.fundingActive = fundingActive;
     o.orderStatus = orderStatus;
     o.payStatus = payStatus;
     o.returnStatus = returnStatus;
@@ -77,6 +78,7 @@ function OrderItems(url, number, fundingStatus, fundingType, orderStatus, paySta
             payStatus: o.payStatus,
             returnStatus: o.returnStatus,
             fundingType: o.fundingType,
+            fundingActive: o.fundingActive,
             pageId: this.pageId,
             pageSize: this.pageSize
         }, function (err, data) {
@@ -197,7 +199,7 @@ require(['Vue', 'Utils'],
                     }
                 });
 
-                var foundingItem = new OrderItems('/users/get-order', 5, '[1,10,11]', '[1,3]', -1, -1, -1);
+                var foundingItem = new OrderItems('/users/get-order', 5, '[0,10,11]', '[1,3]', -1, -1, -1, -1);
                 foundingItem.addItems(function (err, data) {
                     if (err) {
                         toastr.error(err, '错误');
@@ -304,14 +306,20 @@ require(['Vue', 'Utils'],
 
                 function changeSelect() {
                     var selectStatus = parseInt($('#selectStatus').children('option:selected').val());
+                    var status ='';
+                    var active = -1;
                     if (selectStatus === 1) {
-                        selectStatus = '[1]';
+                        active = 1;
+                        status = '[0,10,11]';
                     } else if (selectStatus === 10) {
-                        selectStatus = '[10]';
+                        active = -1;
+                        status = '[10]';
                     } else if (selectStatus === 11) {
-                        selectStatus = '[11]';
+                        active = -1;
+                        status = '[11]'
                     } else {
-                        selectStatus = '[1,10,11]';
+                        active = -1;
+                        status = '[0,10,11]'
                     }
 
                     var selectOrderStatus = parseInt($('#selectOrderStatus').children('option:selected').val());
@@ -324,7 +332,7 @@ require(['Vue', 'Utils'],
                         payStatus = 0;
                     } else if (selectOrderStatus === 1) {
                         orderStatus = 1;
-                        payStatus = 1;
+                        payStatus = 0;
                     } else if (selectOrderStatus === 2) {
                         orderStatus = 2;
                         payStatus = 1;
@@ -337,7 +345,7 @@ require(['Vue', 'Utils'],
                     }
 
                     foundingItem = null;
-                    foundingItem = new OrderItems('/users/get-order', 5, selectStatus, '[1,3]', orderStatus, payStatus, returnStatus);
+                    foundingItem = new OrderItems('/users/get-order', 5, status, '[1,3]', active, orderStatus, payStatus, returnStatus);
                     vm.fundingList.splice(0, vm.fundingList.length);
                     vm.fundingImg.splice(0, vm.fundingImg.length);
                     foundingItem.addItems(function (err, data) {
@@ -535,7 +543,7 @@ require(['Vue', 'Utils'],
                         payStatus = 0;
                     } else if (selectOrderStatus === 1) {
                         orderStatus = 1;
-                        payStatus = 1;
+                        payStatus = 0;
                     } else if (selectOrderStatus === 2) {
                         orderStatus = 2;
                         payStatus = 1;

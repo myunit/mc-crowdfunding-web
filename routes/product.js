@@ -56,6 +56,7 @@ router.post('/get-all-funding', function (req, res, next) {
         "pageSize": parseInt(req.body.pageSize),
         "fundingStatus": JSON.parse(req.body.fundingStatus),
         "fundingType": JSON.parse(req.body.fundingType),
+        "fundingActive": JSON.parse(req.body.fundingActive),
         "districtId": parseInt(req.body.districtId)
     };
 

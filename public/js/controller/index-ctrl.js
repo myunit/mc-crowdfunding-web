@@ -580,17 +580,15 @@ require(['Vue', 'Utils'],
 
 				vm.$watch('id', function (newVal, oldVal) {
 					var a = document.getElementById("id");
-					/*15位身份证号*/
-					var isIDCard1 = /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$/;
-					/*18位身份证号*/
-					var isIDCard2 = /^(\d{6})(18|19|20)?(\d{2})([01]\d)([0123]\d)(\d{3})(\d|X)?$/;
+					// 身份证号码为15位或者18位，15位时全为数字，18位前17位为数字，最后一位是校验位，可能为数字或字符X
+					var isIDCard = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
 					if (!newVal) {
 						a = document.getElementById("id");
 						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">请输入身份证号</label>';
 						return;
 					}
 
-					if (!isIDCard1.test(newVal) && !isIDCard2.test(newVal)) {
+					if (!isIDCard.test(newVal)) {
 						a = document.getElementById("id");
 						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">身份证号不正确</label>';
 						return;
@@ -622,11 +620,8 @@ require(['Vue', 'Utils'],
 					/*邮箱*/
 					var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
 
-					/*15位身份证号*/
-					var isIDCard1 = /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$/;
-
-					/*18位身份证号*/
-					var isIDCard2 = /^(\d{6})(18|19|20)?(\d{2})([01]\d)([0123]\d)(\d{3})(\d|X)?$/;
+					// 身份证号码为15位或者18位，15位时全为数字，18位前17位为数字，最后一位是校验位，可能为数字或字符X
+					var isIDCard = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
 					var a = null;
 					if (!vm.name) {
 						a = document.getElementById("name");
@@ -639,7 +634,7 @@ require(['Vue', 'Utils'],
 						return;
 					}
 
-					if (vm.id && (!isIDCard1.test(vm.id) && !isIDCard2.test(vm.id))) {
+					if (!isIDCard.test(vm.id)) {
 						a = document.getElementById("id");
 						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">身份证号不正确</label>';
 						return;
@@ -663,9 +658,9 @@ require(['Vue', 'Utils'],
 						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">请选择省市区</label>';
 						return;
 					}
-					var pName = parseInt($('#selectedP').children('option:selected').text());
-					var cName = parseInt($('#selectedC').children('option:selected').text());
-					var dName = parseInt($('#selectedD').children('option:selected').text());
+					var pName = $('#selectedP').children('option:selected').text();
+					var cName = $('#selectedC').children('option:selected').text();
+					var dName = $('#selectedD').children('option:selected').text();
 
 					var pcdCode = pId + '-' + cId + '-' + dId;
 					var pcdDes = pName + '-' + cName + '-' + dName;

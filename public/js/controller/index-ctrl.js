@@ -319,13 +319,13 @@ require(['Vue', 'Utils'],
 				vm.$watch('validate', function (newVal, oldVal) {
 					var a = document.getElementById("validate");
 					if (!newVal) {
-						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">请输入验证码</label>';
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 100px;">请输入验证码</label>';
 						return;
 					}
 
 					var checkCode = vm.checkCode.replace(/\s+/g, "");
 					if (newVal !== checkCode) {
-						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">验证码不正确</label>';
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 100px;">验证码不正确</label>';
 						return;
 					}
 					a.innerHTML = '';
@@ -333,7 +333,7 @@ require(['Vue', 'Utils'],
 
 				vm.$watch('captcha', function (newVal, oldVal) {
 					var a = document.getElementById("captcha");
-					if (!newVal) {
+					if (newVal) {
 						a.innerHTML = '';
 						return;
 					}
@@ -430,13 +430,13 @@ require(['Vue', 'Utils'],
 					var checkCode = vm.checkCode.replace(/\s+/g, "");
 					if (vm.validate !== checkCode) {
 						a = document.getElementById("validate");
-						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">验证码不正确</label>';
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 100px;">验证码不正确</label>';
 						return;
 					}
 
 					if (!vm.captcha) {
 						a = document.getElementById("captcha");
-						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">请输入激活码</label>';
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 100px;">请输入激活码</label>';
 						return;
 					}
 
@@ -570,6 +570,54 @@ require(['Vue', 'Utils'],
 				});
 
 
+				vm.$watch('name', function (newVal, oldVal) {
+					var a = document.getElementById("name");
+					if (newVal) {
+						a.innerHTML = '';
+						return;
+					}
+				});
+
+				vm.$watch('id', function (newVal, oldVal) {
+					var a = document.getElementById("id");
+					/*15位身份证号*/
+					var isIDCard1 = /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$/;
+					/*18位身份证号*/
+					var isIDCard2 = /^(\d{6})(18|19|20)?(\d{2})([01]\d)([0123]\d)(\d{3})(\d|X)?$/;
+					if (!newVal) {
+						a = document.getElementById("id");
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">请输入身份证号</label>';
+						return;
+					}
+
+					if (!isIDCard1.test(newVal) && !isIDCard2.test(newVal)) {
+						a = document.getElementById("id");
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">身份证号不正确</label>';
+						return;
+					}
+
+					a.innerHTML = '';
+				});
+
+				vm.$watch('email', function (newVal, oldVal) {
+					var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+					var a = document.getElementById("email");
+					if (newVal && !myreg.test(newVal)) {
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">邮箱格式不正确</label>';
+						return;
+					}
+
+					a.innerHTML = '';
+				});
+
+				vm.$watch('address', function (newVal, oldVal) {
+					var a = document.getElementById("address");
+					if (newVal) {
+						a.innerHTML = '';
+						return;
+					}
+				});
+
 				$("#reg-info-next").click(function () {
 					/*邮箱*/
 					var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
@@ -698,9 +746,10 @@ require(['Vue', 'Utils'],
 				}
 
 				$('#licence').change(function () {
+					var a = document.getElementById("licence-alert");
+					var b = document.getElementById("shop-name");
+					a.innerHTML = '';
 					if (!/\.(jpg|jpeg|png|bmp|JPG|PNG|BMP|JPEG)$/.test(this.value)) {
-						var a = document.getElementById("licence-alert");
-						var b = document.getElementById("shop-name");
 						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">&nbsp;&nbsp;&nbsp;&nbsp;　　　照片格式不正确,请选择png,jpeg,bmp格式照片上传</label>';
 						b.focus();
 						return;
@@ -709,8 +758,6 @@ require(['Vue', 'Utils'],
 					var fsize = this.files[0].size;
 					if (fsize > 5242880) //do something if file size more than 1 mb (1048576)
 					{
-						var a = document.getElementById("licence-alert");
-						var b = document.getElementById("shop-name");
 						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">&nbsp;&nbsp;&nbsp;&nbsp;　　　照片大小不能超过5M</label>';
 						b.focus();
 						return;
@@ -724,9 +771,10 @@ require(['Vue', 'Utils'],
 				});
 
 				$('#work-pic').change(function () {
+					var a = document.getElementById("licence-alert");
+					var b = document.getElementById("shop-name");
+					a.innerHTML = '';
 					if (!/\.(jpg|jpeg|png|bmp|JPG|PNG|BMP|JPEG)$/.test(this.value)) {
-						var a = document.getElementById("licence-alert");
-						var b = document.getElementById("shop-name");
 						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">&nbsp;&nbsp;&nbsp;&nbsp;　　　照片格式不正确,请选择png,jpeg,bmp格式照片上传</label>';
 						b.focus();
 						return;
@@ -735,8 +783,6 @@ require(['Vue', 'Utils'],
 					var fsize = this.files[0].size;
 					if (fsize > 5242880) //do something if file size more than 1 mb (1048576)
 					{
-						var a = document.getElementById("licence-alert");
-						var b = document.getElementById("shop-name");
 						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">&nbsp;&nbsp;&nbsp;&nbsp;　　　照片大小不能超过5M</label>';
 						b.focus();
 						return;
@@ -750,9 +796,10 @@ require(['Vue', 'Utils'],
 				});
 
 				$('#weixinPhoto').change(function () {
+					var a = document.getElementById("licence-alert");
+					var b = document.getElementById("shop-name");
+					a.innerHTML = '';
 					if (!/\.(jpg|jpeg|png|bmp|JPG|PNG|BMP|JPEG)$/.test(this.value)) {
-						var a = document.getElementById("licence-alert");
-						var b = document.getElementById("shop-name");
 						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">&nbsp;&nbsp;&nbsp;&nbsp;　　　照片格式不正确,请选择png,jpeg,bmp格式照片上传</label>';
 						b.focus();
 						return;
@@ -761,8 +808,6 @@ require(['Vue', 'Utils'],
 					var fsize = this.files[0].size;
 					if (fsize > 5242880) //do something if file size more than 1 mb (1048576)
 					{
-						var a = document.getElementById("licence-alert");
-						var b = document.getElementById("shop-name");
 						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">&nbsp;&nbsp;&nbsp;&nbsp;　　　照片大小不能超过5M</label>';
 						b.focus();
 						return;

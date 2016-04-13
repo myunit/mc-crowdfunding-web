@@ -145,12 +145,12 @@ require(['Vue', 'Utils'],
 					var a = document.getElementById("id-label");
 					a.innerHTML = '';
 					if (!vm.username) {
-						a.innerHTML = '<label style="font-size:14px;color:red;">11位手机号码</label>';
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">请输入11位手机号码</label>';
 						return;
 					}
 
 					if (!myreg.test(vm.username)) {
-						a.innerHTML = '<label style="font-size:14px;color:red;">手机号码不正确</label>';
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">手机号码不正确</label>';
 						return;
 					}
 
@@ -188,25 +188,25 @@ require(['Vue', 'Utils'],
 					var a = null;
 					if (!vm.username) {
 						a = document.getElementById("id-label");
-						a.innerHTML = '<label style="font-size:14px;color:red;">11位手机号码</label>';
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">请输入11位手机号码</label>';
 						return;
 					}
 
 					if (!myreg.test(vm.username)) {
 						a = document.getElementById("id-label");
-						a.innerHTML = '<label style="font-size:14px;color:red;">手机号码不正确</label>';
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">手机号码不正确</label>';
 						return;
 					}
 
 					if (!vm.captcha) {
 						a = document.getElementById("captcha-label");
-						a.innerHTML = '<label style="font-size:14px;color:red;">请输入验证码</label>';
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">请输入验证码</label>';
 						return;
 					}
 
 					if (!vm.password) {
 						a = document.getElementById("pass-label");
-						a.innerHTML = '<label style="font-size:14px;color:red;">密码不能为空</label>';
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">密码不能为空</label>';
 						return;
 					}
 
@@ -260,6 +260,85 @@ require(['Vue', 'Utils'],
 					vm.checkCode = createCode();
 				}
 
+				vm.$watch('phone', function (newVal, oldVal) {
+					var myreg = /^[1][358][0-9]{9}$/;
+					var a = document.getElementById("phone");
+					if (!newVal) {
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">请输入11位手机号码</label>';
+						return;
+					}
+
+					if (!myreg.test(newVal)) {
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">手机号码不正确</label>';
+						return;
+					}
+					a.innerHTML = '';
+				});
+
+				vm.$watch('password', function (newVal, oldVal) {
+					var a = document.getElementById("password");;
+					if (!newVal || (newVal.length < 6 || newVal.length > 15)) {
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">6-15位密码</label>';
+						return;
+					}
+					a.innerHTML = '';
+
+					a = document.getElementById("repassword");
+					if (vm.password != newVal) {
+						a = document.getElementById("repassword");
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">密码输入不一致</label>';
+						return;
+					}
+					a.innerHTML = '';
+				});
+
+				vm.$watch('repassword', function (newVal, oldVal) {
+					var a = document.getElementById("repassword");
+					if (!newVal) {
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">请确认密码</label>';
+						return;
+					}
+
+					if (vm.password != newVal) {
+						a = document.getElementById("repassword");
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">密码输入不一致</label>';
+						return;
+					}
+					a.innerHTML = '';
+				});
+
+				vm.$watch('wechat', function (newVal, oldVal) {
+					var a = document.getElementById("wechat");
+					if (!newVal) {
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">请输入微信号</label>';
+						return;
+					}
+					a.innerHTML = '';
+				});
+
+				vm.$watch('validate', function (newVal, oldVal) {
+					var a = document.getElementById("validate");
+					if (!newVal) {
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">请输入验证码</label>';
+						return;
+					}
+
+					var checkCode = vm.checkCode.replace(/\s+/g, "");
+					if (newVal !== checkCode) {
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">验证码不正确</label>';
+						return;
+					}
+					a.innerHTML = '';
+				});
+
+				vm.$watch('captcha', function (newVal, oldVal) {
+					var a = document.getElementById("captcha");
+					if (!newVal) {
+						a.innerHTML = '';
+						return;
+					}
+				});
+
 				$('#sendActiveCode').click(function (e) {
 					e.preventDefault();
 					var myreg = /^[1][358][0-9]{9}$/;
@@ -269,12 +348,12 @@ require(['Vue', 'Utils'],
 					var a = null;
 					if (!vm.phone) {
 						a = document.getElementById("phone");
-						a.innerHTML = '<label style="font-size:14px;color:red;">11位手机号码</label>';
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">请输入11位手机号码</label>';
 						return;
 					}
 					if (!myreg.test(vm.phone)) {
 						a = document.getElementById("phone");
-						a.innerHTML = '<label style="font-size:14px;color:red;">手机号码不正确</label>';
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">手机号码不正确</label>';
 						return;
 					}
 
@@ -311,53 +390,53 @@ require(['Vue', 'Utils'],
 					var a = null;
 					if (!vm.phone) {
 						a = document.getElementById("phone");
-						a.innerHTML = '<label style="font-size:14px;color:red;">请输入电话号码</label>';
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">请输入11位手机号码</label>';
 						return;
 					}
 					if (!myreg.test(vm.phone)) {
 						a = document.getElementById("phone");
-						a.innerHTML = '<label style="font-size:14px;color:red;">电话号码不正确</label>';
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">电话号码不正确</label>';
 						return;
 					}
 					if (!vm.wechat) {
 						a = document.getElementById("wechat");
-						a.innerHTML = '<label style="font-size:14px;color:red;">请输入微信号</label>';
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">请输入微信号</label>';
 						return;
 					}
 					if (!vm.password || (vm.password && (vm.password.length < 6 || vm.password.length > 15))) {
 						a = document.getElementById("password");
-						a.innerHTML = '<label style="font-size:14px;color:red;">6-15位密码</label>';
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">6-15位密码</label>';
 						return;
 					}
 
 					if (!vm.repassword) {
 						a = document.getElementById("repassword");
-						a.innerHTML = '<label style="font-size:14px;color:red;">请确认密码</label>';
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">请确认密码</label>';
 						return;
 					}
 
 					if (vm.password != vm.repassword) {
 						a = document.getElementById("repassword");
-						a.innerHTML = '<label style="font-size:14px;color:red;">密码输入不一致</label>';
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">密码输入不一致</label>';
 						return;
 					}
 
 					if (!vm.validate) {
 						a = document.getElementById("validate");
-						a.innerHTML = '<label style="font-size:14px;color:red;">请输入验证码</label>';
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">请输入验证码</label>';
 						return;
 					}
 
 					var checkCode = vm.checkCode.replace(/\s+/g, "");
 					if (vm.validate !== checkCode) {
 						a = document.getElementById("validate");
-						a.innerHTML = '<label style="font-size:14px;color:red;">验证码不正确</label>';
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">验证码不正确</label>';
 						return;
 					}
 
 					if (!vm.captcha) {
 						a = document.getElementById("captcha");
-						a.innerHTML = '<label style="font-size:14px;color:red;">请输入激活码</label>';
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">请输入激活码</label>';
 						return;
 					}
 
@@ -503,28 +582,28 @@ require(['Vue', 'Utils'],
 					var a = null;
 					if (!vm.name) {
 						a = document.getElementById("name");
-						a.innerHTML = '<label style="font-size:14px;color:red;">请输入真实姓名</label>';
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">请输入真实姓名</label>';
 						return;
 					}
 					if (!vm.id) {
 						a = document.getElementById("id");
-						a.innerHTML = '<label style="font-size:14px;color:red;">请输入身份证号</label>';
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">请输入身份证号</label>';
 						return;
 					}
 
 					if (vm.id && (!isIDCard1.test(vm.id) && !isIDCard2.test(vm.id))) {
 						a = document.getElementById("id");
-						a.innerHTML = '<label style="font-size:14px;color:red;">身份证号不正确</label>';
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">身份证号不正确</label>';
 						return;
 					}
 					if (vm.email && !myreg.test(vm.email)) {
 						a = document.getElementById("email");
-						a.innerHTML = '<label style="font-size:14px;color:red;">邮箱格式不正确</label>';
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">邮箱格式不正确</label>';
 						return;
 					}
 					if (!vm.address) {
 						a = document.getElementById("address");
-						a.innerHTML = '<label style="font-size:14px;color:red;">请输入详细地址</label>';
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">请输入详细地址</label>';
 						return;
 					}
 
@@ -533,7 +612,7 @@ require(['Vue', 'Utils'],
 					var dId = parseInt($('#selectedD').children('option:selected').val());
 					if (isNaN(pId) || isNaN(cId) || isNaN(dId)) {
 						a = document.getElementById("area");
-						a.innerHTML = '<label style="font-size:14px;color:red;">请选择省市区</label>';
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">请选择省市区</label>';
 						return;
 					}
 					var pName = parseInt($('#selectedP').children('option:selected').text());
@@ -622,7 +701,7 @@ require(['Vue', 'Utils'],
 					if (!/\.(jpg|jpeg|png|bmp|JPG|PNG|BMP|JPEG)$/.test(this.value)) {
 						var a = document.getElementById("licence-alert");
 						var b = document.getElementById("shop-name");
-						a.innerHTML = '<label style="font-size:14px;color:red;">&nbsp;&nbsp;&nbsp;&nbsp;　　　照片格式不正确,请选择png,jpeg,bmp格式照片上传</label>';
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">&nbsp;&nbsp;&nbsp;&nbsp;　　　照片格式不正确,请选择png,jpeg,bmp格式照片上传</label>';
 						b.focus();
 						return;
 					}
@@ -632,7 +711,7 @@ require(['Vue', 'Utils'],
 					{
 						var a = document.getElementById("licence-alert");
 						var b = document.getElementById("shop-name");
-						a.innerHTML = '<label style="font-size:14px;color:red;">&nbsp;&nbsp;&nbsp;&nbsp;　　　照片大小不能超过5M</label>';
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">&nbsp;&nbsp;&nbsp;&nbsp;　　　照片大小不能超过5M</label>';
 						b.focus();
 						return;
 					}
@@ -648,7 +727,7 @@ require(['Vue', 'Utils'],
 					if (!/\.(jpg|jpeg|png|bmp|JPG|PNG|BMP|JPEG)$/.test(this.value)) {
 						var a = document.getElementById("licence-alert");
 						var b = document.getElementById("shop-name");
-						a.innerHTML = '<label style="font-size:14px;color:red;">&nbsp;&nbsp;&nbsp;&nbsp;　　　照片格式不正确,请选择png,jpeg,bmp格式照片上传</label>';
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">&nbsp;&nbsp;&nbsp;&nbsp;　　　照片格式不正确,请选择png,jpeg,bmp格式照片上传</label>';
 						b.focus();
 						return;
 					}
@@ -658,7 +737,7 @@ require(['Vue', 'Utils'],
 					{
 						var a = document.getElementById("licence-alert");
 						var b = document.getElementById("shop-name");
-						a.innerHTML = '<label style="font-size:14px;color:red;">&nbsp;&nbsp;&nbsp;&nbsp;　　　照片大小不能超过5M</label>';
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">&nbsp;&nbsp;&nbsp;&nbsp;　　　照片大小不能超过5M</label>';
 						b.focus();
 						return;
 					}
@@ -674,7 +753,7 @@ require(['Vue', 'Utils'],
 					if (!/\.(jpg|jpeg|png|bmp|JPG|PNG|BMP|JPEG)$/.test(this.value)) {
 						var a = document.getElementById("licence-alert");
 						var b = document.getElementById("shop-name");
-						a.innerHTML = '<label style="font-size:14px;color:red;">&nbsp;&nbsp;&nbsp;&nbsp;　　　照片格式不正确,请选择png,jpeg,bmp格式照片上传</label>';
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">&nbsp;&nbsp;&nbsp;&nbsp;　　　照片格式不正确,请选择png,jpeg,bmp格式照片上传</label>';
 						b.focus();
 						return;
 					}
@@ -684,7 +763,7 @@ require(['Vue', 'Utils'],
 					{
 						var a = document.getElementById("licence-alert");
 						var b = document.getElementById("shop-name");
-						a.innerHTML = '<label style="font-size:14px;color:red;">&nbsp;&nbsp;&nbsp;&nbsp;　　　照片大小不能超过5M</label>';
+						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">&nbsp;&nbsp;&nbsp;&nbsp;　　　照片大小不能超过5M</label>';
 						b.focus();
 						return;
 					}

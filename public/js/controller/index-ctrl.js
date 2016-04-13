@@ -400,7 +400,8 @@ require(['Vue', 'Utils'],
 				vm.selectedC = Utils.clone(vm.city[0]);
 				vm.selectedD = Utils.clone(vm.district[0]);
 				var i = 0;
-				var el = '<select class="dropdown" name="" id="selectedP"  size=1>';
+				var el = '<select class="dropdown" name="" id="selectedP"  size="1" validate="{required:\'请选择省\'}">';
+				el += '<option value="">请选择省</option>';
 				for (i = 0;i < vm.province.length; i++) {
 					var p = vm.province[i];
 					el += '<option value="'+ p.id +'">' + p.name + '</option>';
@@ -408,7 +409,8 @@ require(['Vue', 'Utils'],
 				el += '</select>';
 				$("#userArea").after(el);
 
-				el = '<select class="dropdown" name="" id="selectedC" size=1>';
+				el = '<select class="dropdown" name="" id="selectedC" size="1" validate="{required:\'请选择市\'}">';
+				el += '<option value="">请选择市</option>';
 				for (i = 0;i < vm.city.length; i++) {
 					var c = vm.city[i];
 					el += '<option value="'+ c.id +'">' + c.name + '</option>';
@@ -416,7 +418,8 @@ require(['Vue', 'Utils'],
 				el += '</select>';
 				$("#selectedP").after(el);
 
-				el = '<select class="dropdown" name="" id="selectedD"  size=1>';
+				el = '<select class="dropdown" name="" id="selectedD"  size="1" validate="{required:\'请选择区\'}">';
+				el += '<option value="">请选择区</option>';
 				for (i = 0;i < vm.district.length; i++) {
 					var d = vm.district[i];
 					el += '<option value="'+ d.id +'">' + d.name + '</option>';
@@ -430,29 +433,63 @@ require(['Vue', 'Utils'],
 					$('#selectedD').easyDropDown({cutOff: 5});
 				});
 
+				function changeCity () {
+					var cityId = parseInt($('#selectedC').children('option:selected').val());
+					vm.district = Utils.getDistrict(cityId).slice();
+
+					el = '<select class="dropdown" name="" id="selectedD"  size="1" validate="{required:\'请选择区\'}">';
+					el += '<option value="">请选择区</option>';
+					for (i = 0;i < vm.district.length; i++) {
+						var d = vm.district[i];
+						el += '<option value="'+ d.id +'">' + d.name + '</option>';
+					}
+					el += '</select>';
+					$('#userArea').next().next().next().replaceWith(el);
+					Vue.nextTick(function () {
+						$('#selectedD').easyDropDown('destroy');
+						$('#selectedD').easyDropDown({cutOff: 5});
+					});
+				}
+
 				$('#selectedP').change(function () {
-					changeSelect();
+					var provinceId = parseInt($('#selectedP').children('option:selected').val());
+					vm.city = Utils.getCity(provinceId).slice();
+					vm.district = Utils.getDistrict(vm.city[0].id).slice();
+
+					el = '<select class="dropdown" name="" id="selectedC" size="1" validate="{required:\'请选择市\'}">';
+					el += '<option value="">请选择市</option>';
+					for (i = 0;i < vm.city.length; i++) {
+						var c = vm.city[i];
+						el += '<option value="'+ c.id +'">' + c.name + '</option>';
+					}
+					el += '</select>';
+					$('#userArea').next().next().replaceWith(el);
+
+					el = '<select class="dropdown" name="" id="selectedD"  size="1" validate="{required:\'请选择区\'}">';
+					el += '<option value="">请选择区</option>';
+					for (i = 0;i < vm.district.length; i++) {
+						var d = vm.district[i];
+						el += '<option value="'+ d.id +'">' + d.name + '</option>';
+					}
+					el += '</select>';
+					$('#userArea').next().next().next().replaceWith(el);
+
+					Vue.nextTick(function () {
+						$('#selectedC').easyDropDown('destroy');
+						$('#selectedD').easyDropDown('destroy');
+						$('#selectedC').easyDropDown({cutOff: 5});
+						$('#selectedD').easyDropDown({cutOff: 5});
+						$('#selectedC').change(function () {
+							changeCity();
+						});
+					});
+
 				});
 
 				$('#selectedC').change(function () {
-					changeSelect();
+					changeCity();
 				});
 
-				$('#selectedD').change(function () {
-					changeSelect();
-				});
-
-				vm.$watch('selectedP', function (newVal, oldVal) {
-					vm.city = Utils.getCity(newVal.id).slice();
-					vm.district = Utils.getDistrict(vm.city[0].id).slice();
-					vm.selectedC = Utils.clone(vm.city[0]);
-					vm.selectedD = Utils.clone(vm.district[0]);
-				});
-
-				vm.$watch('selectedC', function (newVal, oldVal) {
-					vm.district = Utils.getDistrict(newVal.id).slice();
-					vm.selectedD = Utils.clone(vm.district[0]);
-				});
 
 				$("#reg-info-next").click(function () {
 					/*邮箱*/
@@ -490,8 +527,21 @@ require(['Vue', 'Utils'],
 						a.innerHTML = '<label style="font-size:14px;color:red;">请输入详细地址</label>';
 						return;
 					}
-					var pcdCode = vm.selectedP.id + '-' + vm.selectedC.id + '-' + vm.selectedD.id;
-					var pcdDes = vm.selectedP.name + '-' + vm.selectedC.name + '-' + vm.selectedD.name;
+
+					var pId = parseInt($('#selectedP').children('option:selected').val());
+					var cId = parseInt($('#selectedC').children('option:selected').val());
+					var dId = parseInt($('#selectedD').children('option:selected').val());
+					if (isNaN(pId) || isNaN(cId) || isNaN(dId)) {
+						a = document.getElementById("area");
+						a.innerHTML = '<label style="font-size:14px;color:red;">请选择省市区</label>';
+						return;
+					}
+					var pName = parseInt($('#selectedP').children('option:selected').text());
+					var cName = parseInt($('#selectedC').children('option:selected').text());
+					var dName = parseInt($('#selectedD').children('option:selected').text());
+
+					var pcdCode = pId + '-' + cId + '-' + dId;
+					var pcdDes = pName + '-' + cName + '-' + dName;
 					location.href = '/reg-platform' + location.search + '&name=' + encodeURI(encodeURI(vm.name)) + '&cardID=' + vm.id
 					+ '&email=' + vm.email + '&pcdCode=' + pcdCode + '&pcdDes=' + encodeURI(encodeURI(pcdDes)) + '&address=' + vm.address + '&qq=' + vm.qq;
 				});

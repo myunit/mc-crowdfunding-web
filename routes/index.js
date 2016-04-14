@@ -35,7 +35,7 @@ router.route('/login')
 				if (data.status) {
 					req.session.uid = data.customer.CustomerNo;
 					req.session.name = data.customer.Name;
-					res.json({status: data.status, audit: data.IsAudit});
+					res.json({status: data.status, audit: data.customer.IsAudit});
 				} else {
 					res.json({status: data.status, msg: data.msg});
 				}

@@ -363,7 +363,7 @@ require(['Vue', 'Utils'],
 									var id_selector = $(this).attr("id");
 									var id = id_selector.substr(id_selector.length - 1);
 									id = parseInt(id);
-									$('#my-carousel').carousel(id);
+									//$('#my-carousel').carousel(id);
 									$('[id^=carousel-selector-]').removeClass('selected');
 									$(this).addClass('selected');
 								});

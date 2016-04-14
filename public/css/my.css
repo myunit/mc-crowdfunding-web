@@ -410,6 +410,24 @@ DIV.digg  .next{ margin:2px 6px 2px 6px;}
 .ui-video-content{ background:#000; display:none;}
 .ui-video-content #player{ width:1200px; height:537px; display:block;}
 
+/*众筹列表也模态窗口样式*/
+
+.modal_align_b  .modal-content{ width:600px;}
+.modal_align_b  .modal-header{ border-bottom: 1px solid #e5e5e5; padding:15px;}
+
+.ui-confirm-trans{ text-align:center;}
+.ui-confirm-trans h3{ font-size:18px;}
+.ui-confirm-trans ul{ list-style:none; margin:0; display:inline-block; margin-right:-20px; padding:30px 15px 15px 15px;}
+.ui-confirm-trans li{ list-style:none; padding:0; float:left; position:relative; margin-right:20px;}
+.ui-confirm-trans li .ui-delete{ background:url(../images/sprite.png) no-repeat; background-position:-512px -482px; display:block; width:18px; height:18px; position:absolute; top:-9px; right:-9px;}
+.ui-confirm-trans p.ui-tip{ font-size:12px; color:#21b6b4;}
+.modal_align_b .modal-footer{ text-align:center; border:none; padding-top:20px;}
+.modal_align_b .modal-footer .btn{ font-size:16px; padding:10px 58px;}
+.modal_align_b .modal-footer .btn-dark:hover{ background:#2a2a2c; border-color:#2a2a2c;}
+
+.sl-custom-file{position:relative;display:inline-block;zoom:1;cursor:pointer;overflow:hidden;vertical-align:middle;}
+.sl-custom-file .ui-input-file{position:absolute;right:0;top:0;_zoom:30;font-size:300px\9;height:100%;_height:auto;opacity:0;}
+
 [v-cloak] {
 	display: none;
 }

@@ -187,7 +187,11 @@ require(['Vue', 'Utils'],
                         fundingImg: [],
                         pageId: 1,
                         curIndex: 0,
-                        payPhoto: null
+                        payPhoto1: '',
+                        payPhoto2: '',
+                        payPhoto3: '',
+                        payPhoto4: '',
+                        payPhoto5: ''
                     },
                     methods: {
                         goToDetail: goToDetail,
@@ -210,24 +214,25 @@ require(['Vue', 'Utils'],
                     }
                 });
 
-                $('#payPhoto').change(function () {
-                    var a = document.getElementById("picture-alert");
+                $('[id^=payPhoto-]').change(function () {
+                    var id_selector = $(this).attr("id");
+                    var id = id_selector.substr(id_selector.length - 1);
+                    id = parseInt(id);
                     if (!/\.(jpg|jpeg|png|bmp|JPG|PNG|BMP|JPEG)$/.test(this.value)) {
-                        a.innerHTML = '<label style="font-size:14px;color:red;">&nbsp;&nbsp;&nbsp;&nbsp;　　　照片格式不正确,请选择png,jpeg,bmp格式照片上传</label>';
+                        toastr.error('照片格式不正确,请选择png,jpeg,bmp格式照片上传', '错误');
                         return;
                     }
 
                     var fsize = this.files[0].size;
                     if (fsize > 5242880) //do something if file size more than 1 mb (1048576)
                     {
-                        a.innerHTML = '<label style="font-size:14px;color:red;">&nbsp;&nbsp;&nbsp;&nbsp;　　　照片大小不能超过5M</label>';
+                        toastr.error('照片大小不能超过5M', '错误');
                         return;
                     }
 
                     lrz(this.files[0], function (results) {
                         // 你需要的数据都在这里，可以以字符串的形式传送base64给服务端转存为图片。
-                        var base = results.base64.split(',');
-                        vm.payPhoto = base[1];
+                        vm['payPhoto' + id] = results.base64;
                     });
                 });
 

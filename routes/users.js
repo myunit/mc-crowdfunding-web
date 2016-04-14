@@ -37,7 +37,8 @@ router.post('/get-reserve', function (req, res, next) {
   var obj = {
     "userId": req.session.uid,
     "pageId": parseInt(req.body.pageId),
-    "pageSize": parseInt(req.body.pageSize)
+    "pageSize": parseInt(req.body.pageSize),
+    "publish": [1]
   };
 
   unirest.post(api.getFundingReserve())

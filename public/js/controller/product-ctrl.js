@@ -406,7 +406,7 @@ require(['Vue', 'Utils'],
                     ajaxPost('/product/add-funding-order', {
                         fundingId: parseInt(search['id']),
                         "quantity": vm.num,
-                        "price": vm.amount*100
+                        "price": vm.funding.UnitPrice*100
                     }, function (err, data) {
                         $('.my-booking-box').loading('stop');
                         if (err) {

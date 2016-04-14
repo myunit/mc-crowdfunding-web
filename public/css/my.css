@@ -390,6 +390,8 @@ input.ui-checkbox { vertical-align: baseline;}
 /*查看数据页面样式*/
 .my-view-content{ padding:20px; border:1px solid #d3d3d3; border-top:none; margin-bottom:50px;}
 .my-view-content .my-project-list{ background:#f5f5f5; padding:16px 32px; margin-bottom:20px;}
+.my-view-content .my-project-list p{word-break:break-all;}
+.my-view-content .my-project-list img{margin:0 5px 5px 0;}
 .my-view-content .my-project-list:last-child{ margin-bottom:0;}
 .my-canvas-box{ width:960px; height:380px; margin:40px auto;}
 .my-canvas-nav{width:960px; margin:0 auto; text-align:center;}

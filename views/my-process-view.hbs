@@ -40,7 +40,11 @@
                             <div class="my-project-list" v-cloak>
                                 <p class="my-text-gray">${funding.InDate}</p>
                                 <p>${funding.Memo}</p>
-                                <p><img :src="fundingImg[$index].ImgValue" width="185" height="130" alt=""/></p>
+                                <p>
+                                    <template v-for="img in fundingImg[$index].ImgValue">
+                                        <img :src="img" width="185" height="130" alt=""/>
+                                    </template>
+                                </p>
                             </div>
                         </template>
                     </div>

@@ -61,16 +61,16 @@
             <div id="my-carousel" class="carousel slide my-carousel" data-ride="carousel">
                 <!-- Indicators -->
                 <ol class="carousel-indicators">
-                    <template v-for="img in swiperImg">
+                    <template v-for="img in swiperImg" track-by="$index">
                         <li data-target="#my-carousel" :data-slide-to="$index" :class="{'active': $index === 0}"></li>
                     </template>
                 </ol>
 
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner" role="listbox">
-                    <template v-for="img in swiperImg">
+                    <template v-for="img in swiperImg" track-by="$index">
                         <div class="item" :class="{'active': $index === 0}" :data-slide-number="$index">
-                            <img :src="img" alt="..." class="img-responsive">
+                            <img :src="img.url" alt="..." class="img-responsive">
                         </div>
                     </template>
                 </div>
@@ -92,23 +92,23 @@
                             <canvas id="videoCanvas" width="185" height="130"></canvas>
                             <span>宣传视频</span></a>
                     </li>
-                    <li class="my-thumbnail-item" @click.prevent="switchSwiper(2)">
+                    <li class="my-thumbnail-item" @click.prevent="switchSwiper(0)">
                         <a id="carousel-selector-0"><img :src="imgList[2].ImgValue.length > 0 ? imgList[2].ImgValue[0]:''" width="185" height="130" alt=""/>
                             <span>品牌及产品介绍</span></a>
                     </li>
-                    <li class="my-thumbnail-item" @click.prevent="switchSwiper(3)">
+                    <li class="my-thumbnail-item" @click.prevent="switchSwiper(imgList[2].ImgValue.length)">
                         <a id="carousel-selector-1"><img :src="imgList[3].ImgValue.length > 0 ? imgList[3].ImgValue[0]:''" width="185" height="130" alt=""/>
                             <span>营销策划方案</span></a>
                     </li>
-                    <li class="my-thumbnail-item" @click.prevent="switchSwiper(4)">
+                    <li class="my-thumbnail-item" @click.prevent="switchSwiper(imgList[2].ImgValue.length + imgList[3].ImgValue.length)">
                         <a id="carousel-selector-2"><img :src="imgList[4].ImgValue.length > 0 ? imgList[4].ImgValue[0]:''" width="185" height="130" alt=""/>
                             <span>投资回报</span></a>
                     </li>
-                    <li class="my-thumbnail-item" @click.prevent="switchSwiper(5)">
+                    <li class="my-thumbnail-item" @click.prevent="switchSwiper(imgList[2].ImgValue.length + imgList[3].ImgValue.length + imgList[4].ImgValue.length)">
                         <a id="carousel-selector-3"><img :src="imgList[5].ImgValue.length > 0 ? imgList[5].ImgValue[0]:''" width="185" height="130" alt=""/>
                             <span>权利与义务</span></a>
                     </li>
-                    <li class="my-thumbnail-item" @click.prevent="switchSwiper(6)">
+                    <li class="my-thumbnail-item" @click.prevent="switchSwiper(imgList[2].ImgValue.length + imgList[3].ImgValue.length + imgList[4].ImgValue.length + imgList[5].ImgValue.length)">
                         <a id="carousel-selector-4"><img :src="imgList[6].ImgValue.length > 0 ? imgList[6].ImgValue[0]:''" width="185" height="130" alt=""/>
                             <span>淘汰机制</span></a>
                     </li>

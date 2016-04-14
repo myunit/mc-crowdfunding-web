@@ -287,8 +287,7 @@ require(['Vue', 'Utils'],
 					var $video = $('.ui-video-content video');
 					$video[0].currentTime = 0;
 					$video[0].pause();
-					vm.swiperImg.splice(0, vm.swiperImg.length);
-					vm.swiperImg = vm.imgList[index].ImgValue.slice();
+					$('#my-carousel').carousel(index);
 				}
 
 				function draw(video, thecanvas) {
@@ -316,7 +315,37 @@ require(['Vue', 'Utils'],
 								//$video[0].currentTime = 0;
 							}
 
-							vm.swiperImg = vm.imgList[2].ImgValue.slice();
+							var i = 0;
+							var key =  0;
+							var imgList = vm.imgList[2].ImgValue;
+							for (i = 0; i < imgList.length; i++) {
+								vm.swiperImg.push({index: key, url: imgList[i]});
+								key++;
+							}
+
+							imgList = vm.imgList[3].ImgValue;
+							for (i = 0; i < imgList.length; i++) {
+								vm.swiperImg.push({index: key, url: imgList[i]});
+								key++;
+							}
+
+							imgList = vm.imgList[4].ImgValue;
+							for (i = 0; i < imgList.length; i++) {
+								vm.swiperImg.push({index: key, url: imgList[i]});
+								key++;
+							}
+
+							imgList = vm.imgList[5].ImgValue;
+							for (i = 0; i < imgList.length; i++) {
+								vm.swiperImg.push({index: key, url: imgList[i]});
+								key++;
+							}
+
+							imgList = vm.imgList[6].ImgValue;
+							for (i = 0; i < imgList.length; i++) {
+								vm.swiperImg.push({index: key, url: imgList[i]});
+								key++;
+							}
 							$('#fn-video').click(function(e){
 								e.preventDefault();
 								$('#my-carousel').hide();

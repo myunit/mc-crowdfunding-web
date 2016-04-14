@@ -156,7 +156,8 @@ router.post('/register', function (req, res, next) {
 		"pcdCode": req.body.pcdCode,
 		"pcd": req.body.pcdDes,
 		"qq": req.body.qq,
-		"weixin": req.body.weixin
+		"weixin": req.body.weixin,
+		"groupId": 2
 	};
 
 	unirest.post(api.register())

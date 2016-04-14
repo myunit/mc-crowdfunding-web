@@ -157,10 +157,10 @@ require(['Vue', 'Utils'],
                 $(window).scroll(function () {
                     var $this = $(this),
                         viewH = $(this).height(),//可见高度
-                        contentH = $(this).get(0).scrollHeight,//内容高度
+                        contentH = document.body.scrollHeight==0?document.documentElement.scrollHeight:document.body.scrollHeight,//内容高度
                         scrollTop = $(this).scrollTop();//滚动高度
                     //if(contentH - viewH - scrollTop <= 100) { //到达底部100px时,加载新内容
-                    if (scrollTop / (contentH - viewH) >= 0.95 && vm.fundingList < vm.count) { //到达底部100px时,加载新内容
+                    if (scrollTop / (contentH - viewH) >= 0.95 && vm.fundingList.length < vm.count) { //到达底部100px时,加载新内容
                         foundingItem.addItems(function (err, data) {
                             if (err) {
                                 toastr.error(err, '错误');
@@ -313,10 +313,10 @@ require(['Vue', 'Utils'],
                         active = 1;
                         status = '[0,10,11]';
                     } else if (selectStatus === 10) {
-                        active = -1;
+                        active = 10;
                         status = '[10]';
                     } else if (selectStatus === 11) {
-                        active = -1;
+                        active = 10;
                         status = '[11]'
                     } else {
                         active = -1;
@@ -371,10 +371,10 @@ require(['Vue', 'Utils'],
                 $(window).scroll(function () {
                     var $this = $(this),
                         viewH = $(this).height(),//可见高度
-                        contentH = $(this).get(0).scrollHeight,//内容高度
+                        contentH = document.body.scrollHeight==0?document.documentElement.scrollHeight:document.body.scrollHeight,//内容高度
                         scrollTop = $(this).scrollTop();//滚动高度
                     //if(contentH - viewH - scrollTop <= 100) { //到达底部100px时,加载新内容
-                    if (scrollTop / (contentH - viewH) >= 0.95 && vm.fundingList < vm.count) { //到达底部100px时,加载新内容
+                    if (scrollTop / (contentH - viewH) >= 0.95 && vm.fundingList.length < vm.count) { //到达底部100px时,加载新内容
                         foundingItem.addItems(function (err, data) {
                             if (err) {
                                 toastr.error(err, '错误');
@@ -583,10 +583,10 @@ require(['Vue', 'Utils'],
                 $(window).scroll(function () {
                     var $this = $(this),
                         viewH = $(this).height(),//可见高度
-                        contentH = $(this).get(0).scrollHeight,//内容高度
+                        contentH = document.body.scrollHeight==0?document.documentElement.scrollHeight:document.body.scrollHeight,//内容高度
                         scrollTop = $(this).scrollTop();//滚动高度
                     //if(contentH - viewH - scrollTop <= 100) { //到达底部100px时,加载新内容
-                    if (scrollTop / (contentH - viewH) >= 0.95 && vm.fundingList < vm.count) { //到达底部100px时,加载新内容
+                    if (scrollTop / (contentH - viewH) >= 0.95 && vm.fundingList.length < vm.count) { //到达底部100px时,加载新内容
                         foundingItem.addItems(function (err, data) {
                             if (err) {
                                 toastr.error(err, '错误');

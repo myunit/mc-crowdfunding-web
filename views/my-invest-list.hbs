@@ -71,7 +71,7 @@
             <tr>
                 <td width="28%" @click.prevent="goToDetail($index)"><span class="img-cart"><img :src="fundingImg[$index].ImgValue" width="80" height="80"></span>
           <span class="title-cart title-middle">${funding.CrowdFunding.CrowdFundingName}</span></td>
-                <td width="10%" valign="top"><span class=" my-text-red" v-if="funding.CrowdFunding.AcitveStatus === 1">进行中</span><span class=" my-text-black" v-if="funding.CrowdFunding.CrowdFundingStatus === 10">已成功</span><span class=" my-text-black" v-if="funding.CrowdFunding.CrowdFundingStatus === 11">已失败</span></td>
+                <td width="10%" valign="top"><span class=" my-text-red" v-if="funding.CrowdFunding.AcitveStatus === 1">进行中</span><span class=" my-text-black" v-if="funding.CrowdFunding.AcitveStatus === 10 && funding.CrowdFunding.CrowdFundingStatus === 10">已成功</span><span class=" my-text-black" v-if="funding.CrowdFunding.AcitveStatus === 10 && funding.CrowdFunding.CrowdFundingStatus === 11">已失败</span></td>
                 <td width="12%" valign="top">
                     <p>目标：${funding.CrowdFunding.TargetAmount}元</p>
                     <p>${funding.CrowdFunding.CompletePercent}%</p>

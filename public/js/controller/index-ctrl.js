@@ -223,7 +223,11 @@ require(['Vue', 'Utils'],
 						if (err) {
 							toastr.error(err, '错误');
 						} else {
-							location.href = '/login-suc';
+							if (data.audit) {
+								location.href = '/login-suc';
+							} else {
+								toastr.info('对不起，您还没有通过审核，请耐心等待');
+							}
 						}
 					});
 				});

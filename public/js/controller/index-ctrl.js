@@ -440,7 +440,18 @@ require(['Vue', 'Utils'],
 						return;
 					}
 
-					location.href = '/reg-info?phone=' + vm.phone + '&wechat=' + encodeURI(encodeURI(vm.wechat)) + '&password=' + vm.password + '&captcha=' + vm.captcha;
+					$('.my-box').loading({
+						message: '校验激活码...'
+					});
+					ajaxPost('/check-captcha', {phone: vm.phone, captcha: vm.captcha}, function (err, data) {
+						$('.my-box').loading('stop');
+						if (err) {
+							toastr.error(err, '错误');
+						} else {
+							location.href = '/reg-info?phone=' + vm.phone + '&wechat=' + encodeURI(encodeURI(vm.wechat)) + '&password=' + vm.password + '&captcha=' + vm.captcha;
+						}
+					});
+
 				});
 
 			});

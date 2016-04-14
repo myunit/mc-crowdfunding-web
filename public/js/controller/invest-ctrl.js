@@ -313,7 +313,7 @@ require(['Vue', 'Utils'],
 									draw($video[0], $videoCanvas[0]);
 								};
 								$video[0].load();
-								$video[0].currentTime = 0;
+								//$video[0].currentTime = 0;
 							}
 
 							vm.swiperImg = vm.imgList[2].ImgValue.slice();

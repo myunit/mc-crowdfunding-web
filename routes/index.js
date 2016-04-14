@@ -92,6 +92,24 @@ router.post('/send-captcha', function (req, res, next) {
 		});
 });
 
+router.post('/check-captcha', function (req, res, next) {
+	unirest.post(api.checkCaptcha())
+		.headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
+		.send({"phone": req.body.phone, "captcha": req.body.captcha})
+		.end(function (response) {
+			var data = response.body.repData;
+			if (data === undefined) {
+				res.json({status: 0, msg: '服务异常'});
+				return;
+			}
+			if (data.status) {
+				res.json({status: data.status});
+			} else {
+				res.json({status: data.status, msg: data.msg});
+			}
+		});
+});
+
 router.post('/register', function (req, res, next) {
 
 	//save into disk

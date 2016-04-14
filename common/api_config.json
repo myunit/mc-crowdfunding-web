@@ -5,6 +5,7 @@
       "sendCaptcha": "Customers/send-captcha",
       "register": "Customers/register",
       "login": "Customers/login",
+      "checkCaptcha": "Customers/check-captcha",
       "addFundingOrder": "Fundings/add-funding-order",
       "addFundingReserve": "Fundings/add-funding-reserve",
       "finishPayFunding": "Fundings/finish-pay-funding",

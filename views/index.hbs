@@ -70,7 +70,7 @@
                         <span class="sr-only"></span>
                     </div>
                 </div>
-                    <span class="my-progress-num" v-if="product.AcitveStatus === 1">${equity.CompletePercent}%</span>
+                    <span class="my-progress-num" v-if="product.AcitveStatus === 1">${product.CompletePercent}%</span>
                     <span class="my-progress-num my-preheat-status" v-if="product.AcitveStatus === 0">预热中</span>
                 </div>
                 <p class="my-p-status my-text-gray" v-if="product.AcitveStatus !== 0"><span>目标数量 <b>${product.Quantity}件</b></span>         <span>已众筹 <b>${product.HaveCrowdFundingCount}件</b></span>           <span>剩余天数 <b>${product.RemainDay}天</b></span></p>

@@ -153,6 +153,7 @@ footer.my-footer-home{position:fixed; bottom:40px; height:auto; background:none;
 .my-item-box{ border:1px solid #d4d4d4; padding:20px; margin-bottom:20px; position:relative;}
 .my-item-box .my-item-img{ width:216px;}
 .my-item-box .my-item-info{ width:338px; margin:0 48px 0 24px;}
+.my-item-box .my-item-info p{ word-break:break-all;}
 .my-item-box .my-item-info h3{ font-size:18px; margin:12px 0; font-weight:bold;}
 .my-item-box .my-item-status{ width:532px;}
 .my-item-box .my-item-status .my-item-progress{ position:relative; padding:26px 0 0 0;}

@@ -258,6 +258,7 @@ require(['Vue', 'Utils'],
                                 "pageSize": 1,
                                 "fundingStatus": -1,
                                 "fundingType": -1,
+                                "fundingActive": -1,
                                 "orderStatus": -1,
                                 "payStatus": -1,
                                 "returnStatus": -1
@@ -464,6 +465,7 @@ require(['Vue', 'Utils'],
                                 "pageSize": 1,
                                 "fundingStatus": -1,
                                 "fundingType": -1,
+                                "fundingActive": -1,
                                 "orderStatus": -1,
                                 "payStatus": -1,
                                 "returnStatus": -1
@@ -510,7 +512,7 @@ require(['Vue', 'Utils'],
                     location.href = '/users/my-process-view?id=' + funding.CrowdFunding.SysNo;
                 }
 
-                var foundingItem = new OrderItems('/users/get-order', 5, '[1,10,11]', '[2]', -1, -1, -1);
+                var foundingItem = new OrderItems('/users/get-order', 5, '[0,10,11]', '[2]', -1, -1, -1, -1);
                 foundingItem.addItems(function (err, data) {
                     if (err) {
                         toastr.error(err, '错误');
@@ -524,13 +526,13 @@ require(['Vue', 'Utils'],
                 function changeSelect() {
                     var selectStatus = parseInt($('#selectStatus').children('option:selected').val());
                     if (selectStatus === 1) {
-                        selectStatus = '[1]';
+                        selectStatus = '[0]';
                     } else if (selectStatus === 10) {
                         selectStatus = '[10]';
                     } else if (selectStatus === 11) {
                         selectStatus = '[11]';
                     } else {
-                        selectStatus = '[1,10,11]';
+                        selectStatus = '[0,10,11]';
                     }
 
                     var selectOrderStatus = parseInt($('#selectOrderStatus').children('option:selected').val());
@@ -556,7 +558,7 @@ require(['Vue', 'Utils'],
                     }
 
                     foundingItem = null;
-                    foundingItem = new OrderItems('/users/get-order', 5, selectStatus, '[2]', orderStatus, payStatus, returnStatus);
+                    foundingItem = new OrderItems('/users/get-order', 5, selectStatus, '[2]', -1, orderStatus, payStatus, returnStatus);
                     vm.fundingList.splice(0, vm.fundingList.length);
                     vm.fundingImg.splice(0, vm.fundingImg.length);
                     foundingItem.addItems(function (err, data) {

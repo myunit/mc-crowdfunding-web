@@ -62,7 +62,7 @@
                 </tbody>
             </table>
 
-            <template v-for="funding in fundingList" track-by="SysNo">
+            <template v-for="funding in fundingList" track-by="$index">
                 <table width="100%" class="ui-table-cart-item ui-table-clear my-table-progress" border="0" cellspacing="0" cellpadding="0" v-cloak>
                     <tr>
                         <td colspan="7" class="my-order-num"><span>下单时间  ${funding.InDate.substring(0, 16)}</span><span>订单号  ${funding.SysNo}</span></td>

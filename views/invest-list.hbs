@@ -42,7 +42,7 @@
         </select>
     </div>
     <!--  众筹项目开始-->
-    <template v-for="equity in equityList" track-by="SysNo">
+    <template v-for="equity in equityList" track-by="$index">
         <div class="my-item-box clearfix" id="invest-detail-ongoing" @click.prevent="goToDetail($index)">
             <p class="my-item-img pull-left"><img :src="equityImg[$index].ImgValue" width="216" height="152" alt=""/></p>
             <div class="my-item-info pull-left" v-cloak>

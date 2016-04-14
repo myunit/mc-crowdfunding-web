@@ -311,7 +311,7 @@ require(['Vue', 'Utils'],
                     var active = -1;
                     if (selectStatus === 1) {
                         active = 1;
-                        status = '[0,10,11]';
+                        status = '[0,10]';
                     } else if (selectStatus === 10) {
                         active = 10;
                         status = '[10]';
@@ -525,14 +525,19 @@ require(['Vue', 'Utils'],
 
                 function changeSelect() {
                     var selectStatus = parseInt($('#selectStatus').children('option:selected').val());
+                    var active = -1;
                     if (selectStatus === 1) {
-                        selectStatus = '[0]';
+                        active = 1;
+                        status = '[0,10]';
                     } else if (selectStatus === 10) {
-                        selectStatus = '[10]';
+                        active = 10;
+                        status = '[10]';
                     } else if (selectStatus === 11) {
-                        selectStatus = '[11]';
+                        active = 10;
+                        status = '[11]'
                     } else {
-                        selectStatus = '[0,10,11]';
+                        active = -1;
+                        status = '[0,10,11]'
                     }
 
                     var selectOrderStatus = parseInt($('#selectOrderStatus').children('option:selected').val());
@@ -558,7 +563,7 @@ require(['Vue', 'Utils'],
                     }
 
                     foundingItem = null;
-                    foundingItem = new OrderItems('/users/get-order', 5, selectStatus, '[2]', -1, orderStatus, payStatus, returnStatus);
+                    foundingItem = new OrderItems('/users/get-order', 5, status, '[2]', active, orderStatus, payStatus, returnStatus);
                     vm.fundingList.splice(0, vm.fundingList.length);
                     vm.fundingImg.splice(0, vm.fundingImg.length);
                     foundingItem.addItems(function (err, data) {

@@ -36,7 +36,7 @@
                 </select>
             </div>
             <!--  众筹项目开始-->
-            <template v-for="product in productList" track-by="SysNo">
+            <template v-for="product in productList" track-by="$index">
                 <div class="my-item-box clearfix" id="product-detail-ongoing" @click.prevent="goToDetail($index)">
                     <p class="my-item-img pull-left"><img :src="productImg[$index].ImgValue" width="216" height="152" alt=""/></p>
                     <div class="my-item-info pull-left" v-cloak>

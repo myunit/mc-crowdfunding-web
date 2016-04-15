@@ -71,7 +71,6 @@ router.post('/get-order', function (req, res, next) {
     "payStatus": parseInt(req.body.payStatus),
     "returnStatus": parseInt(req.body.returnStatus)
   };
-
   unirest.post(api.getFundingOrder())
       .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
       .send(obj)

@@ -1,6 +1,7 @@
 var express = require('express');
 var unirest = require('unirest');
 var ApiFactory = require('../common/api_config');
+var ccap = require('ccap')();
 var fs = require('fs');
 var Readable = require('stream').Readable;
 var router = express.Router();
@@ -71,6 +72,15 @@ router.get('/reg-platform-verify', function (req, res, next) {
 
 router.get('/reg-success', function (req, res, next) {
 	res.render('reg-success', {title: '美仓众筹'});
+});
+
+router.post('/captcha-png', function (req, res, next) {
+	var ary = ccap.get();
+
+	var code = ary[0];
+
+	var buf = new Buffer(ary[1]).toString('base64');
+	res.json({status: 1, buf: buf, code: code});
 });
 
 

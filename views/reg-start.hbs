@@ -72,9 +72,8 @@
                                                                                                   validate="{required:'请输入验证码'}"
                                                                                                   class="ui-input"
                                                                                                   v-model="validate"/>
-                    <input type="text" readonly="readonly" v-model="checkCode" class="ui-vertify-button"
-                           style="width: 80px"/> <a href="#" class="ui-a-vertify"
-                                                    @click.prevent="changeCode()">换一张</a>
+                    <img :src="catpchaBuf" class="ui-vertify-button" style="width: 100px;height:30px">
+                    <a href="#" class="ui-a-vertify"  @click.prevent="changeCode()">换一张</a>
                 </div>
                 <div id="validate"></div>
                 <div class="ui-form-item p-item ui-active">

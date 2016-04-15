@@ -37,19 +37,6 @@ function ajaxPost(url, data, cb) {
 	});
 }
 
-function createCode() {
-	var code = '';
-	var codeLength = 4;//验证码的长度
-	var selectChar = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');//所有候选组成验证码的字符，当然也可以用中文的
-
-	for (var i = 0; i < codeLength; i++) {
-		var charIndex = Math.floor(Math.random() * 36);
-		code += '  ' + selectChar[charIndex];
-	}
-
-	return code;
-}
-
 require(['Vue', 'Utils'],
 	function (Vue, Utils) {
 		'use strict';
@@ -284,17 +271,29 @@ require(['Vue', 'Utils'],
 						isSendCaptcha: false,
 						isDisable: true,
 						captchaMsg: '',
-						checkCode: ''
+						catpchaBuf: '',
+						catpchaCode: ''
 					},
 					methods: {
 						changeCode: changeCode
 					}
 				});
 
-				vm.checkCode = createCode();
+				function createCode() {
+					ajaxPost('/captcha-png', {}, function (err, data) {
+						if (err) {
+							toastr.error(err, '错误');
+						} else {
+							vm.catpchaCode = data.code;
+							vm.catpchaBuf = 'data:image/png;base64,' + data.buf;
+						}
+					});
+				}
 
+
+				createCode();
 				function changeCode() {
-					vm.checkCode = createCode();
+					createCode();
 				}
 
 				vm.$watch('phone', function (newVal, oldVal) {
@@ -360,8 +359,7 @@ require(['Vue', 'Utils'],
 						return;
 					}
 
-					var checkCode = vm.checkCode.replace(/\s+/g, "");
-					if (newVal !== checkCode) {
+					if (newVal !== vm.catpchaCode) {
 						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 100px;">验证码不正确</label>';
 						return;
 					}
@@ -464,8 +462,7 @@ require(['Vue', 'Utils'],
 						return;
 					}
 
-					var checkCode = vm.checkCode.replace(/\s+/g, "");
-					if (vm.validate !== checkCode) {
+					if (vm.validate !== vm.catpchaCode) {
 						a = document.getElementById("validate");
 						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 100px;">验证码不正确</label>';
 						return;

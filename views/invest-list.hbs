@@ -59,7 +59,7 @@
                     <span class="my-progress-num" v-if="equity.AcitveStatus === 1 || equity.AcitveStatus === 10">${equity.CompletePercent}%</span>
                     <span class="my-progress-num my-preheat-status" v-if="equity.AcitveStatus === 0">预热中</span>
                 </div>
-                <p class="my-p-status my-text-gray" v-if="equity.AcitveStatus !== 0"><span>目标金额 <b>${equity.TargetAmount}元</b></span> <span>已众筹 <b>${equity.HaveCrowdFundingAmount}元</b></span> <span>投资人数 <b>${equity.CrowdFundingOrderCount}人</b></span>           <span>剩余天数 <b>${equity.RemainDay}天</b></span></p>
+                <p class="my-p-status my-text-gray" v-if="equity.AcitveStatus !== 0"><span>目标金额 <b>${equity.TargetAmount}元</b></span> <span>已众筹 <b>${equity.HaveCrowdFundingAmount}元</b></span> <span>投资人数 <b>${equity.CrowdFundingCustomerCount}人</b></span>           <span>剩余天数 <b>${equity.RemainDay}天</b></span></p>
                 <p class="my-p-status my-text-gray" v-if="equity.AcitveStatus === 0"><span>目标金额 <b>${equity.TargetAmount}元</b></span>         <span>开始时间 <b>${equity.StartDate.substring(0, 10)}</b></span>           <span>预约人数 <b>${equity.CrowdFundingReserveCount}人</b></span></p>
             </div>
             <span class="my-product-list-failed" v-if="equity.AcitveStatus === 10"></span>

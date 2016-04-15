@@ -136,6 +136,39 @@ require(['Vue', 'Utils'],
 					}
 				});
 
+				vm.$watch('username', function (newVal, oldVal) {
+					var myreg = /^[1][358][0-9]{9}$/;
+					var a = document.getElementById("id-label");
+					if (!newVal) {
+						a.innerHTML = '<label style="font-size:14px;color:red;margin: 0;">请输入11位手机号码</label>';
+						return;
+					}
+
+					if (!myreg.test(newVal)) {
+						a.innerHTML = '<label style="font-size:14px;color:red;margin: 0;">手机号码不正确</label>';
+						return;
+					}
+					a.innerHTML = '';
+				});
+
+				vm.$watch('captcha', function (newVal, oldVal) {
+					var a = document.getElementById("captcha-label");
+					if (!newVal) {
+						a.innerHTML = '<label style="font-size:14px;color:red;margin: 0;">请输入验证码</label>';
+						return;
+					}
+					a.innerHTML = '';
+				});
+
+				vm.$watch('password', function (newVal, oldVal) {
+					var a = document.getElementById("pass-label");
+					if (!newVal) {
+						a.innerHTML = '<label style="font-size:14px;color:red;margin: 0;">密码不能为空</label>';
+						return;
+					}
+					a.innerHTML = '';
+				});
+
 				$('#sendCaptcha').click(function (e) {
 					e.preventDefault();
 					var myreg = /^[1][358][0-9]{9}$/;
@@ -145,12 +178,12 @@ require(['Vue', 'Utils'],
 					var a = document.getElementById("id-label");
 					a.innerHTML = '';
 					if (!vm.username) {
-						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">请输入11位手机号码</label>';
+						a.innerHTML = '<label style="font-size:14px;color:red;margin: 0;">请输入11位手机号码</label>';
 						return;
 					}
 
 					if (!myreg.test(vm.username)) {
-						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">手机号码不正确</label>';
+						a.innerHTML = '<label style="font-size:14px;color:red;margin: 0;">手机号码不正确</label>';
 						return;
 					}
 
@@ -188,25 +221,25 @@ require(['Vue', 'Utils'],
 					var a = null;
 					if (!vm.username) {
 						a = document.getElementById("id-label");
-						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">请输入11位手机号码</label>';
+						a.innerHTML = '<label style="font-size:14px;color:red;margin: 0;">请输入11位手机号码</label>';
 						return;
 					}
 
 					if (!myreg.test(vm.username)) {
 						a = document.getElementById("id-label");
-						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">手机号码不正确</label>';
+						a.innerHTML = '<label style="font-size:14px;color:red;margin: 0;">手机号码不正确</label>';
 						return;
 					}
 
 					if (!vm.captcha) {
 						a = document.getElementById("captcha-label");
-						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">请输入验证码</label>';
+						a.innerHTML = '<label style="font-size:14px;color:red;margin: 0;">请输入验证码</label>';
 						return;
 					}
 
 					if (!vm.password) {
 						a = document.getElementById("pass-label");
-						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 90px;">密码不能为空</label>';
+						a.innerHTML = '<label style="font-size:14px;color:red;margin: 0;">密码不能为空</label>';
 						return;
 					}
 

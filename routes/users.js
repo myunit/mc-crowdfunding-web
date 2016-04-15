@@ -124,7 +124,7 @@ router.post('/finish-order', function (req, res, next) {
     var buf = null;
     var writeStream = null;
     var savePath = '';
-    var opt = {flags: 'w', encoding: null, fd: null, mode: 0666, autoClose: true};;
+    var opt = {flags: 'w', encoding: null, fd: null, mode: 0666, autoClose: true};
     var filePath = path.join(__dirname, '../public/images/pay/');
     if (!fs.existsSync(filePath)) {
       fs.mkdirSync(filePath);
@@ -134,7 +134,7 @@ router.post('/finish-order', function (req, res, next) {
       buf = new Buffer(imgData[i], 'base64');
       rs.push(buf);
       rs.push(null);
-      savePath = filePath +  req.session.uid + '_' + req.body.orderId + '_' + (new Date()).getTime() + '.jpg';
+      savePath = filePath +  req.session.uid + '_' + req.body.orderId + '_' + (new Date()).getTime() + '_' + i + '.jpg';
       writeStream = fs.createWriteStream(savePath, opt);
       rs.pipe(writeStream);
       rs = null;

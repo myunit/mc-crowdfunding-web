@@ -86,9 +86,9 @@
                 <td width="12%" valign="top">${funding.TotalAmount}元</td>
                 <td width="10%" valign="top">${funding.StatusTip}</td>
                 <td width="12%" valign="top" :id="'opt-box-'+funding.SysNo">
-                    <button type="button" class="btn btn-dark" v-if="funding.OrderStatus === 0 && funding.PaymentStatus === 0" @click.prevent="wantPay($index)">已完成转账</button><br  v-if="funding.OrderStatus === 0 && funding.PaymentStatus === 0">
-                    <button type="button" class="btn btn-default" v-if="funding.OrderStatus === 0 && funding.PaymentStatus === 0" @click.prevent="wantCancel($index)">取消订单</button>
-                    <button type="button" class="btn btn-default" id="view-invest-process"  v-if="funding.OrderStatus === 2 && funding.PaymentStatus === 1 && funding.CrowdFunding.AcitveStatus === 10 && funding.CrowdFunding.CrowdFundingStatus === 10" @click.prevent="goToProgress($index)">查看项目进度</button>
+                    <button type="button" class="btn btn-dark" v-if="funding.OrderStatus === 0" @click.prevent="wantPay($index)">已完成转账</button><br  v-if="funding.OrderStatus === 0">
+                    <button type="button" class="btn btn-default" v-if="funding.OrderStatus === 0" @click.prevent="wantCancel($index)">取消订单</button>
+                    <button type="button" class="btn btn-default" id="view-invest-process"  v-if="funding.OrderStatus === 2 && funding.CrowdFunding.AcitveStatus === 10 && funding.CrowdFunding.CrowdFundingStatus === 10" @click.prevent="goToProgress($index)">查看项目进度</button>
                     <span class=" my-text-blue" v-if="funding.OrderStatus === 11 && funding.ReturnStatus === 0">已付款？<br>联系客服申请退款</span>
                 </td>
             </tr>

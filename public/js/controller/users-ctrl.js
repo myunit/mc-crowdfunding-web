@@ -364,17 +364,19 @@ require(['Vue', 'Utils'],
                     if (selectOrderStatus === 0) {
                         orderStatus = 0;
                         payStatus = 0;
+                        returnStatus = 0;
                     } else if (selectOrderStatus === 1) {
                         orderStatus = 1;
                         payStatus = 0;
+                        returnStatus = 0;
                     } else if (selectOrderStatus === 2) {
                         orderStatus = 2;
                         payStatus = 1;
+                        returnStatus = 0;
                     } else if (selectOrderStatus === 3) {
                         orderStatus = 11;
                         returnStatus = 0;
                     } else if (selectOrderStatus === 4) {
-                        orderStatus = 11;
                         returnStatus = 1;
                     }
 
@@ -608,17 +610,19 @@ require(['Vue', 'Utils'],
                     if (selectOrderStatus === 0) {
                         orderStatus = 0;
                         payStatus = 0;
+                        returnStatus = 0;
                     } else if (selectOrderStatus === 1) {
                         orderStatus = 1;
                         payStatus = 0;
+                        returnStatus = 0;
                     } else if (selectOrderStatus === 2) {
                         orderStatus = 2;
                         payStatus = 1;
+                        returnStatus = 0;
                     } else if (selectOrderStatus === 3) {
                         orderStatus = 11;
                         returnStatus = 0;
                     } else if (selectOrderStatus === 4) {
-                        orderStatus = 11;
                         returnStatus = 1;
                     }
 

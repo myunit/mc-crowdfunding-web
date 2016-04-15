@@ -428,6 +428,9 @@ DIV.digg  .next{ margin:2px 6px 2px 6px;}
 .sl-custom-file{position:relative;display:inline-block;zoom:1;cursor:pointer;overflow:hidden;vertical-align:middle;}
 .sl-custom-file .ui-input-file{position:absolute;right:0;top:0;_zoom:30;font-size:300px\9;height:100%;_height:auto;opacity:0;}
 
+.warpper{position: relative;padding-bottom: 74px;height: auto;min-height: 100%}
+.warpper footer{position: absolute;left: 0;bottom: 0;width: 100%}
+
 [v-cloak] {
 	display: none;
 }

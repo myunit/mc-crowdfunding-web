@@ -1,153 +1,151 @@
-<div class="page-group">
-    <div id="page-invest-detail" class="page page-current my-white-bg">
-        <header class="my-header-default">
-            <div class=" my-login-header">
+<div id="page-invest-detail" class="page page-current my-white-bg warpper">
+    <header class="my-header-default">
+        <div class=" my-login-header">
     	<span class="pull-left">
          Hi,{{name}}  <a href="/">退出</a>
         </span>
-            </div>
-        </header>
-
-        <nav class="my-border-bottom">
-            <div class="my-wp-1200">
-                <a href="/login-suc" class="my-logo">美仓众筹</a>
-                <ul class="nav nav-pills pull-right">
-
-                    <li role="presentation"><a href="../login-suc">首页</a></li>
-                    <li role="presentation"><a href="../invest/invest-list">权益众筹</a></li>
-                    <li role="presentation" class="active"><a href="../product/product-list">产品众筹</a></li>
-                    <li role="presentation"><a href="../users/my-pre-order">我的预约</a></li>
-                    <li role="presentation"><a href="../users/my-invest-list">我的众筹</a></li>
-                </ul>
-            </div>
-        </nav>
-
-
-        <div class="my-wp-1200">
-            <h2 class="my-h2-product" v-cloak>${funding.CrowdFundingName}</h2>
-            <div class="my-item-box my-produtc-box clearfix">
-                <p class="my-item-img pull-left"><img :src="imgList[1].ImgValue" width="490" height="330" alt=""/></p>
-                <div class="my-item-status my-item-status-b pull-left" v-cloak>
-                    <p class="my-item-preheat" v-if="funding.AcitveStatus === 0">预热中</p>
-                    <p class="my-item-num" v-if="funding.AcitveStatus === 1 || funding.AcitveStatus === 10">累计众筹金额：<span>￥${funding.HaveCrowdFundingAmount}</span></p>
-                    <p class="my-item-num" v-if="funding.AcitveStatus === 1 || funding.AcitveStatus === 10">累计出让比例：<span class="my-text-black">${funding.HaveCrowdFundingPercent}%</span></p>
-                    <div class="my-item-progress clearfix">
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" :style="{width: funding.CompletePercent+'%'};">
-                                <span class="sr-only"></span>
-                            </div>
-                        </div>
-                        <span class="my-progress-num">${funding.CompletePercent}%</span>
-                    </div>
-                    <p class="my-p-status my-text-gray"><span><b class="my-text-red">${funding.TargetAmount}元</b><br />目标金额</span>
-                        <span><b class="my-text-red">${funding.RemiseInterestRate*100}%</b><br />出让比例</span>
-                        <span><b class="my-text-red">${funding.UnitPrice}元</b><br />每份金额</span>
-                        <span><b class="my-text-red">${funding.UnitPercent}%</b><br />单份占比</span>
-                        <span><b class="my-text-red">${funding.WholesaleGrossProfit*100}%</b><br />批发毛利</span>
-                    </p>
-                    <p class="my-p-time">众筹时间:${funding.StartDate.substring(0, 16)} 到 ${funding.EndDate.substring(0, 16)}</p>
-                    <button type="button" class="btn btn-lg btn-primary" id="join-invest" @click.prevent="goToBuy()" v-if="funding.AcitveStatus === 1">我要参与</button>
-                    <button type="button" class="btn btn-lg btn-primary" @click.prevent="reserve()" v-if="funding.AcitveStatus === 0">我要预约</button>
-                    <button type="button" disabled class="btn btn-lg btn-primary" v-if="funding.AcitveStatus === 10">已结束</button>
-                </div>
-                <span class="my-item-success" v-if="funding.AcitveStatus === 10 && funding.CrowdFundingStatus === 10"></span>
-                <span class="my-item-failed" v-if="funding.AcitveStatus === 10 && funding.CrowdFundingStatus === 11"></span>
-            </div>
-            <div class="ui-video-content">
-                <video width="1200" height="537" controls preload>
-                    <source src="" type="video/mp4">
-                </video>
-            </div>
-            <div id="my-carousel" class="carousel slide my-carousel" data-ride="carousel">
-                <!-- Indicators -->
-                <ol class="carousel-indicators">
-                    <template v-for="img in swiperImg" track-by="$index">
-                        <li data-target="#my-carousel" :data-slide-to="$index" :class="{'active': $index === 0}"></li>
-                    </template>
-                </ol>
-
-                <!-- Wrapper for slides -->
-                <div class="carousel-inner" role="listbox">
-                    <template v-for="img in swiperImg" track-by="$index">
-                        <div class="item" :class="{'active': $index === 0}" :data-slide-number="$index">
-                            <img :src="img.url" alt="..." class="img-responsive">
-                        </div>
-                    </template>
-                </div>
-
-                <!-- Controls -->
-                <a class="left carousel-control" href="#my-carousel" role="button" data-slide="prev">
-                    <span class="ui-icon ui-icon-arrow-left" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="right carousel-control" href="#my-carousel" role="button" data-slide="next">
-                    <span class="ui-icon ui-icon-arrow-right" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
-            <div class="my-thumbnail-box">
-                <ul class="clearfix">
-                    <li class="my-thumbnail-item">
-                        <a href="#" id="fn-video">
-                            <canvas id="videoCanvas" width="185" height="130"></canvas>
-                            <span>宣传视频</span></a>
-                    </li>
-                    <li class="my-thumbnail-item" @click.prevent="switchSwiper(0)">
-                        <a id="carousel-selector-0"><img :src="imgList[2].ImgValue.length > 0 ? imgList[2].ImgValue[0]:''" width="185" height="130" alt=""/>
-                            <span>品牌及产品介绍</span></a>
-                    </li>
-                    <li class="my-thumbnail-item" @click.prevent="switchSwiper(imgList[2].ImgValue.length)">
-                        <a id="carousel-selector-1"><img :src="imgList[3].ImgValue.length > 0 ? imgList[3].ImgValue[0]:''" width="185" height="130" alt=""/>
-                            <span>营销策划方案</span></a>
-                    </li>
-                    <li class="my-thumbnail-item" @click.prevent="switchSwiper(imgList[2].ImgValue.length + imgList[3].ImgValue.length)">
-                        <a id="carousel-selector-2"><img :src="imgList[4].ImgValue.length > 0 ? imgList[4].ImgValue[0]:''" width="185" height="130" alt=""/>
-                            <span>投资回报</span></a>
-                    </li>
-                    <li class="my-thumbnail-item" @click.prevent="switchSwiper(imgList[2].ImgValue.length + imgList[3].ImgValue.length + imgList[4].ImgValue.length)">
-                        <a id="carousel-selector-3"><img :src="imgList[5].ImgValue.length > 0 ? imgList[5].ImgValue[0]:''" width="185" height="130" alt=""/>
-                            <span>权利与义务</span></a>
-                    </li>
-                    <li class="my-thumbnail-item" @click.prevent="switchSwiper(imgList[2].ImgValue.length + imgList[3].ImgValue.length + imgList[4].ImgValue.length + imgList[5].ImgValue.length)">
-                        <a id="carousel-selector-4"><img :src="imgList[6].ImgValue.length > 0 ? imgList[6].ImgValue[0]:''" width="185" height="130" alt=""/>
-                            <span>淘汰机制</span></a>
-                    </li>
-                </ul>
-            </div>
-            <h3 class="my-h3-product">常见问题</h3>
-            <div class="my-qa-box">
-                <dl>
-                    <dt>问题问题问题问题问题问题问题问题问题问题问题问题问题问题问?</dt>
-                    <dd>回答：回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本</dd>
-                    <dt>问题问题问题问题问题问题问题问题问题问题问题问题问题问题问?</dt>
-                    <dd>回答：回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本
-                        回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本</dd>
-                    <dt>问题问题问题问题问题问题问题问题问题问题问题问题问题问题问?</dt>
-                    <dd>回答：回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本
-                        回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本</dd>
-                    <dt>问题问题问题问题问题问题问题问题问题问题问题问题问题问题问?</dt>
-                    <dd>回答：回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本
-                        回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本</dd>
-                </dl>
-            </div>
         </div>
+    </header>
 
-        <footer>
-            <p class="my-p-footer">友情链接 - <a href="#">美仓供应链</a><br>
-                ©2015 xxxxxx众筹网络科技有限公司 zhongchou.com 版权所有 xxICP证1xxxxxxxx号</p>
-        </footer>
-        <div class="modal modal_align fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-            <div class="modal-dialog modal-sm">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <nav class="my-border-bottom">
+        <div class="my-wp-1200">
+            <a href="/login-suc" class="my-logo">美仓众筹</a>
+            <ul class="nav nav-pills pull-right">
+
+                <li role="presentation"><a href="../login-suc">首页</a></li>
+                <li role="presentation"><a href="../invest/invest-list">权益众筹</a></li>
+                <li role="presentation" class="active"><a href="../product/product-list">产品众筹</a></li>
+                <li role="presentation"><a href="../users/my-pre-order">我的预约</a></li>
+                <li role="presentation"><a href="../users/my-invest-list">我的众筹</a></li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <div class="my-wp-1200">
+        <h2 class="my-h2-product" v-cloak>${funding.CrowdFundingName}</h2>
+        <div class="my-item-box my-produtc-box clearfix">
+            <p class="my-item-img pull-left"><img :src="imgList[1].ImgValue" width="490" height="330" alt=""/></p>
+            <div class="my-item-status my-item-status-b pull-left" v-cloak>
+                <p class="my-item-preheat" v-if="funding.AcitveStatus === 0">预热中</p>
+                <p class="my-item-num" v-if="funding.AcitveStatus === 1 || funding.AcitveStatus === 10">累计众筹金额：<span>￥${funding.HaveCrowdFundingAmount}</span></p>
+                <p class="my-item-num" v-if="funding.AcitveStatus === 1 || funding.AcitveStatus === 10">累计出让比例：<span class="my-text-black">${funding.HaveCrowdFundingPercent}%</span></p>
+                <div class="my-item-progress clearfix">
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" :style="{width: funding.CompletePercent+'%'};">
+                            <span class="sr-only"></span>
+                        </div>
                     </div>
-                    <div class="modal-body">
-                        <div class="ui-reg-complete">
-                            <h3><span class="ui-icon ui-icon-check"></span>您已成功预约</h3>
-                            可以去 <a href="/users/my-pre-order">我的预约</a> 中查看 </div>
-                    </div>
+                    <span class="my-progress-num">${funding.CompletePercent}%</span>
                 </div>
+                <p class="my-p-status my-text-gray"><span><b class="my-text-red">${funding.TargetAmount}元</b><br />目标金额</span>
+                    <span><b class="my-text-red">${funding.RemiseInterestRate*100}%</b><br />出让比例</span>
+                    <span><b class="my-text-red">${funding.UnitPrice}元</b><br />每份金额</span>
+                    <span><b class="my-text-red">${funding.UnitPercent}%</b><br />单份占比</span>
+                    <span><b class="my-text-red">${funding.WholesaleGrossProfit*100}%</b><br />批发毛利</span>
+                </p>
+                <p class="my-p-time">众筹时间:${funding.StartDate.substring(0, 16)} 到 ${funding.EndDate.substring(0, 16)}</p>
+                <button type="button" class="btn btn-lg btn-primary" id="join-invest" @click.prevent="goToBuy()" v-if="funding.AcitveStatus === 1">我要参与</button>
+                <button type="button" class="btn btn-lg btn-primary" @click.prevent="reserve()" v-if="funding.AcitveStatus === 0">我要预约</button>
+                <button type="button" disabled class="btn btn-lg btn-primary" v-if="funding.AcitveStatus === 10">已结束</button>
+            </div>
+            <span class="my-item-success" v-if="funding.AcitveStatus === 10 && funding.CrowdFundingStatus === 10"></span>
+            <span class="my-item-failed" v-if="funding.AcitveStatus === 10 && funding.CrowdFundingStatus === 11"></span>
+        </div>
+        <div class="ui-video-content">
+            <video width="1200" height="537" controls preload>
+                <source src="" type="video/mp4">
+            </video>
+        </div>
+        <div id="my-carousel" class="carousel slide my-carousel" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <template v-for="img in swiperImg" track-by="$index">
+                    <li data-target="#my-carousel" :data-slide-to="$index" :class="{'active': $index === 0}"></li>
+                </template>
+            </ol>
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" role="listbox">
+                <template v-for="img in swiperImg" track-by="$index">
+                    <div class="item" :class="{'active': $index === 0}" :data-slide-number="$index">
+                        <img :src="img.url" alt="..." class="img-responsive">
+                    </div>
+                </template>
+            </div>
+
+            <!-- Controls -->
+            <a class="left carousel-control" href="#my-carousel" role="button" data-slide="prev">
+                <span class="ui-icon ui-icon-arrow-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#my-carousel" role="button" data-slide="next">
+                <span class="ui-icon ui-icon-arrow-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+        <div class="my-thumbnail-box">
+            <ul class="clearfix">
+                <li class="my-thumbnail-item">
+                    <a href="#" id="fn-video">
+                        <canvas id="videoCanvas" width="185" height="130"></canvas>
+                        <span>宣传视频</span></a>
+                </li>
+                <li class="my-thumbnail-item" @click.prevent="switchSwiper(0)">
+                    <a id="carousel-selector-0"><img :src="imgList[2].ImgValue.length > 0 ? imgList[2].ImgValue[0]:''" width="185" height="130" alt=""/>
+                        <span>品牌及产品介绍</span></a>
+                </li>
+                <li class="my-thumbnail-item" @click.prevent="switchSwiper(imgList[2].ImgValue.length)">
+                    <a id="carousel-selector-1"><img :src="imgList[3].ImgValue.length > 0 ? imgList[3].ImgValue[0]:''" width="185" height="130" alt=""/>
+                        <span>营销策划方案</span></a>
+                </li>
+                <li class="my-thumbnail-item" @click.prevent="switchSwiper(imgList[2].ImgValue.length + imgList[3].ImgValue.length)">
+                    <a id="carousel-selector-2"><img :src="imgList[4].ImgValue.length > 0 ? imgList[4].ImgValue[0]:''" width="185" height="130" alt=""/>
+                        <span>投资回报</span></a>
+                </li>
+                <li class="my-thumbnail-item" @click.prevent="switchSwiper(imgList[2].ImgValue.length + imgList[3].ImgValue.length + imgList[4].ImgValue.length)">
+                    <a id="carousel-selector-3"><img :src="imgList[5].ImgValue.length > 0 ? imgList[5].ImgValue[0]:''" width="185" height="130" alt=""/>
+                        <span>权利与义务</span></a>
+                </li>
+                <li class="my-thumbnail-item" @click.prevent="switchSwiper(imgList[2].ImgValue.length + imgList[3].ImgValue.length + imgList[4].ImgValue.length + imgList[5].ImgValue.length)">
+                    <a id="carousel-selector-4"><img :src="imgList[6].ImgValue.length > 0 ? imgList[6].ImgValue[0]:''" width="185" height="130" alt=""/>
+                        <span>淘汰机制</span></a>
+                </li>
+            </ul>
+        </div>
+        <h3 class="my-h3-product">常见问题</h3>
+        <div class="my-qa-box">
+            <dl>
+                <dt>问题问题问题问题问题问题问题问题问题问题问题问题问题问题问?</dt>
+                <dd>回答：回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本</dd>
+                <dt>问题问题问题问题问题问题问题问题问题问题问题问题问题问题问?</dt>
+                <dd>回答：回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本
+                    回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本</dd>
+                <dt>问题问题问题问题问题问题问题问题问题问题问题问题问题问题问?</dt>
+                <dd>回答：回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本
+                    回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本</dd>
+                <dt>问题问题问题问题问题问题问题问题问题问题问题问题问题问题问?</dt>
+                <dd>回答：回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本
+                    回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本回答文本</dd>
+            </dl>
+        </div>
+    </div>
+
+    <footer>
+        <p class="my-p-footer">友情链接 - <a href="#">美仓供应链</a><br>
+            ©2015 xxxxxx众筹网络科技有限公司 zhongchou.com 版权所有 xxICP证1xxxxxxxx号</p>
+    </footer>
+</div>
+<div class="modal modal_align fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="ui-reg-complete">
+                    <h3><span class="ui-icon ui-icon-check"></span>您已成功预约</h3>
+                    可以去 <a href="/users/my-pre-order">我的预约</a> 中查看 </div>
             </div>
         </div>
     </div>

@@ -1,70 +1,80 @@
-<div class="page-group">
-    <div id="page-my-pre-order" class="page page-current my-white-bg">
-<header class="my-header-default">
-    <div class=" my-login-header">
+<div id="page-my-pre-order" class="page page-current my-white-bg warpper">
+    <header class="my-header-default">
+        <div class=" my-login-header">
     	<span class="pull-left">
          Hi,{{name}}  <a href="/">退出</a>
         </span>
-    </div>
-</header>
+        </div>
+    </header>
 
-<nav class="my-border-bottom">
+    <nav class="my-border-bottom">
+        <div class="my-wp-1200">
+            <a href="/login-suc" class="my-logo">美仓众筹</a>
+            <ul class="nav nav-pills pull-right">
+
+                <li role="presentation" class="active"><a href="../login-suc">首页</a></li>
+                <li role="presentation"><a href="../invest/invest-list">权益众筹</a></li>
+                <li role="presentation"><a href="../product/product-list">产品众筹</a></li>
+                <li role="presentation"><a href="../users/my-pre-order">我的预约</a></li>
+                <li role="presentation"><a href="../users/my-invest-list">我的众筹</a></li>
+            </ul>
+        </div>
+    </nav>
+
+
     <div class="my-wp-1200">
-        <a href="/login-suc" class="my-logo">美仓众筹</a>
-        <ul class="nav nav-pills pull-right">
+        <div class="my-title-box clearfix">
+            <h2 class="ui-h2-cart pull-left"><span class="ui-icon ui-icon-arrow"></span>预约记录</h2>
+        </div>
 
-            <li role="presentation" class="active"><a href="../login-suc">首页</a></li>
-            <li role="presentation"><a href="../invest/invest-list">权益众筹</a></li>
-            <li role="presentation"><a href="../product/product-list">产品众筹</a></li>
-            <li role="presentation"><a href="../users/my-pre-order">我的预约</a></li>
-            <li role="presentation"><a href="../users/my-invest-list">我的众筹</a></li>
-        </ul>
-    </div>
-</nav>
-
-
-<div class="my-wp-1200">
-    <div class="my-title-box clearfix">
-        <h2 class="ui-h2-cart pull-left"><span class="ui-icon ui-icon-arrow"></span>预约记录</h2>
-    </div>
-
-    <table class="ui-table-cart-header" width="100%" border="0" cellspacing="0" cellpadding="0">
-        <tbody>
-        <tr>
-            <td width="36%" align="left">项目信息</td>
-            <td width="12%">项目状态</td>
-            <td width="20%">开始时间</td>
-            <td width="20%">结束时间</td>
-            <td width="12%">操作</td>
-        </tr>
-        </tbody>
-    </table>
-
-    <template v-for="funding in fundingList" track-by="CrowdFundingSysNo">
-        <table width="100%" class="ui-table-cart-item ui-table-clear" border="0" cellspacing="0" cellpadding="0" v-cloak>
+        <table class="ui-table-cart-header" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tbody>
             <tr>
-                <td width="36%"><span class="img-cart"><img :src="fundingImg[$index].ImgValue" width="80" height="80"></span>
-          <span class="title-cart title-middle">
-          <h4><strong v-if="funding.CrowdFunding.CrowdFundingType === 1">品牌权益众筹</strong><strong v-if="funding.CrowdFunding.CrowdFundingType === 3">单品权益众筹</strong><strong v-if="funding.CrowdFunding.CrowdFundingType === 2">产品众筹</strong></h4>
-          ${funding.CrowdFunding.CrowdFundingName}</span></td>
-                <td width="12%"><span class=" my-text-red" v-if="funding.CrowdFunding.AcitveStatus === 1">进行中</span><span class=" my-text-blue" v-if="funding.CrowdFunding.AcitveStatus === 0">预热中</span><span class=" my-text-gray" v-if="funding.CrowdFunding.AcitveStatus === 10">已结束</span></td>
-                <td width="20%">${funding.CrowdFunding.StartDate.substring(0, 16)}</td>
-                <td width="20%">${funding.CrowdFunding.EndDate.substring(0, 16)}</td>
-                <td width="12%" v-if="funding.CrowdFunding.AcitveStatus === 1"><button type="button" class="btn btn-dark" @click.prevent="goToDetail($index)">去支持</button></td>
-                <td width="12%" v-if="funding.CrowdFunding.AcitveStatus !== 1"><button type="button" class="btn btn-default"  @click.prevent="goToDetail($index)">查看详情</button></td>
+                <td width="36%" align="left">项目信息</td>
+                <td width="12%">项目状态</td>
+                <td width="20%">开始时间</td>
+                <td width="20%">结束时间</td>
+                <td width="12%">操作</td>
             </tr>
+            </tbody>
         </table>
-    </template>
-    <div class="digg my-mar-b50"></div>
+
+        <template v-for="funding in fundingList" track-by="CrowdFundingSysNo">
+            <table width="100%" class="ui-table-cart-item ui-table-clear" border="0" cellspacing="0" cellpadding="0"
+                   v-cloak>
+                <tr>
+                    <td width="36%"><span class="img-cart"><img :src="fundingImg[$index].ImgValue" width="80"
+                                                                height="80"></span>
+          <span class="title-cart title-middle">
+          <h4><strong v-if="funding.CrowdFunding.CrowdFundingType === 1">品牌权益众筹</strong><strong
+                  v-if="funding.CrowdFunding.CrowdFundingType === 3">单品权益众筹</strong><strong
+                  v-if="funding.CrowdFunding.CrowdFundingType === 2">产品众筹</strong></h4>
+          ${funding.CrowdFunding.CrowdFundingName}</span></td>
+                    <td width="12%"><span class=" my-text-red"
+                                          v-if="funding.CrowdFunding.AcitveStatus === 1">进行中</span><span
+                            class=" my-text-blue" v-if="funding.CrowdFunding.AcitveStatus === 0">预热中</span><span
+                            class=" my-text-gray" v-if="funding.CrowdFunding.AcitveStatus === 10">已结束</span></td>
+                    <td width="20%">${funding.CrowdFunding.StartDate.substring(0, 16)}</td>
+                    <td width="20%">${funding.CrowdFunding.EndDate.substring(0, 16)}</td>
+                    <td width="12%" v-if="funding.CrowdFunding.AcitveStatus === 1">
+                        <button type="button" class="btn btn-dark" @click.prevent="goToDetail($index)">去支持</button>
+                    </td>
+                    <td width="12%" v-if="funding.CrowdFunding.AcitveStatus !== 1">
+                        <button type="button" class="btn btn-default" @click.prevent="goToDetail($index)">查看详情
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </template>
+        <div class="digg my-mar-b50"></div>
+    </div>
+    <footer>
+        <p class="my-p-footer">友情链接 - <a href="#">美仓供应链</a><br>
+            ©2015 xxxxxx众筹网络科技有限公司 zhongchou.com 版权所有 xxICP证1xxxxxxxx号</p>
+    </footer>
 </div>
-</div>
-</div>
-<footer>
-    <p class="my-p-footer">友情链接 - <a href="#">美仓供应链</a><br>
-        ©2015 xxxxxx众筹网络科技有限公司 zhongchou.com 版权所有 xxICP证1xxxxxxxx号</p>
-</footer>
 <script src="../js/lib/jquery.min.js"></script>
 <script src="../js/lib/bootstrap.min.js"></script>
 <script src="../js/lib/toastr.min.js"></script>
 <script src="../js/lib/my.js"></script>
-<script type='text/javascript' src='../js/lib/requirejs.min.js' data-main='../js/controller/users-ctrl' ></script>
+<script type='text/javascript' src='../js/lib/requirejs.min.js' data-main='../js/controller/users-ctrl'></script>

@@ -1,194 +1,235 @@
-<div class="page-group">
-    <div id="page-invest-list" class="page page-current my-white-bg">
-<header class="my-header-default">
-    <div class=" my-login-header">
+<div id="page-invest-list" class="page page-current my-white-bg warpper">
+    <header class="my-header-default">
+        <div class=" my-login-header">
     	<span class="pull-left">
          Hi,{{name}}  <a href="/">退出</a>
         </span>
-    </div>
-</header>
+        </div>
+    </header>
 
-<nav class="my-border-bottom">
+    <nav class="my-border-bottom">
+        <div class="my-wp-1200">
+            <a href="/login-suc" class="my-logo">美仓众筹</a>
+            <ul class="nav nav-pills pull-right">
+
+                <li role="presentation" class="active"><a href="../login-suc">首页</a></li>
+                <li role="presentation"><a href="../invest/invest-list">权益众筹</a></li>
+                <li role="presentation"><a href="../product/product-list">产品众筹</a></li>
+                <li role="presentation"><a href="../users/my-pre-order">我的预约</a></li>
+                <li role="presentation"><a href="../users/my-invest-list">我的众筹</a></li>
+            </ul>
+        </div>
+    </nav>
+
+
     <div class="my-wp-1200">
-        <a href="/login-suc" class="my-logo">美仓众筹</a>
-        <ul class="nav nav-pills pull-right">
-
-            <li role="presentation" class="active"><a href="../login-suc">首页</a></li>
-            <li role="presentation"><a href="../invest/invest-list">权益众筹</a></li>
-            <li role="presentation"><a href="../product/product-list">产品众筹</a></li>
-            <li role="presentation"><a href="../users/my-pre-order">我的预约</a></li>
-            <li role="presentation"><a href="../users/my-invest-list">我的众筹</a></li>
+        <ul class="my-nav-product-list clearfix">
+            <li class="active"><a href="#">权益众筹</a></li>
+            <li><a href="my-product-list">产品众筹 </a></li>
         </ul>
-    </div>
-</nav>
 
+        <div class="my-top-product-list my-mar-0">
+            <label>项目状态</label>
+            <select class="dropdown" name="" id="selectStatus">
+                <option value="-1">全部</option>
+                <option value="1">进行中</option>
+                <option value="10">已成功</option>
+                <option value="11">已失败</option>
+            </select>
+            <label>支付状态</label>
+            <select class="dropdown" name="" id="selectOrderStatus">
+                <option value="-1">全部</option>
+                <option value="0">待支付</option>
+                <option value="1">审核中</option>
+                <option value="2">已支付</option>
+                <option value="3">已取消</option>
+                <option value="4">已退款</option>
+            </select>
+        </div>
 
-<div class="my-wp-1200">
-    <ul class="my-nav-product-list clearfix">
-        <li class="active"><a href="#">权益众筹</a></li>
-        <li><a href="my-product-list">产品众筹 </a></li>
-    </ul>
-
-    <div class="my-top-product-list my-mar-0">
-        <label>项目状态</label>
-        <select class="dropdown" name="" id="selectStatus">
-            <option value="-1">全部</option>
-            <option value="1">进行中</option>
-            <option value="10">已成功</option>
-            <option value="11">已失败</option>
-        </select>
-        <label>支付状态</label>
-        <select class="dropdown" name="" id="selectOrderStatus">
-            <option value="-1">全部</option>
-            <option value="0">待支付</option>
-            <option value="1">审核中</option>
-            <option value="2">已支付</option>
-            <option value="3">已取消</option>
-            <option value="4">已退款</option>
-        </select>
-    </div>
-
-    <table class="ui-table-cart-header  my-mar-0" width="100%" border="0" cellspacing="0" cellpadding="0">
-        <tbody>
-        <tr>
-            <td width="28%" align="left">项目信息</td>
-            <td width="10%" >项目状态</td>
-            <td width="12%" >进度</td>
-            <td width="8%" >众筹数量</td>
-            <td width="8%" >投资占比</td>
-            <td width="12%" >实付金额</td>
-            <td width="10%">状态</td>
-            <td width="12%" >操作</td>
-        </tr>
-        </tbody>
-    </table>
-
-    <template v-for="funding in fundingList" track-by="$index">
-        <table width="100%" class="ui-table-cart-item ui-table-clear my-table-progress" border="0" cellspacing="0" cellpadding="0" v-cloak>
+        <table class="ui-table-cart-header  my-mar-0" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tbody>
             <tr>
-                <td colspan="8" class="my-order-num"><span>下单时间  ${funding.InDate.substring(0, 16)}</span><span>订单号  ${funding.SysNo}</span></td>
+                <td width="28%" align="left">项目信息</td>
+                <td width="10%">项目状态</td>
+                <td width="12%">进度</td>
+                <td width="8%">众筹数量</td>
+                <td width="8%">投资占比</td>
+                <td width="12%">实付金额</td>
+                <td width="10%">状态</td>
+                <td width="12%">操作</td>
             </tr>
-            <tr>
-                <td width="28%" @click.prevent="goToDetail($index)"><span class="img-cart"><img :src="fundingImg[$index].ImgValue" width="80" height="80"></span>
-          <span class="title-cart title-middle">${funding.CrowdFunding.CrowdFundingName}</span></td>
-                <td width="10%" valign="top"><span class=" my-text-red" v-if="funding.CrowdFunding.AcitveStatus === 1">进行中</span><span class=" my-text-black" v-if="funding.CrowdFunding.AcitveStatus === 10 && funding.CrowdFunding.CrowdFundingStatus === 10">已成功</span><span class=" my-text-black" v-if="funding.CrowdFunding.AcitveStatus === 10 && funding.CrowdFunding.CrowdFundingStatus === 11">已失败</span></td>
-                <td width="12%" valign="top">
-                    <p>目标：${funding.CrowdFunding.TargetAmount}元</p>
-                    <p>${funding.CrowdFunding.CompletePercent}%</p>
-                    <div class="progress">
-
-                        <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" :style="{width: funding.CrowdFunding.CompletePercent+'%'};">
-                            <span class="sr-only"></span>
-                        </div>
-                    </div>
-                </td>
-                <td width="8%" valign="top">${funding.Quantity}份</td><td width="8%" valign="top">${funding.BuyPercent}%</td>
-                <td width="12%" valign="top">${funding.TotalAmount}元</td>
-                <td width="10%" valign="top">${funding.StatusTip}</td>
-                <td width="12%" valign="top" :id="'opt-box-'+funding.SysNo">
-                    <button type="button" class="btn btn-dark" v-if="funding.OrderStatus === 0" @click.prevent="wantPay($index)">已完成转账</button><br  v-if="funding.OrderStatus === 0">
-                    <button type="button" class="btn btn-default" v-if="funding.OrderStatus === 0" @click.prevent="wantCancel($index)">取消订单</button>
-                    <button type="button" class="btn btn-default" id="view-invest-process"  v-if="funding.OrderStatus === 2 && funding.CrowdFunding.AcitveStatus === 10 && funding.CrowdFunding.CrowdFundingStatus === 10" @click.prevent="goToProgress($index)">查看项目进度</button>
-                    <span class=" my-text-blue" v-if="funding.OrderStatus === 11 && funding.ReturnStatus === 0">已付款？<br>联系客服申请退款</span>
-                </td>
-            </tr>
+            </tbody>
         </table>
-    </template>
-    <div class="digg my-mar-b50"></div>
-    <div class="modal modal_align fade bs-example-modal-sm" id="cancelModal" tabindex="-1" role="dialog"
-         aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close"
-                            data-dismiss="modal" aria-hidden="true">
-                        &times;
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">
-                        取消订单
-                    </h4>
-                </div>
-                <div class="modal-body">
-                    您确定要取消改订单吗？
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
-                    </button>
-                    <button type="button" class="btn btn-primary" @click.prevent="cancelOrder()">
-                        确定
-                    </button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal -->
-    </div>
 
-    <div class="modal modal_align modal_align_b fade" id="updatePayModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title">确认完成转账</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="ui-confirm-trans">
-                        <h3><strong>请上传转账凭证</strong>（银行汇款照片或网上银行回单截图）</h3>
-                        <ul>
-                            <li>
-                                <a class="ui-add sl-custom-file">
-                                    <img :src="payPhoto1.length > 0 ? payPhoto1 : '../images/add.gif'" width="82" height="82" alt=""/>
-                                    <input type="file" class="ui-input-file" name="uploadFile" accept="image/png,image/jpeg,image/bmp" id="payPhoto-1"/>
-                                </a>
-                                <a href="#" class="ui-delete" v-show="payPhoto1.length > 0" @click.prevent="deletePhoto(1)"></a>
-                            </li>
-                            <li>
-                                <a class="ui-add sl-custom-file">
-                                    <img :src="payPhoto2.length > 0 ? payPhoto2 : '../images/add.gif'" width="82" height="82" alt=""/>
-                                    <input type="file" class="ui-input-file" name="uploadFile" accept="image/png,image/jpeg,image/bmp" id="payPhoto-2"/>
-                                </a>
-                                <a href="#" class="ui-delete" v-show="payPhoto2.length > 0" @click.prevent="deletePhoto(2)"></a>
-                            </li>
-                            <li>
-                                <a class="ui-add sl-custom-file">
-                                    <img :src="payPhoto3.length > 0 ? payPhoto3 : '../images/add.gif'" width="82" height="82" alt=""/>
-                                    <input type="file" class="ui-input-file" name="uploadFile" accept="image/png,image/jpeg,image/bmp" id="payPhoto-3"/>
-                                </a>
-                                <a href="#" class="ui-delete" v-show="payPhoto3.length > 0" @click.prevent="deletePhoto(3)"></a>
-                            </li>
-                            <li>
-                                <a class="ui-add sl-custom-file">
-                                    <img :src="payPhoto4.length > 0 ? payPhoto4 : '../images/add.gif'" width="82" height="82" alt=""/>
-                                    <input type="file" class="ui-input-file" name="uploadFile" accept="image/png,image/jpeg,image/bmp" id="payPhoto-4"/>
-                                </a>
-                                <a href="#" class="ui-delete" v-show="payPhoto4.length > 0" @click.prevent="deletePhoto(4)"></a>
-                            </li>
-                            <li>
-                                <a class="ui-add sl-custom-file">
-                                    <img :src="payPhoto5.length > 0 ? payPhoto5 : '../images/add.gif'" width="82" height="82" alt=""/>
-                                    <input type="file" class="ui-input-file" name="uploadFile" accept="image/png,image/jpeg,image/bmp" id="payPhoto-5"/>
-                                </a>
-                                <a href="#" class="ui-delete" v-show="payPhoto5.length > 0" @click.prevent="deletePhoto(5)"></a>
-                            </li>
-                        </ul>
-                        <p class="ui-tip">支持PNG、JPG、JPEG格式，图片大小请勿超过5M</p>
+        <template v-for="funding in fundingList" track-by="$index">
+            <table width="100%" class="ui-table-cart-item ui-table-clear my-table-progress" border="0"
+                   cellspacing="0" cellpadding="0" v-cloak>
+                <tr>
+                    <td colspan="8" class="my-order-num"><span>下单时间  ${funding.InDate.substring(0, 16)}</span><span>订单号  ${funding.SysNo}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="28%" @click.prevent="goToDetail($index)"><span class="img-cart"><img
+                            :src="fundingImg[$index].ImgValue" width="80" height="80"></span>
+                        <span class="title-cart title-middle">${funding.CrowdFunding.CrowdFundingName}</span></td>
+                    <td width="10%" valign="top"><span class=" my-text-red"
+                                                       v-if="funding.CrowdFunding.AcitveStatus === 1">进行中</span><span
+                            class=" my-text-black"
+                            v-if="funding.CrowdFunding.AcitveStatus === 10 && funding.CrowdFunding.CrowdFundingStatus === 10">已成功</span><span
+                            class=" my-text-black"
+                            v-if="funding.CrowdFunding.AcitveStatus === 10 && funding.CrowdFunding.CrowdFundingStatus === 11">已失败</span>
+                    </td>
+                    <td width="12%" valign="top">
+                        <p>目标：${funding.CrowdFunding.TargetAmount}元</p>
+
+                        <p>${funding.CrowdFunding.CompletePercent}%</p>
+
+                        <div class="progress">
+
+                            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0"
+                                 aria-valuemax="100" :style="{width: funding.CrowdFunding.CompletePercent+'%'};">
+                                <span class="sr-only"></span>
+                            </div>
+                        </div>
+                    </td>
+                    <td width="8%" valign="top">${funding.Quantity}份</td>
+                    <td width="8%" valign="top">${funding.BuyPercent}%</td>
+                    <td width="12%" valign="top">${funding.TotalAmount}元</td>
+                    <td width="10%" valign="top">${funding.StatusTip}</td>
+                    <td width="12%" valign="top" :id="'opt-box-'+funding.SysNo">
+                        <button type="button" class="btn btn-dark" v-if="funding.OrderStatus === 0"
+                                @click.prevent="wantPay($index)">已完成转账
+                        </button>
+                        <br v-if="funding.OrderStatus === 0">
+                        <button type="button" class="btn btn-default" v-if="funding.OrderStatus === 0"
+                                @click.prevent="wantCancel($index)">取消订单
+                        </button>
+                        <button type="button" class="btn btn-default" id="view-invest-process"
+                                v-if="funding.OrderStatus === 2 && funding.CrowdFunding.AcitveStatus === 10 && funding.CrowdFunding.CrowdFundingStatus === 10"
+                                @click.prevent="goToProgress($index)">查看项目进度
+                        </button>
+                        <span class=" my-text-blue" v-if="funding.OrderStatus === 11 && funding.ReturnStatus === 0">已付款？<br>联系客服申请退款</span>
+                    </td>
+                </tr>
+            </table>
+        </template>
+        <div class="digg my-mar-b50"></div>
+        <div class="modal modal_align fade bs-example-modal-sm" id="cancelModal" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close"
+                                data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            取消订单
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        您确定要取消改订单吗？
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" @click.prevent="finishPay()">确认</button> <button type="button" class="btn  btn-dark" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" class="btn btn-primary" @click.prevent="cancelOrder()">
+                            确定
+                        </button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal -->
+        </div>
+
+        <div class="modal modal_align modal_align_b fade" id="updatePayModal" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">确认完成转账</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="ui-confirm-trans">
+                            <h3><strong>请上传转账凭证</strong>（银行汇款照片或网上银行回单截图）</h3>
+                            <ul>
+                                <li>
+                                    <a class="ui-add sl-custom-file">
+                                        <img :src="payPhoto1.length > 0 ? payPhoto1 : '../images/add.gif'"
+                                             width="82" height="82" alt=""/>
+                                        <input type="file" class="ui-input-file" name="uploadFile"
+                                               accept="image/png,image/jpeg,image/bmp" id="payPhoto-1"/>
+                                    </a>
+                                    <a href="#" class="ui-delete" v-show="payPhoto1.length > 0"
+                                       @click.prevent="deletePhoto(1)"></a>
+                                </li>
+                                <li>
+                                    <a class="ui-add sl-custom-file">
+                                        <img :src="payPhoto2.length > 0 ? payPhoto2 : '../images/add.gif'"
+                                             width="82" height="82" alt=""/>
+                                        <input type="file" class="ui-input-file" name="uploadFile"
+                                               accept="image/png,image/jpeg,image/bmp" id="payPhoto-2"/>
+                                    </a>
+                                    <a href="#" class="ui-delete" v-show="payPhoto2.length > 0"
+                                       @click.prevent="deletePhoto(2)"></a>
+                                </li>
+                                <li>
+                                    <a class="ui-add sl-custom-file">
+                                        <img :src="payPhoto3.length > 0 ? payPhoto3 : '../images/add.gif'"
+                                             width="82" height="82" alt=""/>
+                                        <input type="file" class="ui-input-file" name="uploadFile"
+                                               accept="image/png,image/jpeg,image/bmp" id="payPhoto-3"/>
+                                    </a>
+                                    <a href="#" class="ui-delete" v-show="payPhoto3.length > 0"
+                                       @click.prevent="deletePhoto(3)"></a>
+                                </li>
+                                <li>
+                                    <a class="ui-add sl-custom-file">
+                                        <img :src="payPhoto4.length > 0 ? payPhoto4 : '../images/add.gif'"
+                                             width="82" height="82" alt=""/>
+                                        <input type="file" class="ui-input-file" name="uploadFile"
+                                               accept="image/png,image/jpeg,image/bmp" id="payPhoto-4"/>
+                                    </a>
+                                    <a href="#" class="ui-delete" v-show="payPhoto4.length > 0"
+                                       @click.prevent="deletePhoto(4)"></a>
+                                </li>
+                                <li>
+                                    <a class="ui-add sl-custom-file">
+                                        <img :src="payPhoto5.length > 0 ? payPhoto5 : '../images/add.gif'"
+                                             width="82" height="82" alt=""/>
+                                        <input type="file" class="ui-input-file" name="uploadFile"
+                                               accept="image/png,image/jpeg,image/bmp" id="payPhoto-5"/>
+                                    </a>
+                                    <a href="#" class="ui-delete" v-show="payPhoto5.length > 0"
+                                       @click.prevent="deletePhoto(5)"></a>
+                                </li>
+                            </ul>
+                            <p class="ui-tip">支持PNG、JPG、JPEG格式，图片大小请勿超过5M</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" @click.prevent="finishPay()">确认</button>
+                            <button type="button" class="btn  btn-dark" data-dismiss="modal">取消</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-</div>
     <footer>
         <p class="my-p-footer">友情链接 - <a href="#">美仓供应链</a><br>
             ©2015 xxxxxx众筹网络科技有限公司 zhongchou.com 版权所有 xxICP证1xxxxxxxx号</p>
     </footer>
 </div>
+
 <script src="../js/lib/jquery.min.js"></script>
 <script src="../js/lib/bootstrap.min.js"></script>
 <script src="../js/lib/toastr.min.js"></script>
 <script src="../js/lib/jquery.loading.min.js"></script>
 <script src="../js/lib/lrz.pc.min.js"></script>
 <script src="../js/lib/my.js"></script>
-<script type='text/javascript' src='../js/lib/requirejs.min.js' data-main='../js/controller/users-ctrl' ></script>
+<script type='text/javascript' src='../js/lib/requirejs.min.js' data-main='../js/controller/users-ctrl'></script>

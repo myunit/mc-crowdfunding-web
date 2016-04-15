@@ -123,34 +123,61 @@
                 </div><!-- /.modal -->
             </div>
 
-            <div class="modal modal_align fade bs-example-modal-sm" id="updatePayModal" tabindex="-1" role="dialog"
-                 aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
+            <div class="modal modal_align modal_align_b fade" id="updatePayModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button type="button" class="close"
-                                    data-dismiss="modal" aria-hidden="true">
-                                &times;
-                            </button>
-                            <h4 class="modal-title" id="myModalLabel">
-                                上传支付凭证
-                            </h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title">确认完成转账</h4>
                         </div>
                         <div class="modal-body">
-                            <p><input type="file" name="uploadFile" accept="image/png,image/jpeg,image/bmp" id="payPhoto">上传支付凭证</input> <label id="picture-alert"></label></p>
+                            <div class="ui-confirm-trans">
+                                <h3><strong>请上传转账凭证</strong>（银行汇款照片或网上银行回单截图）</h3>
+                                <ul>
+                                    <li>
+                                        <a href="#" class="ui-add sl-custom-file">
+                                            <img :src="payPhoto1.length > 0 ? payPhoto1 : '../images/add.gif'" width="82" height="82" alt=""/>
+                                            <input type="file" class="ui-input-file" name="uploadFile" accept="image/png,image/jpeg,image/bmp" id="payPhoto-1"/>
+                                        </a>
+                                        <a href="#" class="ui-delete" v-show="payPhoto1.length > 0" @click.prevent="deletePhoto(1)"></a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="ui-add sl-custom-file">
+                                            <img :src="payPhoto2.length > 0 ? payPhoto2 : '../images/add.gif'" width="82" height="82" alt=""/>
+                                            <input type="file" class="ui-input-file" name="uploadFile" accept="image/png,image/jpeg,image/bmp" id="payPhoto-2"/>
+                                        </a>
+                                        <a href="#" class="ui-delete" v-show="payPhoto2.length > 0" @click.prevent="deletePhoto(2)"></a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="ui-add sl-custom-file">
+                                            <img :src="payPhoto3.length > 0 ? payPhoto3 : '../images/add.gif'" width="82" height="82" alt=""/>
+                                            <input type="file" class="ui-input-file" name="uploadFile" accept="image/png,image/jpeg,image/bmp" id="payPhoto-3"/>
+                                        </a>
+                                        <a href="#" class="ui-delete" v-show="payPhoto3.length > 0" @click.prevent="deletePhoto(3)"></a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="ui-add sl-custom-file">
+                                            <img :src="payPhoto4.length > 0 ? payPhoto4 : '../images/add.gif'" width="82" height="82" alt=""/>
+                                            <input type="file" class="ui-input-file" name="uploadFile" accept="image/png,image/jpeg,image/bmp" id="payPhoto-4"/>
+                                        </a>
+                                        <a href="#" class="ui-delete" v-show="payPhoto4.length > 0" @click.prevent="deletePhoto(4)"></a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="ui-add sl-custom-file">
+                                            <img :src="payPhoto5.length > 0 ? payPhoto5 : '../images/add.gif'" width="82" height="82" alt=""/>
+                                            <input type="file" class="ui-input-file" name="uploadFile" accept="image/png,image/jpeg,image/bmp" id="payPhoto-5"/>
+                                        </a>
+                                        <a href="#" class="ui-delete" v-show="payPhoto5.length > 0" @click.prevent="deletePhoto(5)"></a>
+                                    </li>
+                                </ul>
+                                <p class="ui-tip">支持PNG、JPG、JPEG格式，图片大小请勿超过5M</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" @click.prevent="finishPay()">确认</button> <button type="button" class="btn  btn-dark" data-dismiss="modal">取消</button>
+                            </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default"
-                                    data-dismiss="modal">关闭
-                            </button>
-                            <button type="button" class="btn btn-primary" @click.prevent="finishPay()">
-                                确定
-                            </button>
-                        </div>
-                    </div><!-- /.modal-content -->
-                </div><!-- /.modal -->
+                    </div>
+                </div>
             </div>
-        </div>
 
         <footer>
             <p class="my-p-footer">友情链接 - <a href="#">美仓供应链</a><br>

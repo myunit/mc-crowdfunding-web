@@ -116,33 +116,42 @@ router.post('/cancel-order', function (req, res, next) {
 router.post('/finish-order', function (req, res, next) {
 
   //save into disk
-  if (req.body.imgData) {
-    var link = '';
-    var rs = new Readable;
-    var buf = new Buffer(req.body.imgData, 'base64');
-    rs.push(buf);
-    rs.push(null);
-    var opt = {flags: 'w', encoding: null, fd: null, mode: 0666, autoClose: true};
+  var imgData = JSON.parse(req.body.imgData);
+  if (imgData.length) {
+    var link = [];
+    var url = '';
+    var i = 0;
+    var rs = null;
+    var buf = null;
+    var writeStream = null;
+    var savePath = '';
+    var opt = {flags: 'w', encoding: null, fd: null, mode: 0666, autoClose: true};;
     var filePath = path.join(__dirname, '../public/images/pay/');
     if (!fs.existsSync(filePath)) {
       fs.mkdirSync(filePath);
     }
+    for (i = 0;i < imgData.length; i++) {
+      rs = new Readable;
+      buf = new Buffer(imgData[i], 'base64');
+      rs.push(buf);
+      rs.push(null);
+      savePath = filePath +  req.session.uid + '_' + req.body.orderId + '_' + (new Date()).getTime() + '.jpg';
+      writeStream = fs.createWriteStream(savePath, opt);
+      rs.pipe(writeStream);
+      rs = null;
+      buf = null;
+      writeStream = null;
 
-    filePath += req.session.uid + '_' + req.body.orderId + '_' + (new Date()).getTime() + '.jpg';
-    var writeStream = fs.createWriteStream(filePath, opt);
-    rs.pipe(writeStream);
-    rs = null;
-
-    link = filePath.indexOf('/images');
-    link = filePath.substring(link);
-    link = 'http://wxp.xitie10.com:3100/' + link;
+      url = savePath.indexOf('/images');
+      url = savePath.substring(url);
+      link.push('http://wxp.xitie10.com:3100/' + url);
+    }
 
     var obj = {
       "userId": req.session.uid,
       "orderId": parseInt(req.body.orderId),
       "imgUrl": link
     };
-
     unirest.post(api.finishPayFunding())
         .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
         .send(obj)

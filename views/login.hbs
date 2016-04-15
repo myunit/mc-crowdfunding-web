@@ -1,51 +1,60 @@
-<div class="page-group">
-    <div id="page-login" class="page page-current my-white-bg">
-<nav class="my-border-bottom">
+<div id="page-login" class="page page-current my-white-bg warpper">
+    <nav class="my-border-bottom">
+        <div class="my-wp-1200">
+            <a href="/" class="my-logo">美仓众筹</a>
+
+            <div class="my-top-login pull-right">
+                <a href="login">登录</a> | <a href="reg-start">注册</a>
+            </div>
+        </div>
+    </nav>
+
+
     <div class="my-wp-1200">
-        <a href="/" class="my-logo">美仓众筹</a>
-        <div class="my-top-login pull-right">
-            <a href="login">登录</a>  | <a href="reg-start">注册</a>
+
+        <div class="my-box my-mar-t50">
+            <div class="home-login-box">
+                <h3 class="my-login-h3">登录</h3>
+
+                <form class="ui-form" name="" method="post" action="#" id="1158480096">
+                    <div class="home-ui-form-box ui-form home-ui-box">
+                        <div class="ui-form-item p-item">
+                            <label class="ui-label">账号</label> <input name="" type="text" class="ui-input"
+                                                                      v-model="username" id="username"><label
+                                id="id-label"></label>
+                        </div>
+                        <div class="ui-form-item p-item ui-vertify">
+
+                            <label class="ui-label">验证码</label> <input name="" type="text" class="ui-input"
+                                                                       v-model="captcha">
+                            <!--<a href="#" class="ui-vertify-button">获取验证码</a>-->
+                            <a v-cloak href="#" id="sendCaptcha" class="ui-vertify-button"
+                               :class="{'my-black-text':!isSendCaptcha , 'my-gray-text':isSendCaptcha}">${captchaTip}</a><label
+                                id="captcha-label"></label>
+                        </div>
+                        <div class="text-center"><p id="captchaMsg" class="my-gray-text" v-cloak>${captchaMsg}</p>
+                        </div>
+                        <div class="ui-form-item p-item">
+                            <label class="ui-label">密码</label> <input name="" type="password" class="ui-input"
+                                                                      v-model="password"><label
+                                id="pass-label"></label>
+                        </div>
+                        <p v-cloak class="my-text-center my-mar-t30">
+                            <button type="button" class="btn btn-long btn-dark"
+                                    :class="{'button-disable': isDisable}" id="login">登录
+                            </button>
+                        </p>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</nav>
-
-
-<div class="my-wp-1200">
-
-    <div class="my-box my-mar-t50">
-        <div class="home-login-box">
-            <h3 class="my-login-h3">登录</h3>
-            <form class="ui-form" name="" method="post" action="#" id="1158480096">
-                <div class="home-ui-form-box ui-form home-ui-box">
-                    <div class="ui-form-item p-item">
-                        <label class="ui-label" >账号</label> <input name="" type="text" class="ui-input" v-model="username" id="username"><label id="id-label"></label>
-                    </div>
-                    <div class="ui-form-item p-item ui-vertify">
-
-                        <label class="ui-label">验证码</label> <input name="" type="text"  class="ui-input" v-model="captcha">
-                        <!--<a href="#" class="ui-vertify-button">获取验证码</a>-->
-                        <a v-cloak href="#" id="sendCaptcha" class="ui-vertify-button" :class= "{'my-black-text':!isSendCaptcha , 'my-gray-text':isSendCaptcha}">${captchaTip}</a><label id="captcha-label"></label>
-                    </div>
-                    <div class="text-center"><p id="captchaMsg" class="my-gray-text" v-cloak>${captchaMsg}</p></div>
-                    <div class="ui-form-item p-item">
-                        <label class="ui-label">密码</label> <input name="" type="password"  class="ui-input" v-model="password"><label id="pass-label"></label>
-                    </div>
-                    <p v-cloak class="my-text-center my-mar-t30"><button type="button" class="btn btn-long btn-dark" :class="{'button-disable': isDisable}" id="login">登录</button></p>
-                </div>
-            </form>
-        </div>
-    </div>
-
-
-
-</div>
-
-</div>
     <footer>
         <p class="my-p-footer">友情链接 - <a href="#">美仓供应链</a><br>
             ©2015 xxxxxx众筹网络科技有限公司 zhongchou.com 版权所有 xxICP证1xxxxxxxx号</p>
     </footer>
 </div>
+
 <script src="/js/lib/jquery.min.js"></script>
 <script src="/js/lib/bootstrap.min.js"></script>
 <script src="/js/lib/jquery.loading.min.js"></script>

@@ -42,7 +42,7 @@
                     <span><b class="my-text-red">${funding.RemiseInterestRate*100}%</b><br />出让比例</span>
                     <span><b class="my-text-red">${funding.UnitPrice}元</b><br />每份金额</span>
                     <span><b class="my-text-red">${funding.UnitPercent}%</b><br />单份占比</span>
-                    <span><b class="my-text-red">${funding.WholesaleGrossProfit*100}%</b><br />批发毛利</span>
+                    <span><b class="my-text-red">${funding.WholesaleGrossProfit}%</b><br />批发毛利</span>
                 </p>
                 <p class="my-p-time">众筹时间:${funding.StartDate.substring(0, 16)} 到 ${funding.EndDate.substring(0, 16)}</p>
                 <button type="button" class="btn btn-lg btn-primary" id="join-invest" @click.prevent="goToBuy()" v-if="funding.AcitveStatus === 1">我要参与</button>

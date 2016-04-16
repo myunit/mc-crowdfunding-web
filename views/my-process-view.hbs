@@ -45,7 +45,9 @@
 
                             <p>
                                 <template v-for="img in fundingImg[$index].ImgValue">
-                                    <img :src="img" width="185" height="130" alt=""/>
+                                    <a :href="img" class="fancybox" rel="gallery" title="">
+                                        <img :src="img" width="185" height="130" alt=""/>
+                                    </a>
                                 </template>
                             </p>
                         </div>
@@ -71,6 +73,7 @@
 
 <script src="../js/lib/jquery.min.js"></script>
 <script src="../js/lib/bootstrap.min.js"></script>
+<script src="../js/lib/jquery.fancybox.pack.js"></script>
 <script src="../js/lib/toastr.min.js"></script>
 <script src="../js/lib/my.js"></script>
 <script src="../js/lib/Chart.js"></script>

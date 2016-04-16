@@ -701,6 +701,10 @@ require(['Vue', 'Utils'],
                         vm.fundingImg = vm.fundingImg.concat(data.img);
                         vm.count = data.count;
                         vm.fundingType = data.fundingType;
+
+                        Vue.nextTick(function () {
+                            $('.fancybox').fancybox();
+                        });
                     }
                 });
             });

@@ -41,7 +41,7 @@
                         <div class="my-project-list" v-cloak>
                             <p class="my-text-gray">${funding.InDate.substring(0, 19)}</p>
 
-                            <p>${funding.Memo}</p>
+                            <p>{!!funding.Memo!!}</p>
 
                             <p>
                                 <template v-for="img in fundingImg[$index].ImgValue">

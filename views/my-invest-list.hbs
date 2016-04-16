@@ -106,7 +106,7 @@
                                 @click.prevent="wantCancel($index)">取消订单
                         </button>
                         <button type="button" class="btn btn-default" id="view-invest-process"
-                                v-if="funding.OrderStatus === 2 && funding.CrowdFunding.AcitveStatus === 10 && funding.CrowdFunding.CrowdFundingStatus === 10"
+                                v-if="funding.OrderStatus === 2 && funding.PaymentStatus === 1 && funding.CrowdFunding.AcitveStatus === 10 && funding.CrowdFunding.CrowdFundingStatus === 10"
                                 @click.prevent="goToProgress($index)">查看项目进度
                         </button>
                         <span class=" my-text-blue" v-if="funding.OrderStatus === 11 && funding.ReturnStatus === 0">已付款？<br>联系客服申请退款</span>

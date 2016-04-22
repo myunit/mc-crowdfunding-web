@@ -359,7 +359,7 @@ require(['Vue', 'Utils'],
 						return;
 					}
 
-					if (newVal !== vm.catpchaCode) {
+					if (newVal.toLowerCase() !== vm.catpchaCode.toLowerCase()) {
 						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 100px;">验证码不正确</label>';
 						return;
 					}
@@ -462,7 +462,7 @@ require(['Vue', 'Utils'],
 						return;
 					}
 
-					if (vm.validate !== vm.catpchaCode) {
+					if (vm.validate.toLowerCase() !== vm.catpchaCode.toLowerCase()) {
 						a = document.getElementById("validate");
 						a.innerHTML = '<label style="font-size:14px;color:red;margin-left: 100px;">验证码不正确</label>';
 						return;

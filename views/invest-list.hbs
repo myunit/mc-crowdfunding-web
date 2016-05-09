@@ -1,87 +1,91 @@
-<div class="page-group">
-    <div id="page-invest-list" class="page page-current my-white-bg">
-<header class="my-header-default">
-    <div class=" my-login-header">
+<div id="page-invest-list" class="page page-current my-white-bg warpper">
+    <header class="my-header-default">
+        <div class=" my-login-header">
     	<span class="pull-left">
          Hi,{{name}}  <a href="/">退出</a>
         </span>
-    </div>
-</header>
-
-<nav class="my-border-bottom">
-    <div class="my-wp-1200">
-        <a href="/login-suc" class="my-logo">美仓众筹</a>
-        <ul class="nav nav-pills pull-right">
-
-            <li role="presentation" class="active"><a href="../login-suc">首页</a></li>
-            <li role="presentation"><a href="../invest/invest-list">权益众筹</a></li>
-            <li role="presentation"><a href="../product/product-list">产品众筹</a></li>
-            <li role="presentation"><a href="../users/my-pre-order">我的预约</a></li>
-            <li role="presentation"><a href="../users/my-invest-list">我的众筹</a></li>
-        </ul>
-    </div>
-</nav>
-
-
-<div class="my-wp-1200">
-
-    <div class="my-top-product-list">
-        <label>品牌来源</label>
-        <select class="dropdown" name="" id="selectSource">
-            <option value="all">全部</option>
-            <option value="jap">日本</option>
-            <option value="ea">欧美</option>
-            <option value="kor">韩国</option>
-            <option value="other">其他</option>
-        </select>
-        <label>状态</label>
-        <select class="dropdown" name="" id="selectStatus">
-            <option value="-1">全部</option>
-            <option value="0">预热中</option>
-            <option value="1">进行中</option>
-            <option value="2">已结束</option>
-        </select>
-        <label>项目类型</label>
-        <select class="dropdown" name="" id="selectType">
-            <option value="-1">全部</option>
-            <option value="0">品牌众筹</option>
-            <option value="1">单品众筹</option>
-        </select>
-    </div>
-    <!--  众筹项目开始-->
-    <template v-for="equity in equityList" track-by="SysNo">
-        <div class="my-item-box clearfix" id="invest-detail-ongoing" @click.prevent="goToDetail($index)">
-            <p class="my-item-img pull-left"><img :src="equityImg[$index].ImgValue" width="216" height="152" alt=""/></p>
-            <div class="my-item-info pull-left" v-cloak>
-                <h3>${equity.Brand.BrandName}</h3>
-                <p>${equity.Slogan}</p>
-                <p>来自：日本</p>
-            </div>
-            <div class="my-item-status pull-left" v-cloak>
-                <div class="my-item-progress my-mar-t30  clearfix"> <div class="progress">
-                    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" :style="{width: equity.CompletePercent+'%'};">
-                        <span class="sr-only"></span>
-                    </div>
-                </div>
-                    <span class="my-progress-num" v-if="equity.CrowdFundingStatus === 1">${equity.CompletePercent}%</span>
-                    <span class="my-progress-num my-preheat-status" v-if="equity.CrowdFundingStatus === 0">预热中</span>
-                </div>
-                <p class="my-p-status my-text-gray" v-if="equity.CrowdFundingStatus !== 0"><span>目标金额 <b>${equity.TargetAmount}</b></span> <span>已众筹 <b>${equity.HaveCrowdFundingAmount}</b></span> <span>投资人数 <b>${equity.CrowdFundingOrderCount}人</b></span>           <span>剩余天数 <b>${equity.RemainDay}天</b></span></p>
-                <p class="my-p-status my-text-gray" v-if="equity.CrowdFundingStatus === 0"><span>目标金额 <b>${equity.TargetAmount}</b></span>         <span>开始时间 <b>${equity.StartDate.substring(0, 10)}</b></span>           <span>预约人数 <b>${equity.CrowdFundingOrderCount}人</b></span></p>
-            </div>
-            <span class="my-product-list-failed" v-if="equity.CrowdFundingStatus === 10 || equity.CrowdFundingStatus === 11"></span>
         </div>
-    </template>
-    <!--  众筹项目结束-->
+    </header>
+
+    <nav class="my-border-bottom">
+        <div class="my-wp-1200">
+            <a href="/login-suc" class="my-logo">美仓众筹</a>
+            <ul class="nav nav-pills pull-right">
+
+                <li role="presentation" class="active"><a href="../login-suc">首页</a></li>
+                <li role="presentation"><a href="../invest/invest-list">权益众筹</a></li>
+                <li role="presentation"><a href="../product/product-list">产品众筹</a></li>
+                <li role="presentation"><a href="../users/my-pre-order">我的预约</a></li>
+                <li role="presentation"><a href="../users/my-invest-list">我的众筹</a></li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <div class="my-wp-1200">
+
+        <div class="my-top-product-list">
+            <label id="brand">品牌来源</label>
+            <label>状态</label>
+            <select class="dropdown" name="" id="selectStatus">
+                <option value="-1">全部</option>
+                <option value="0">预热中</option>
+                <option value="1">进行中</option>
+                <option value="2">已结束</option>
+            </select>
+            <label>项目类型</label>
+            <select class="dropdown" name="" id="selectType">
+                <option value="-1">全部</option>
+                <option value="0">品牌众筹</option>
+                <option value="1">单品众筹</option>
+            </select>
+        </div>
+        <!--  众筹项目开始-->
+        <template v-for="equity in equityList" track-by="$index">
+            <div class="my-item-box clearfix" id="invest-detail-ongoing" @click.prevent="goToDetail($index)">
+                <p class="my-item-img pull-left"><img :src="equityImg[$index].ImgValue" width="216" height="152"
+                                                      alt=""/></p>
+
+                <div class="my-item-info pull-left" v-cloak>
+                    <h3>${equity.CrowdFundingName}</h3>
+
+                    <p>${equity.Slogan}</p>
+
+                    <p>来自：${equity.Brand.DistrictBrand.DistrictBrandName.substring(0,2)}</p>
+                </div>
+                <div class="my-item-status pull-left" v-cloak>
+                    <div class="my-item-progress my-mar-t30  clearfix">
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0"
+                                 aria-valuemax="100" :style="{width: equity.CompletePercent+'%'};">
+                                <span class="sr-only"></span>
+                            </div>
+                        </div>
+                            <span class="my-progress-num"
+                                  v-if="equity.AcitveStatus === 1 || equity.AcitveStatus === 10">${equity.CompletePercent}%</span>
+                        <span class="my-progress-num my-preheat-status" v-if="equity.AcitveStatus === 0">预热中</span>
+                    </div>
+                    <p class="my-p-status my-text-gray" v-if="equity.AcitveStatus !== 0"><span>目标金额 <b>${equity.TargetAmount}元</b></span>
+                        <span>已众筹 <b>${equity.HaveCrowdFundingAmount}元</b></span> <span>投资人数 <b>${equity.CrowdFundingCustomerCount}人</b></span>
+                        <span>剩余天数 <b>${equity.RemainDay}天</b></span></p>
+
+                    <p class="my-p-status my-text-gray" v-if="equity.AcitveStatus === 0"><span>目标金额 <b>${equity.TargetAmount}元</b></span>
+                        <span>开始时间 <b>${equity.StartDate.substring(0, 10)}</b></span> <span>预约人数 <b>${equity.CrowdFundingReserveCount}人</b></span>
+                    </p>
+                </div>
+                <span class="my-product-list-failed" v-if="equity.AcitveStatus === 10"></span>
+            </div>
+        </template>
+        <!--  众筹项目结束-->
+    </div>
+    <footer>
+        <p class="my-p-footer">友情链接 - <a href="http://www.meicang.net"  target="_Blank">美仓供应链</a><br>
+            ©2015 xxxxxx众筹网络科技有限公司 zhongchou.com 版权所有 xxICP证1xxxxxxxx号</p>
+    </footer>
 </div>
 
-<footer>
-    <p class="my-p-footer">友情链接 - <a href="#">美仓供应链</a><br>
-        ©2015 xxxxxx众筹网络科技有限公司 zhongchou.com 版权所有 xxICP证1xxxxxxxx号</p>
-</footer>
-</div></div>
 <script src="../js/lib/jquery.min.js"></script>
 <script src="../js/lib/bootstrap.min.js"></script>
 <script src="../js/lib/toastr.min.js"></script>
 <script src="../js/lib/my.js"></script>
-<script type='text/javascript' src='../js/lib/requirejs.min.js' data-main='../js/controller/invest-ctrl' ></script>
+<script type='text/javascript' src='../js/lib/requirejs.min.js' data-main='../js/controller/invest-ctrl'></script>

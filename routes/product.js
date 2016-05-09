@@ -26,7 +26,7 @@ router.get('/product-booking-pay', function(req, res, next) {
 });
 
 router.get('/product-booking-pay-confirm', function(req, res, next) {
-    res.render('product-booking-pay-confirm',{title:"美仓众筹", name: req.session.name});
+    res.render('product-booking-pay-confirm',{title:"美仓众筹", name: req.session.name, amount: req.query.amount});
 });
 
 router.get('/product-failed', function(req, res, next) {
@@ -55,9 +55,10 @@ router.post('/get-all-funding', function (req, res, next) {
         "pageId": parseInt(req.body.pageId),
         "pageSize": parseInt(req.body.pageSize),
         "fundingStatus": JSON.parse(req.body.fundingStatus),
-        "fundingType": JSON.parse(req.body.fundingType)
+        "fundingType": JSON.parse(req.body.fundingType),
+        "fundingActive": JSON.parse(req.body.fundingActive),
+        "districtId": parseInt(req.body.districtId)
     };
-    console.log('obj: ' + JSON.stringify(obj));
 
     unirest.post(api.getAllFunding())
         .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
@@ -126,7 +127,7 @@ router.post('/add-funding-order', function (req, res, next) {
         "userId": req.session.uid,
         "fundingId": parseInt(req.body.fundingId),
         "quantity": parseInt(req.body.quantity),
-        "price": parseInt(req.body.quantity)/100
+        "price": parseInt(req.body.price)/100
     };
 
     unirest.post(api.addFundingOrder())
@@ -140,6 +141,25 @@ router.post('/add-funding-order', function (req, res, next) {
             }
             if (data.status) {
                 res.json({status: data.status, count: data.count, funding: data.funding, img: data.img});
+            } else {
+                res.json({status: data.status, msg: data.msg});
+            }
+        });
+});
+
+router.post('/get-district', function (req, res, next) {
+    var obj = {};
+    unirest.post(api.getDistrict())
+        .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
+        .send(obj)
+        .end(function (response) {
+            var data = response.body.repData;
+            if (data === undefined) {
+                res.json({status: 0, msg: '服务异常'});
+                return;
+            }
+            if (data.status) {
+                res.json({status: data.status, count: data.count, district: data.district});
             } else {
                 res.json({status: data.status, msg: data.msg});
             }

@@ -22,7 +22,7 @@ function ajaxPost(url, data, cb) {
         type: 'POST',
         url: url,
         data: data,
-        timeout: 15000,
+        timeout: 25000,
         success: function (data, status, xhr) {
             if (data.status) {
                 cb(null, data);
@@ -59,11 +59,12 @@ function ReserveItems(url, number) {
     return o;
 }
 
-function OrderItems(url, number, fundingStatus, fundingType, orderStatus, payStatus, returnStatus) {
+function OrderItems(url, number, fundingStatus, fundingType, fundingActive, orderStatus, payStatus, returnStatus) {
     var o = {};
     o.url = url;
     o.fundingStatus = fundingStatus;
     o.fundingType = fundingType;
+    o.fundingActive = fundingActive;
     o.orderStatus = orderStatus;
     o.payStatus = payStatus;
     o.returnStatus = returnStatus;
@@ -77,6 +78,7 @@ function OrderItems(url, number, fundingStatus, fundingType, orderStatus, paySta
             payStatus: o.payStatus,
             returnStatus: o.returnStatus,
             fundingType: o.fundingType,
+            fundingActive: o.fundingActive,
             pageId: this.pageId,
             pageSize: this.pageSize
         }, function (err, data) {
@@ -155,10 +157,10 @@ require(['Vue', 'Utils'],
                 $(window).scroll(function () {
                     var $this = $(this),
                         viewH = $(this).height(),//可见高度
-                        contentH = $(this).get(0).scrollHeight,//内容高度
+                        contentH = document.body.scrollHeight==0?document.documentElement.scrollHeight:document.body.scrollHeight,//内容高度
                         scrollTop = $(this).scrollTop();//滚动高度
                     //if(contentH - viewH - scrollTop <= 100) { //到达底部100px时,加载新内容
-                    if (scrollTop / (contentH - viewH) >= 0.95 && vm.fundingList < vm.count) { //到达底部100px时,加载新内容
+                    if (scrollTop / (contentH - viewH) >= 0.99 && vm.fundingList.length < vm.count) { //到达底部100px时,加载新内容
                         foundingItem.addItems(function (err, data) {
                             if (err) {
                                 toastr.error(err, '错误');
@@ -185,7 +187,11 @@ require(['Vue', 'Utils'],
                         fundingImg: [],
                         pageId: 1,
                         curIndex: 0,
-                        payPhoto: null
+                        payPhoto1: '',
+                        payPhoto2: '',
+                        payPhoto3: '',
+                        payPhoto4: '',
+                        payPhoto5: ''
                     },
                     methods: {
                         goToDetail: goToDetail,
@@ -193,11 +199,12 @@ require(['Vue', 'Utils'],
                         wantCancel: wantCancel,
                         wantPay: wantPay,
                         finishPay: finishPay,
-                        goToProgress: goToProgress
+                        goToProgress: goToProgress,
+                        deletePhoto: deletePhoto
                     }
                 });
 
-                var foundingItem = new OrderItems('/users/get-order', 5, '[1,10,11]', '[1,3]', -1, -1, -1);
+                var foundingItem = new OrderItems('/users/get-order', 5, '[0,10,11]', '[1,3]', -1, -1, -1, -1);
                 foundingItem.addItems(function (err, data) {
                     if (err) {
                         toastr.error(err, '错误');
@@ -208,26 +215,31 @@ require(['Vue', 'Utils'],
                     }
                 });
 
-                $('#payPhoto').change(function () {
-                    var a = document.getElementById("picture-alert");
+                $('[id^=payPhoto-]').change(function () {
+                    var id_selector = $(this).attr("id");
+                    var id = id_selector.substr(id_selector.length - 1);
+                    id = parseInt(id);
                     if (!/\.(jpg|jpeg|png|bmp|JPG|PNG|BMP|JPEG)$/.test(this.value)) {
-                        a.innerHTML = '<label style="font-size:14px;color:red;">&nbsp;&nbsp;&nbsp;&nbsp;　　　照片格式不正确,请选择png,jpeg,bmp格式照片上传</label>';
+                        toastr.error('照片格式不正确,请选择png,jpeg,bmp格式照片上传', '错误');
                         return;
                     }
 
                     var fsize = this.files[0].size;
                     if (fsize > 5242880) //do something if file size more than 1 mb (1048576)
                     {
-                        a.innerHTML = '<label style="font-size:14px;color:red;">&nbsp;&nbsp;&nbsp;&nbsp;　　　照片大小不能超过5M</label>';
+                        toastr.error('照片大小不能超过5M', '错误');
                         return;
                     }
 
                     lrz(this.files[0], function (results) {
                         // 你需要的数据都在这里，可以以字符串的形式传送base64给服务端转存为图片。
-                        var base = results.base64.split(',');
-                        vm.payPhoto = base[1];
+                        vm['payPhoto' + id] = results.base64;
                     });
                 });
+
+                function deletePhoto (index) {
+                    vm['payPhoto' + index] = '';
+                }
 
                 function wantCancel (index) {
                     vm.curIndex = index;
@@ -236,16 +248,33 @@ require(['Vue', 'Utils'],
 
                 function wantPay (index) {
                     vm.curIndex = index;
+                    vm.payPhoto1 = '';
+                    vm.payPhoto2 = '';
+                    vm.payPhoto3 = '';
+                    vm.payPhoto4 = '';
+                    vm.payPhoto5 = '';
                     $('#updatePayModal').modal('show');
                 }
 
                 function finishPay () {
+                    if (!vm.payPhoto1 && !vm.payPhoto2 && !vm.payPhoto3 && !vm.payPhoto4 && !vm.payPhoto5) {
+                        return;
+                    }
+
                     $('#updatePayModal').modal('hide');
                     var funding = vm.fundingList[vm.curIndex];
                     $('#opt-box-'+funding.SysNo).loading({
                         message: '提交中...'
                     });
-                    ajaxPost('/users/finish-order', {orderId: funding.SysNo, imgData: vm.payPhoto}, function (err, data) {
+
+                    var imgData = [];
+                    for(var i = 1; i < 6; i++){
+                        if (vm['payPhoto' + i]) {
+                            var base = vm['payPhoto' + i].split(',');
+                            imgData.push(base[1]);
+                        }
+                    }
+                    ajaxPost('/users/finish-order', {orderId: funding.SysNo, imgData: JSON.stringify(imgData)}, function (err, data) {
                         $('#opt-box-'+funding.SysNo).loading('stop');
                         if (err) {
                             toastr.error(err, '错误');
@@ -256,6 +285,7 @@ require(['Vue', 'Utils'],
                                 "pageSize": 1,
                                 "fundingStatus": -1,
                                 "fundingType": -1,
+                                "fundingActive": -1,
                                 "orderStatus": -1,
                                 "payStatus": -1,
                                 "returnStatus": -1
@@ -269,6 +299,12 @@ require(['Vue', 'Utils'],
                                         vm.fundingImg.splice(vm.curIndex, 1, data.img[0]);
                                     }
                                 }
+
+                                vm.payPhoto1 = '';
+                                vm.payPhoto2 = '';
+                                vm.payPhoto3 = '';
+                                vm.payPhoto4 = '';
+                                vm.payPhoto5 = '';
                             });
                         }
                     });
@@ -304,14 +340,20 @@ require(['Vue', 'Utils'],
 
                 function changeSelect() {
                     var selectStatus = parseInt($('#selectStatus').children('option:selected').val());
+                    var status ='';
+                    var active = -1;
                     if (selectStatus === 1) {
-                        selectStatus = '[1]';
+                        active = 1;
+                        status = '[0,10]';
                     } else if (selectStatus === 10) {
-                        selectStatus = '[10]';
+                        active = 10;
+                        status = '[10]';
                     } else if (selectStatus === 11) {
-                        selectStatus = '[11]';
+                        active = 10;
+                        status = '[11]'
                     } else {
-                        selectStatus = '[1,10,11]';
+                        active = -1;
+                        status = '[0,10,11]'
                     }
 
                     var selectOrderStatus = parseInt($('#selectOrderStatus').children('option:selected').val());
@@ -322,22 +364,24 @@ require(['Vue', 'Utils'],
                     if (selectOrderStatus === 0) {
                         orderStatus = 0;
                         payStatus = 0;
+                        returnStatus = 0;
                     } else if (selectOrderStatus === 1) {
                         orderStatus = 1;
                         payStatus = 0;
+                        returnStatus = 0;
                     } else if (selectOrderStatus === 2) {
-                        orderStatus = 1;
+                        orderStatus = 2;
                         payStatus = 1;
+                        returnStatus = 0;
                     } else if (selectOrderStatus === 3) {
                         orderStatus = 11;
                         returnStatus = 0;
                     } else if (selectOrderStatus === 4) {
-                        orderStatus = 11;
                         returnStatus = 1;
                     }
 
                     foundingItem = null;
-                    foundingItem = new OrderItems('/users/get-order', 5, selectStatus, '[1,3]', orderStatus, payStatus, returnStatus);
+                    foundingItem = new OrderItems('/users/get-order', 5, status, '[1,3]', active, orderStatus, payStatus, returnStatus);
                     vm.fundingList.splice(0, vm.fundingList.length);
                     vm.fundingImg.splice(0, vm.fundingImg.length);
                     foundingItem.addItems(function (err, data) {
@@ -362,10 +406,10 @@ require(['Vue', 'Utils'],
                 $(window).scroll(function () {
                     var $this = $(this),
                         viewH = $(this).height(),//可见高度
-                        contentH = $(this).get(0).scrollHeight,//内容高度
+                        contentH = document.body.scrollHeight==0?document.documentElement.scrollHeight:document.body.scrollHeight,//内容高度
                         scrollTop = $(this).scrollTop();//滚动高度
                     //if(contentH - viewH - scrollTop <= 100) { //到达底部100px时,加载新内容
-                    if (scrollTop / (contentH - viewH) >= 0.95 && vm.fundingList < vm.count) { //到达底部100px时,加载新内容
+                    if (scrollTop / (contentH - viewH) >= 0.99 && vm.fundingList.length < vm.count) { //到达底部100px时,加载新内容
                         foundingItem.addItems(function (err, data) {
                             if (err) {
                                 toastr.error(err, '错误');
@@ -391,7 +435,11 @@ require(['Vue', 'Utils'],
                         fundingImg: [],
                         pageId: 1,
                         curIndex: 0,
-                        payPhoto: null
+                        payPhoto1: '',
+                        payPhoto2: '',
+                        payPhoto3: '',
+                        payPhoto4: '',
+                        payPhoto5: ''
                     },
                     methods: {
                         goToDetail: goToDetail,
@@ -399,30 +447,36 @@ require(['Vue', 'Utils'],
                         wantCancel: wantCancel,
                         wantPay: wantPay,
                         finishPay: finishPay,
-                        goToProgress: goToProgress
+                        goToProgress: goToProgress,
+                        deletePhoto: deletePhoto
                     }
                 });
 
-                $('#payPhoto').change(function () {
-                    var a = document.getElementById("picture-alert");
+                $('[id^=payPhoto-]').change(function () {
+                    var id_selector = $(this).attr("id");
+                    var id = id_selector.substr(id_selector.length - 1);
+                    id = parseInt(id);
                     if (!/\.(jpg|jpeg|png|bmp|JPG|PNG|BMP|JPEG)$/.test(this.value)) {
-                        a.innerHTML = '<label style="font-size:14px;color:red;">&nbsp;&nbsp;&nbsp;&nbsp;　　　照片格式不正确,请选择png,jpeg,bmp格式照片上传</label>';
+                        toastr.error('照片格式不正确,请选择png,jpeg,bmp格式照片上传', '错误');
                         return;
                     }
 
                     var fsize = this.files[0].size;
                     if (fsize > 5242880) //do something if file size more than 1 mb (1048576)
                     {
-                        a.innerHTML = '<label style="font-size:14px;color:red;">&nbsp;&nbsp;&nbsp;&nbsp;　　　照片大小不能超过5M</label>';
+                        toastr.error('照片大小不能超过5M', '错误');
                         return;
                     }
 
                     lrz(this.files[0], function (results) {
                         // 你需要的数据都在这里，可以以字符串的形式传送base64给服务端转存为图片。
-                        var base = results.base64.split(',');
-                        vm.payPhoto = base[1];
+                        vm['payPhoto' + id] = results.base64;
                     });
                 });
+
+                function deletePhoto (index) {
+                    vm['payPhoto' + index] = '';
+                }
 
                 function wantCancel (index) {
                     vm.curIndex = index;
@@ -431,16 +485,32 @@ require(['Vue', 'Utils'],
 
                 function wantPay (index) {
                     vm.curIndex = index;
+                    vm.payPhoto1 = '';
+                    vm.payPhoto2 = '';
+                    vm.payPhoto3 = '';
+                    vm.payPhoto4 = '';
+                    vm.payPhoto5 = '';
                     $('#updatePayModal').modal('show');
                 }
 
                 function finishPay () {
+                    if (!vm.payPhoto1 && !vm.payPhoto2 && !vm.payPhoto3 && !vm.payPhoto4 && !vm.payPhoto5) {
+                        return;
+                    }
                     $('#updatePayModal').modal('hide');
                     var funding = vm.fundingList[vm.curIndex];
                     $('#opt-box-'+funding.SysNo).loading({
-                        message: '提交中中...'
+                        message: '提交中...'
                     });
-                    ajaxPost('/users/finish-order', {orderId: funding.SysNo, imgData: vm.payPhoto}, function (err, data) {
+
+                    var imgData = [];
+                    for(var i = 1; i < 6; i++){
+                        if (vm['payPhoto' + i]) {
+                            var base = vm['payPhoto' + i].split(',');
+                            imgData.push(base[1]);
+                        }
+                    }
+                    ajaxPost('/users/finish-order', {orderId: funding.SysNo, imgData: JSON.stringify(imgData)}, function (err, data) {
                         $('#opt-box-'+funding.SysNo).loading('stop');
                         if (err) {
                             toastr.error(err, '错误');
@@ -451,6 +521,7 @@ require(['Vue', 'Utils'],
                                 "pageSize": 1,
                                 "fundingStatus": -1,
                                 "fundingType": -1,
+                                "fundingActive": -1,
                                 "orderStatus": -1,
                                 "payStatus": -1,
                                 "returnStatus": -1
@@ -464,6 +535,12 @@ require(['Vue', 'Utils'],
                                         vm.fundingImg.splice(vm.curIndex, 1, data.img[0]);
                                     }
                                 }
+
+                                vm.payPhoto1 = '';
+                                vm.payPhoto2 = '';
+                                vm.payPhoto3 = '';
+                                vm.payPhoto4 = '';
+                                vm.payPhoto5 = '';
                             });
                         }
                     });
@@ -497,7 +574,7 @@ require(['Vue', 'Utils'],
                     location.href = '/users/my-process-view?id=' + funding.CrowdFunding.SysNo;
                 }
 
-                var foundingItem = new OrderItems('/users/get-order', 5, '[1,10,11]', '[2]', -1, -1, -1);
+                var foundingItem = new OrderItems('/users/get-order', 5, '[0,10,11]', '[2]', -1, -1, -1, -1);
                 foundingItem.addItems(function (err, data) {
                     if (err) {
                         toastr.error(err, '错误');
@@ -510,14 +587,19 @@ require(['Vue', 'Utils'],
 
                 function changeSelect() {
                     var selectStatus = parseInt($('#selectStatus').children('option:selected').val());
+                    var active = -1;
                     if (selectStatus === 1) {
-                        selectStatus = '[1]';
+                        active = 1;
+                        status = '[0,10]';
                     } else if (selectStatus === 10) {
-                        selectStatus = '[10]';
+                        active = 10;
+                        status = '[10]';
                     } else if (selectStatus === 11) {
-                        selectStatus = '[11]';
+                        active = 10;
+                        status = '[11]'
                     } else {
-                        selectStatus = '[1,10,11]';
+                        active = -1;
+                        status = '[0,10,11]'
                     }
 
                     var selectOrderStatus = parseInt($('#selectOrderStatus').children('option:selected').val());
@@ -528,22 +610,24 @@ require(['Vue', 'Utils'],
                     if (selectOrderStatus === 0) {
                         orderStatus = 0;
                         payStatus = 0;
+                        returnStatus = 0;
                     } else if (selectOrderStatus === 1) {
                         orderStatus = 1;
                         payStatus = 0;
+                        returnStatus = 0;
                     } else if (selectOrderStatus === 2) {
-                        orderStatus = 1;
+                        orderStatus = 2;
                         payStatus = 1;
+                        returnStatus = 0;
                     } else if (selectOrderStatus === 3) {
                         orderStatus = 11;
                         returnStatus = 0;
                     } else if (selectOrderStatus === 4) {
-                        orderStatus = 11;
                         returnStatus = 1;
                     }
 
                     foundingItem = null;
-                    foundingItem = new OrderItems('/users/get-order', 5, selectStatus, '[2]', orderStatus, payStatus, returnStatus);
+                    foundingItem = new OrderItems('/users/get-order', 5, status, '[2]', active, orderStatus, payStatus, returnStatus);
                     vm.fundingList.splice(0, vm.fundingList.length);
                     vm.fundingImg.splice(0, vm.fundingImg.length);
                     foundingItem.addItems(function (err, data) {
@@ -568,10 +652,10 @@ require(['Vue', 'Utils'],
                 $(window).scroll(function () {
                     var $this = $(this),
                         viewH = $(this).height(),//可见高度
-                        contentH = $(this).get(0).scrollHeight,//内容高度
+                        contentH = document.body.scrollHeight==0?document.documentElement.scrollHeight:document.body.scrollHeight,//内容高度
                         scrollTop = $(this).scrollTop();//滚动高度
                     //if(contentH - viewH - scrollTop <= 100) { //到达底部100px时,加载新内容
-                    if (scrollTop / (contentH - viewH) >= 0.95 && vm.fundingList < vm.count) { //到达底部100px时,加载新内容
+                    if (scrollTop / (contentH - viewH) >= 0.99 && vm.fundingList.length < vm.count) { //到达底部100px时,加载新内容
                         foundingItem.addItems(function (err, data) {
                             if (err) {
                                 toastr.error(err, '错误');
@@ -617,6 +701,10 @@ require(['Vue', 'Utils'],
                         vm.fundingImg = vm.fundingImg.concat(data.img);
                         vm.count = data.count;
                         vm.fundingType = data.fundingType;
+
+                        Vue.nextTick(function () {
+                            $('.fancybox').fancybox();
+                        });
                     }
                 });
             });

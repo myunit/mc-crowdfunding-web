@@ -1,6 +1,7 @@
 var express = require('express');
 var unirest = require('unirest');
 var ApiFactory = require('../common/api_config');
+var ccap = require('ccap')();
 var fs = require('fs');
 var Readable = require('stream').Readable;
 var router = express.Router();
@@ -35,7 +36,7 @@ router.route('/login')
 				if (data.status) {
 					req.session.uid = data.customer.CustomerNo;
 					req.session.name = data.customer.Name;
-					res.json({status: data.status});
+					res.json({status: data.status, audit: data.customer.IsAudit});
 				} else {
 					res.json({status: data.status, msg: data.msg});
 				}
@@ -73,11 +74,38 @@ router.get('/reg-success', function (req, res, next) {
 	res.render('reg-success', {title: '美仓众筹'});
 });
 
+router.post('/captcha-png', function (req, res, next) {
+	var ary = ccap.get();
+
+	var code = ary[0];
+
+	var buf = new Buffer(ary[1]).toString('base64');
+	res.json({status: 1, buf: buf, code: code});
+});
+
 
 router.post('/send-captcha', function (req, res, next) {
 	unirest.post(api.sendCaptcha())
 		.headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
 		.send({"phone": req.body.phone, "type": parseInt(req.body.type)})
+		.end(function (response) {
+			var data = response.body.repData;
+			if (data === undefined) {
+				res.json({status: 0, msg: '服务异常'});
+				return;
+			}
+			if (data.status) {
+				res.json({status: data.status});
+			} else {
+				res.json({status: data.status, msg: data.msg});
+			}
+		});
+});
+
+router.post('/check-captcha', function (req, res, next) {
+	unirest.post(api.checkCaptcha())
+		.headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
+		.send({"phone": req.body.phone, "captcha": req.body.captcha})
 		.end(function (response) {
 			var data = response.body.repData;
 			if (data === undefined) {
@@ -138,7 +166,8 @@ router.post('/register', function (req, res, next) {
 		"pcdCode": req.body.pcdCode,
 		"pcd": req.body.pcdDes,
 		"qq": req.body.qq,
-		"weixin": req.body.weixin
+		"weixin": req.body.weixin,
+		"groupId": 2
 	};
 
 	unirest.post(api.register())

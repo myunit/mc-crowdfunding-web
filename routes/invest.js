@@ -55,7 +55,9 @@ router.post('/get-all-funding', function (req, res, next) {
         "pageId": parseInt(req.body.pageId),
         "pageSize": parseInt(req.body.pageSize),
         "fundingStatus": JSON.parse(req.body.fundingStatus),
-        "fundingType": JSON.parse(req.body.fundingType)
+        "fundingType": JSON.parse(req.body.fundingType),
+        "fundingActive": JSON.parse(req.body.fundingActive),
+        "districtId": parseInt(req.body.districtId)
     };
 
     unirest.post(api.getAllFunding())
@@ -141,6 +143,25 @@ router.post('/add-funding-order', function (req, res, next) {
             }
             if (data.status) {
                 res.json({status: data.status, count: data.count, funding: data.funding, img: data.img});
+            } else {
+                res.json({status: data.status, msg: data.msg});
+            }
+        });
+});
+
+router.post('/get-district', function (req, res, next) {
+    var obj = {};
+    unirest.post(api.getDistrict())
+        .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
+        .send(obj)
+        .end(function (response) {
+            var data = response.body.repData;
+            if (data === undefined) {
+                res.json({status: 0, msg: '服务异常'});
+                return;
+            }
+            if (data.status) {
+                res.json({status: data.status, count: data.count, district: data.district});
             } else {
                 res.json({status: data.status, msg: data.msg});
             }

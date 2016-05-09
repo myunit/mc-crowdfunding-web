@@ -27,6 +27,9 @@ ApiService.prototype = {
 	register: function () {
 		return api_config.apiService.baseUrl + api_config.apiService.method.register;
 	},
+	checkCaptcha: function () {
+		return api_config.apiService.baseUrl + api_config.apiService.method.checkCaptcha;
+	},
 	addFundingOrder: function () {
 		return api_config.apiService.baseUrl + api_config.apiService.method.addFundingOrder;
 	},
@@ -56,5 +59,8 @@ ApiService.prototype = {
 	},
 	cancelFundingOrder: function () {
 		return api_config.apiService.baseUrl + api_config.apiService.method.cancelFundingOrder;
+	},
+	getDistrict: function () {
+		return api_config.apiService.baseUrl + api_config.apiService.method.getDistrict;
 	}
 };

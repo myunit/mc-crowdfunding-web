@@ -13,7 +13,6 @@ var product = require('./routes/product');
 var invest = require('./routes/invest');
 
 var app = express();
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -21,8 +20,8 @@ app.use(compression());
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: false}));
 app.use(cookieParser('hhmweb_'));
 
 app.use(session({
@@ -39,6 +38,8 @@ app.use(session({
 }));
 
 app.use(express.static(path.join(__dirname, 'public')));
+//app.use(express.json({limit: '50mb'}));
+//app.use(express.urlencoded({limit: '50mb'}));
 
 app.use('/', routes);
 app.use('/users', users);

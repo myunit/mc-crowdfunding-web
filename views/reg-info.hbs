@@ -1,83 +1,95 @@
-<div class="page-group">
-    <div id="page-reg-info" class="page page-current my-white-bg">
-<nav class="my-border-bottom">
+<div id="page-reg-info" class="page page-current my-white-bg warpper">
+    <nav class="my-border-bottom">
+        <div class="my-wp-1200">
+            <a href="/" class="my-logo">美仓众筹</a>
+
+            <div class="my-top-login pull-right">
+                <a href="login">登录</a> | <a href="reg-start">注册</a>
+            </div>
+        </div>
+    </nav>
+
+
     <div class="my-wp-1200">
-        <a href="/" class="my-logo">美仓众筹</a>
-        <div class="my-top-login pull-right">
-            <a href="login">登录</a>  | <a href="reg-start">注册</a>
+        <div class="cart-title-box ui-reg-nav clearfix">
+            <ul class="ui-nav">
+                <li class="ui-nav-item">
+                    <span class="ui-nav-item-order">1</span>
+                    <span class="ui-nav-item-text">账户注册</span>
+                </li>
+                <li class="ui-nav-item ui-nav-item-current">
+                    <span class="ui-nav-item-order">2</span>
+                    <span class="ui-nav-item-text">填写基本信息</span>
+                </li>
+                <li class="ui-nav-item">
+                    <span class="ui-nav-item-order">3</span>
+                    <span class="ui-nav-item-text">店铺/平台验证</span>
+                </li>
+                <li class="ui-nav-item">
+                    <span class="ui-nav-item-order">4</span>
+                    <span class="ui-nav-item-text">注册成功</span>
+                </li>
+            </ul>
+
+        </div>
+
+        <div class="my-box">
+            <form class="ui-form ui-reg-form" name="">
+                <div class="ui-form-item p-item">
+                    <label class="ui-label"><span class="ui-text-red">*</span> 姓名</label> <input type="text"
+                                                                                                 class="ui-input ui-no-tborder ui-address-name ui-login-name"
+                                                                                                 validate="{required:'请填写手机号'}"
+                                                                                                 placeholder="请填写你的真实姓名"
+                                                                                                 v-model="name"><label
+                        id="name"></label>
+                </div>
+                <div class="ui-form-item p-item">
+                    <label class="ui-label"><span class="ui-text-red">*</span> 身份证号</label> <input name=""
+                                                                                                   type="text"
+                                                                                                   validate="{required:'请输入微信号'}"
+                                                                                                   class="ui-input"
+                                                                                                   placeholder="请填写与姓名相符的身份证号码"
+                                                                                                   v-model="id"/><label
+                        id="id"></label>
+                </div>
+                <div class="ui-form-item p-item">
+                    <label class="ui-label"> 邮箱</label> <input type="text"
+                                                               class="ui-input ui-no-tborder ui-login-psw"
+                                                               validate="{required:'请填写你的邮箱地址',email:true}"
+                                                               placeholder="请填写你的邮箱地址" v-model="email"><label
+                        id="email"></label>
+                </div>
+                <div class="ui-form-item p-item">
+                    <label class="ui-label">QQ</label> <input type="text"
+                                                              class="ui-input ui-no-tborder ui-login-psw"
+                                                              validate="{required:'请填写你的QQ',number:true}"
+                                                              placeholder="请填写你的QQ" v-model="qq"><label
+                        id="qq"></label>
+                </div>
+                <div class="ui-form-item p-item">
+                    <label class="ui-label" id="userArea"><span class="ui-text-red">*</span> 所在地区</label><label
+                        id="area"></label>
+                </div>
+                <div class="ui-form-item p-item">
+                    <label class="ui-label"><span class="ui-text-red">*</span> 详细地址</label> <input type="text"
+                                                                                                   class="ui-input ui-no-tborder ui-address-name ui-login-name"
+                                                                                                   validate="{required:'请填写详细地址'}"
+                                                                                                   placeholder="请填写详细地址"
+                                                                                                   v-model="address"><label
+                        id="address"></label>
+                </div>
+                <p class="my-text-center my-mar-t30">
+                    <button type="button" class="btn btn-long btn-dark" id="reg-info-next">下一步</button>
+                </p>
+            </form>
         </div>
     </div>
-</nav>
-
-
-<div class="my-wp-1200">
-    <div class="cart-title-box ui-reg-nav clearfix">
-        <ul class="ui-nav">
-            <li class="ui-nav-item">
-                <span class="ui-nav-item-order">1</span>
-                <span class="ui-nav-item-text">账户注册</span>
-            </li>
-            <li class="ui-nav-item ui-nav-item-current">
-                <span class="ui-nav-item-order">2</span>
-                <span class="ui-nav-item-text">填写基本信息</span>
-            </li>
-            <li class="ui-nav-item">
-                <span class="ui-nav-item-order">3</span>
-                <span class="ui-nav-item-text">店铺/平台验证</span>
-            </li>
-            <li class="ui-nav-item">
-                <span class="ui-nav-item-order">4</span>
-                <span class="ui-nav-item-text">注册成功</span>
-            </li>
-        </ul>
-
-    </div>
-
-    <div class="my-box">
-        <form class="ui-form ui-reg-form" name="" >
-            <div class="ui-form-item p-item">
-                <label class="ui-label"><span class="ui-text-red">*</span> 姓名</label> <input type="text" class="ui-input ui-no-tborder ui-address-name ui-login-name" validate="{required:'请填写手机号'}"  placeholder="请填写你的真实姓名" v-model="name"><label id="name"></label>
-            </div>
-            <div class="ui-form-item p-item">
-                <label class="ui-label"><span class="ui-text-red">*</span> 身份证号</label> <input name="" type="text" validate="{required:'请输入微信号'}" class="ui-input" placeholder="请填写与姓名相符的身份证号码" v-model="id"/><label id="id"></label>
-            </div>
-            <div class="ui-form-item p-item">
-                <label class="ui-label"> 邮箱</label> <input type="text" class="ui-input ui-no-tborder ui-login-psw" validate="{required:'请填写你的邮箱地址',email:true}" placeholder="请填写你的邮箱地址"  v-model="email"><label id="email"></label>
-            </div>
-            <div class="ui-form-item p-item">
-                <label class="ui-label">QQ</label> <input type="text" class="ui-input ui-no-tborder ui-login-psw" validate="{required:'请填写你的QQ',number:true}" placeholder="请填写你的QQ"  v-model="qq"><label id="qq"></label>
-            </div>
-            <div class="ui-form-item p-item">
-                <label class="ui-label"><span class="ui-text-red">*</span> 所在地区</label>
-                <select class="dropdown" name="" size="1" v-model="selectedP">
-                    <template v-for="item in province" track-by="id">
-                        <option :value="{id: item.id, name: item.name}">${item.name}</option>
-                    </template>
-                </select>
-                <select class="dropdown" name="" size="1" v-model="selectedC">
-                    <template v-for="item in city" track-by="id">
-                        <option :value="{id: item.id, name: item.name}">${item.name}</option>
-                    </template>
-                </select>
-                <select class="dropdown" name="" size="1" v-model="selectedD">
-                    <template v-for="item in district" track-by="id">
-                        <option :value="{id: item.id, name: item.name}">${item.name}</option>
-                    </template>
-                </select>
-            </div>
-            <div class="ui-form-item p-item">
-                <label class="ui-label"><span class="ui-text-red">*</span> 详细地址</label> <input type="text" class="ui-input ui-no-tborder ui-address-name ui-login-name" validate="{required:'请填写详细地址'}"  placeholder="请填写详细地址" v-model="address"><label id="address"></label>
-            </div>
-            <p  class="my-text-center my-mar-t30"><button type="button" class="btn btn-long btn-dark" id="reg-info-next">下一步</button></p>
-        </form>
-    </div>
+    <footer>
+        <p class="my-p-footer">友情链接 - <a href="http://www.meicang.net"  target="_Blank">美仓供应链</a><br>
+            ©2015 xxxxxx众筹网络科技有限公司 zhongchou.com 版权所有 xxICP证1xxxxxxxx号</p>
+    </footer>
 </div>
 
-<footer>
-    <p class="my-p-footer">友情链接 - <a href="#">美仓供应链</a><br>
-        ©2015 xxxxxx众筹网络科技有限公司 zhongchou.com 版权所有 xxICP证1xxxxxxxx号</p>
-</footer>
-</div></div>
 <script src="js/lib/jquery.min.js"></script>
 <script src="js/lib/bootstrap.min.js"></script>
 <script src="js/lib/my.js"></script>

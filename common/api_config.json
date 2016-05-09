@@ -1,10 +1,11 @@
 {
   "apiService": {
-    "baseUrl": "http://120.27.148.53:3002/api/",
+    "baseUrl": "http://120.27.148.53:30000/api/",
     "method": {
       "sendCaptcha": "Customers/send-captcha",
       "register": "Customers/register",
       "login": "Customers/login",
+      "checkCaptcha": "Customers/check-captcha",
       "addFundingOrder": "Fundings/add-funding-order",
       "addFundingReserve": "Fundings/add-funding-reserve",
       "finishPayFunding": "Fundings/finish-pay-funding",
@@ -14,7 +15,8 @@
       "getFundingReserve": "Fundings/get-funding-reserve",
       "getHotFunding": "Fundings/get-hot-funding",
       "getFundingDetail": "Fundings/get-funding-detail",
-      "cancelFundingOrder":"Fundings/cancel-funding-order"
+      "cancelFundingOrder":"Fundings/cancel-funding-order",
+      "getDistrict": "Fundings/get-district"
     }
   }
 }

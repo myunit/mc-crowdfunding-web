@@ -1,110 +1,115 @@
-<div class="page-group">
-    <div id="page-progress-view" class="page page-current my-white-bg">
-        <header class="my-header-default">
-            <div class=" my-login-header">
+<div id="page-progress-view" class="page page-current my-white-bg warpper">
+    <header class="my-header-default">
+        <div class=" my-login-header">
     	<span class="pull-left">
          Hi,{{name}}  <a href="/">退出</a>
         </span>
-            </div>
-        </header>
-
-        <nav class="my-border-bottom">
-            <div class="my-wp-1200">
-                <a href="/login-suc" class="my-logo">美仓众筹</a>
-                <ul class="nav nav-pills pull-right">
-
-                    <li role="presentation" class="active"><a href="../login-suc">首页</a></li>
-                    <li role="presentation"><a href="../invest/invest-list">权益众筹</a></li>
-                    <li role="presentation"><a href="../product/product-list">产品众筹</a></li>
-                    <li role="presentation"><a href="../users/my-pre-order">我的预约</a></li>
-                    <li role="presentation"><a href="../users/my-invest-list">我的众筹</a></li>
-                </ul>
-            </div>
-        </nav>
-
-
-        <div class="my-wp-1200">
-
-            <div>
-
-                <!-- Nav tabs -->
-                <ul class="nav nav-tabs my-verify-nav my-mar-t50" role="tablist">
-                    <li role="presentation" class="active"><a href="#project" aria-controls="project" role="tab" data-toggle="tab">查看项目进度</a></li>
-                    <li role="presentation"><a href="#report" aria-controls="report" role="tab" data-toggle="tab" v-if="fundingType === 1 || fundingType === 3">查看出货数据</a></li>
-                </ul>
-
-                <!-- Tab panes -->
-                <div class="tab-content my-view-content">
-                    <div role="tabpanel" class="tab-pane active" id="project">
-                        <template v-for="funding in fundingList" track-by="SysNo">
-                            <div class="my-project-list" v-cloak>
-                                <p class="my-text-gray">${funding.InDate}</p>
-                                <p>${funding.Memo}</p>
-                                <p><img :src="fundingImg[$index].ImgValue" width="185" height="130" alt=""/></p>
-                            </div>
-                        </template>
-                    </div>
-                    <div role="tabpanel" class="tab-pane" id="report" v-if="fundingType === 1 || fundingType === 3">
-                        <div class="my-canvas-box">
-                            <canvas id="canvas" width="960" height="380"></canvas>
-                        </div>
-                        <div class="my-canvas-nav">
-                            <span class="my-text-blue pull-left"><strong>平均回报率：8%</strong></span>
-                            <span class="my-canvas-nav-item"><a href="#">最近30天 </a> <a href="#">最近90天</a> <a href="#">最近一年</a></span>
-                        </div>
-
-                    </div>
-
-
-                </div>
-
-            </div>
-
         </div>
+    </header>
 
-        <footer>
-            <p class="my-p-footer">友情链接 - <a href="#">美仓供应链</a><br>
-                ©2015 xxxxxx众筹网络科技有限公司 zhongchou.com 版权所有 xxICP证1xxxxxxxx号</p>
-        </footer>
+    <nav class="my-border-bottom">
+        <div class="my-wp-1200">
+            <a href="/login-suc" class="my-logo">美仓众筹</a>
+            <ul class="nav nav-pills pull-right">
+
+                <li role="presentation" class="active"><a href="../login-suc">首页</a></li>
+                <li role="presentation"><a href="../invest/invest-list">权益众筹</a></li>
+                <li role="presentation"><a href="../product/product-list">产品众筹</a></li>
+                <li role="presentation"><a href="../users/my-pre-order">我的预约</a></li>
+                <li role="presentation"><a href="../users/my-invest-list">我的众筹</a></li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <div class="my-wp-1200">
+
+        <div>
+
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs my-verify-nav my-mar-t50" role="tablist">
+                <li role="presentation" class="active"><a href="#project" aria-controls="project" role="tab"
+                                                          data-toggle="tab">查看项目进度</a></li>
+                <li role="presentation"><a href="#report" aria-controls="report" role="tab" data-toggle="tab"
+                                           v-if="fundingType === 1 || fundingType === 3">查看出货数据</a></li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content my-view-content">
+                <div role="tabpanel" class="tab-pane active" id="project">
+                    <template v-for="funding in fundingList" track-by="SysNo">
+                        <div class="my-project-list" v-cloak>
+                            <p class="my-text-gray">${funding.InDate.substring(0, 19)}</p>
+
+                            <p>{!!funding.Memo!!}</p>
+
+                            <p>
+                                <template v-for="img in fundingImg[$index].ImgValue">
+                                    <a :href="img" class="fancybox" rel="gallery" title="">
+                                        <img :src="img" width="185" height="130" alt=""/>
+                                    </a>
+                                </template>
+                            </p>
+                        </div>
+                    </template>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="report" v-if="fundingType === 1 || fundingType === 3">
+                    <div class="my-canvas-box">
+                        <canvas id="canvas" width="960" height="380"></canvas>
+                    </div>
+                    <div class="my-canvas-nav">
+                        <span class="my-text-blue pull-left"><strong>平均回报率：8%</strong></span>
+                        <span class="my-canvas-nav-item"><a href="#">最近30天 </a> <a href="#">最近90天</a> <a href="#">最近一年</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    <footer>
+        <p class="my-p-footer">友情链接 - <a href="http://www.meicang.net"  target="_Blank">美仓供应链</a><br>
+            ©2015 xxxxxx众筹网络科技有限公司 zhongchou.com 版权所有 xxICP证1xxxxxxxx号</p>
+    </footer>
 </div>
+
 <script src="../js/lib/jquery.min.js"></script>
 <script src="../js/lib/bootstrap.min.js"></script>
+<script src="../js/lib/jquery.fancybox.pack.js"></script>
 <script src="../js/lib/toastr.min.js"></script>
 <script src="../js/lib/my.js"></script>
 <script src="../js/lib/Chart.js"></script>
-<script type='text/javascript' src='../js/lib/requirejs.min.js' data-main='../js/controller/users-ctrl' ></script>
+<script type='text/javascript' src='../js/lib/requirejs.min.js' data-main='../js/controller/users-ctrl'></script>
 <script>
-    var randomScalingFactor = function(){ return Math.round(Math.random()*600)};
+    var randomScalingFactor = function () {
+        return Math.round(Math.random() * 600)
+    };
     var lineChartData = {
-        labels : ["0","3.2","3.4","3.6","3.8","3.10","3.12","3.14","3.16","3.20","3.22","3.24","3.26","3.28","3.30"],
-        datasets : [
+        labels: ["0", "3.2", "3.4", "3.6", "3.8", "3.10", "3.12", "3.14", "3.16", "3.20", "3.22", "3.24", "3.26", "3.28", "3.30"],
+        datasets: [
             {
                 label: "My First dataset",
-                fillColor : "rgba(220,220,220,0)",
-                strokeColor : "rgba(33,182,180,1)",
-                pointColor : "rgba(33,182,180,1)",
-                pointStrokeColor : "#fff",
-                pointHighlightFill : "#fff",
-                pointHighlightStroke : "rgba(220,220,220,1)",
-                data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
+                fillColor: "rgba(220,220,220,0)",
+                strokeColor: "rgba(33,182,180,1)",
+                pointColor: "rgba(33,182,180,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(220,220,220,1)",
+                data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()]
             }
         ]
 
     }
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
         var $target = $(e.target).attr('aria-controls');
-        if($target=='report'){
+        if ($target == 'report') {
             var ctx = document.getElementById("canvas").getContext("2d");
             window.myLine = new Chart(ctx).Line(lineChartData, {
                 responsive: true,
-                bezierCurve : false,
+                bezierCurve: false,
                 //scaleFontColor : "#e14a4a",
-                scaleFontSize : 16,
+                scaleFontSize: 16,
             });
         }
     })
-
 
 
 </script>

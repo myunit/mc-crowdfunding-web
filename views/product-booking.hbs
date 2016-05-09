@@ -1,96 +1,100 @@
-<div class="page-group">
-    <div id="page-product-booking" class="page page-current my-white-bg">
-<header class="my-header-default">
-    <div class=" my-login-header">
+<div id="page-product-booking" class="page page-current my-white-bg warpper">
+    <header class="my-header-default">
+        <div class=" my-login-header">
     	<span class="pull-left">
          Hi,{{name}}  <a href="/">退出</a>
         </span>
-    </div>
-</header>
+        </div>
+    </header>
 
-<nav class="my-border-bottom">
+    <nav class="my-border-bottom">
+        <div class="my-wp-1200">
+            <a href="/login-suc" class="my-logo">美仓众筹</a>
+            <ul class="nav nav-pills pull-right">
+
+                <li role="presentation" class="active"><a href="../login-suc">首页</a></li>
+                <li role="presentation"><a href="../invest/invest-list">权益众筹</a></li>
+                <li role="presentation"><a href="../product/product-list">产品众筹</a></li>
+                <li role="presentation"><a href="../users/my-pre-order">我的预约</a></li>
+                <li role="presentation"><a href="../users/my-invest-list">我的众筹</a></li>
+            </ul>
+        </div>
+    </nav>
+
+
     <div class="my-wp-1200">
-        <a href="/login-suc" class="my-logo">美仓众筹</a>
-        <ul class="nav nav-pills pull-right">
+        <div class="cart-title-box ui-reg-nav clearfix">
+            <ul class="ui-nav">
+                <li class="ui-nav-item ui-nav-item-current">
+                    <span class="ui-nav-item-order">1</span>
+                    <span class="ui-nav-item-text">提交订单</span>
+                </li>
+                <li class="ui-nav-item">
+                    <span class="ui-nav-item-order">2</span>
+                    <span class="ui-nav-item-text">订单支付</span>
+                </li>
+                <li class="ui-nav-item">
+                    <span class="ui-nav-item-order">3</span>
+                    <span class="ui-nav-item-text">支付完成</span>
+                </li>
+            </ul>
 
-            <li role="presentation" class="active"><a href="../login-suc">首页</a></li>
-            <li role="presentation"><a href="../invest/invest-list">权益众筹</a></li>
-            <li role="presentation"><a href="../product/product-list">产品众筹</a></li>
-            <li role="presentation"><a href="../users/my-pre-order">我的预约</a></li>
-            <li role="presentation"><a href="../users/my-invest-list">我的众筹</a></li>
-        </ul>
-    </div>
-</nav>
+        </div>
 
+        <div class="my-box">
+            <div class="my-booking-box">
 
-<div class="my-wp-1200">
-    <div class="cart-title-box ui-reg-nav clearfix">
-        <ul class="ui-nav">
-            <li class="ui-nav-item ui-nav-item-current">
-                <span class="ui-nav-item-order">1</span>
-                <span class="ui-nav-item-text">提交订单</span>
-            </li>
-            <li class="ui-nav-item">
-                <span class="ui-nav-item-order">2</span>
-                <span class="ui-nav-item-text">订单支付</span>
-            </li>
-            <li class="ui-nav-item">
-                <span class="ui-nav-item-order">3</span>
-                <span class="ui-nav-item-text">支付完成</span>
-            </li>
-        </ul>
+                <div class="my-booking-form-item">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label class="sr-only">订购数量</label>
 
-    </div>
-
-    <div class="my-box">
-        <div class="my-booking-box">
-
-            <div class="my-booking-form-item">
-                <form class="form-inline">
-                    <div class="form-group">
-                        <label class="sr-only">订购数量</label>
-                        <p class="form-control-static">订购数量</p>
+                            <p class="form-control-static">订购数量</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword2" class="sr-only">订购数量</label>
+                            <input type="text" class="form-control input-sm" id="inputPassword2" v-model="num">
+                        </div>
+                        <span>件</span><label id="product-amount-label"></label>
+                    </form>
+                    <div class="my-form-item">
+                        <label>单价</label><span class="my-text-blue">${funding.UnitPrice}元</span>
                     </div>
-                    <div class="form-group">
-                        <label for="inputPassword2" class="sr-only">订购数量</label>
-                        <input type="text" class="form-control input-sm" id="inputPassword2" v-model="num">
+                    <div class="my-form-item">
+                        <label>需付金额</label><span class="my-text-red">${amount}元</span>
                     </div>
-                    <span>件</span><label id="product-amount-label"></label>
-                </form>
-                <div class="my-form-item">
-                    <label>单价</label><span class="my-text-blue">${funding.UnitPrice}元</span>
                 </div>
-                <div class="my-form-item">
-                    <label>需付金额</label><span class="my-text-red">${amount}元</span>
-                </div>
-            </div>
 
-            <div class="my-booking-form-item">
-                <p>协议文本xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                    xxxxxxx</p>
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" id="check-pro" v-model="check_pro">我已详细阅读并同意 <label id="check_pro-label"></label>
-                    </label>
+                <div class="my-booking-form-item">
+                    <p>协议文本xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxx</p>
+
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" id="check-pro" v-model="check_pro">我已详细阅读并同意 <label
+                                id="check_pro-label"></label>
+                        </label>
+                    </div>
                 </div>
+                <p v-cloak class="my-text-center my-text-gray">
+                    <button type="button" class="btn btn-long"
+                            :class="{'btn-dark': check_pro, 'btn-dark-disable': !check_pro}"
+                            id="submit-product-booking" @click.prevent="submitOrder()">提交订单
+                    </button>
+                </p>
             </div>
-            <p v-cloak class="my-text-center my-text-gray"><button type="button" class="btn btn-long" :class="{'btn-dark': check_pro, 'btn-dark-disable': !check_pro}" id="submit-product-booking" @click.prevent="submitOrder()">提交订单</button></p>
         </div>
     </div>
-
-
-
+    <footer>
+        <p class="my-p-footer">友情链接 - <a href="http://www.meicang.net"  target="_Blank">美仓供应链</a><br>
+            ©2015 xxxxxx众筹网络科技有限公司 zhongchou.com 版权所有 xxICP证1xxxxxxxx号</p>
+    </footer>
 </div>
 
-<footer>
-    <p class="my-p-footer">友情链接 - <a href="#">美仓供应链</a><br>
-        ©2015 xxxxxx众筹网络科技有限公司 zhongchou.com 版权所有 xxICP证1xxxxxxxx号</p>
-</footer>
-</div></div>
 <script src="../js/lib/jquery.min.js"></script>
 <script src="../js/lib/bootstrap.min.js"></script>
 <script src="../js/lib/toastr.min.js"></script>
 <script src="../js/lib/jquery.loading.min.js"></script>
 <script src="../js/lib/my.js"></script>
-<script type='text/javascript' src='../js/lib/requirejs.min.js' data-main='../js/controller/product-ctrl' ></script>
+<script type='text/javascript' src='../js/lib/requirejs.min.js' data-main='../js/controller/product-ctrl'></script>

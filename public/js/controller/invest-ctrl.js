@@ -28,12 +28,23 @@ function toDecimal4(x) {
 	return f;
 }
 
+function toDecimal2(x) {
+	var f = parseFloat(x);
+
+	if (isNaN(f)) {
+		return;
+	}
+
+	f = Math.round(x*100)/100;
+	return f;
+}
+
 function ajaxPost(url, data, cb) {
 	$.ajax({
 		type: 'POST',
 		url: url,
 		data: data,
-		timeout: 15000,
+		timeout: 25000,
 		success: function (data, status, xhr) {
 			if (data.status) {
 				cb(null, data);
@@ -48,18 +59,22 @@ function ajaxPost(url, data, cb) {
 	});
 }
 
-function FoundingItems(url, number, status, type) {
+function FoundingItems(url, number, district, status, type, active) {
 	var o = {};
 	o.url = url;
 	o.status = status;
 	o.type = type;
+	o.district = district;
+	o.active = active;
 	o.pageSize = number;
 	o.pageId = 0;
 	o.addItems = function (cb) {
 		var self = this;
 		ajaxPost(this.url, {
-			fundingStatus: o.status,
-			fundingType: o.type,
+			fundingStatus: this.status,
+			fundingType: this.type,
+			fundingActive: this.active,
+			districtId: this.district,
 			pageId: this.pageId,
 			pageSize: this.pageSize
 		}, function (err, data) {
@@ -104,7 +119,8 @@ require(['Vue', 'Utils'],
 					data: {
 						count: 0,
 						equityList: [],
-						equityImg: []
+						equityImg: [],
+						district: []
 					},
 					methods: {
 						goToDetail: goToDetail
@@ -115,7 +131,32 @@ require(['Vue', 'Utils'],
 					location.href = '/invest/invest-ongoing?id=' + vm.equityList[index].SysNo;
 				}
 
-				var foundingItem = new FoundingItems('/invest/get-all-funding', 20, '[0,1,10,11]', '[1,3]');
+				ajaxPost('/invest/get-district', {}, function (err, data) {
+					if (err) {
+						toastr.error(err, '错误');
+					} else {
+						vm.district = data.district.slice();
+
+						var el = '<select class="dropdown" name="" id="selectDistrict">';
+						el += '<option value="-1">全部</option>';
+						for (var i = 0;i < vm.district.length; i++) {
+							var dis = vm.district[i];
+							el += '<option value="'+ dis.districtId +'">' + dis.districtName + '</option>';
+						}
+						el += '</select>';
+						$("#brand").after(el);
+
+						Vue.nextTick(function () {
+							$('#selectDistrict').easyDropDown();
+							$('#selectDistrict').change(function () {
+								changeSelect();
+							});
+						});
+
+					}
+				});
+
+				var foundingItem = new FoundingItems('/invest/get-all-funding', 20, -1, '[0,10,11]', '[1,3]', '[0,1,10]');
 				foundingItem.addItems(function (err, data) {
 					if (err) {
 						toastr.error(err, '错误');
@@ -127,15 +168,17 @@ require(['Vue', 'Utils'],
 				});
 
 				function changeSelect() {
-					var status = parseInt($('#selectStatus').children('option:selected').val());
-					if (status === 0) {
-						status = '[0]';
-					} else if (status === 1) {
-						status = '[1]';
-					} else if (status === 2) {
-						status = '[10,11]';
+					var district = parseInt($('#selectDistrict').children('option:selected').val());
+
+					var active = parseInt($('#selectStatus').children('option:selected').val());
+					if (active === 0) {
+						active = '[0]';
+					} else if (active === 1) {
+						active = '[1]';
+					} else if (active === 2) {
+						active = '[10]';
 					} else {
-						status = '[0,1,10,11]';
+						active = '[0,1,10]';
 					}
 
 					var type = parseInt($('#selectType').children('option:selected').val());
@@ -148,9 +191,9 @@ require(['Vue', 'Utils'],
 					}
 
 					foundingItem = null;
-					foundingItem = new FoundingItems('/invest/get-all-funding', 20, status, type);
+					foundingItem = new FoundingItems('/invest/get-all-funding', 20, district, '[0,10,11]', type, active);
 					vm.equityList.splice(0, vm.equityList.length);
-					vm.equityImg.splice(0, vm.proudctImg.length);
+					vm.equityImg.splice(0, vm.equityImg.length);
 					foundingItem.addItems(function (err, data) {
 						if (err) {
 							toastr.error(err, '错误');
@@ -162,7 +205,7 @@ require(['Vue', 'Utils'],
 					});
 				}
 
-				$('#selectSource').change(function () {
+				$('#selectDistrict').change(function () {
 					changeSelect();
 				});
 
@@ -178,10 +221,10 @@ require(['Vue', 'Utils'],
 				$(window).scroll(function () {
 					var $this = $(this),
 						viewH = $(this).height(),//可见高度
-						contentH = $(this).get(0).scrollHeight,//内容高度
+						contentH = document.body.scrollHeight==0?document.documentElement.scrollHeight:document.body.scrollHeight,//内容高度
 						scrollTop = $(this).scrollTop();//滚动高度
 					//if(contentH - viewH - scrollTop <= 100) { //到达底部100px时,加载新内容
-					if (scrollTop / (contentH - viewH) >= 0.95 && vm.equityList < vm.count) { //到达底部100px时,加载新内容
+					if (scrollTop / (contentH - viewH) >= 0.99 && vm.equityList.length < vm.count) { //到达底部100px时,加载新内容
 						foundingItem.addItems(function (err, data) {
 							if (err) {
 								toastr.error(err, '错误');
@@ -244,8 +287,14 @@ require(['Vue', 'Utils'],
 					var $video = $('.ui-video-content video');
 					$video[0].currentTime = 0;
 					$video[0].pause();
-					vm.swiperImg.splice(0, vm.swiperImg.length);
-					vm.swiperImg = vm.imgList[index].ImgValue.slice();
+					$('#my-carousel').carousel(index);
+				}
+
+				function draw(video, thecanvas) {
+					// get the canvas context for drawing
+					var context = thecanvas.getContext('2d');
+					// draw the video contents into the canvas x, y, width, height
+					context.drawImage(video, 0, 0, thecanvas.width, thecanvas.height);
 				}
 
 				ajaxPost('/invest/get-funding-detail', {fundingId: parseInt(search['id'])}, function (err, data) {
@@ -258,10 +307,45 @@ require(['Vue', 'Utils'],
 							if (vm.imgList.length >= 8) {
 								var $video = $('.ui-video-content video');
 								$('source', $video).attr('src', vm.imgList[7].ImgValue.length > 0 ? vm.imgList[7].ImgValue[0]:'');
+								var $videoCanvas = $('#videoCanvas');
+								$video[0].onloadeddata=function () {
+									draw($video[0], $videoCanvas[0]);
+								};
 								$video[0].load();
+								//$video[0].currentTime = 0;
 							}
 
-							vm.swiperImg = vm.imgList[2].ImgValue.slice();
+							var i = 0;
+							var key =  0;
+							var imgList = vm.imgList[2].ImgValue;
+							for (i = 0; i < imgList.length; i++) {
+								vm.swiperImg.push({index: key, url: imgList[i]});
+								key++;
+							}
+
+							imgList = vm.imgList[3].ImgValue;
+							for (i = 0; i < imgList.length; i++) {
+								vm.swiperImg.push({index: key, url: imgList[i]});
+								key++;
+							}
+
+							imgList = vm.imgList[4].ImgValue;
+							for (i = 0; i < imgList.length; i++) {
+								vm.swiperImg.push({index: key, url: imgList[i]});
+								key++;
+							}
+
+							imgList = vm.imgList[5].ImgValue;
+							for (i = 0; i < imgList.length; i++) {
+								vm.swiperImg.push({index: key, url: imgList[i]});
+								key++;
+							}
+
+							imgList = vm.imgList[6].ImgValue;
+							for (i = 0; i < imgList.length; i++) {
+								vm.swiperImg.push({index: key, url: imgList[i]});
+								key++;
+							}
 							$('#fn-video').click(function(e){
 								e.preventDefault();
 								$('#my-carousel').hide();
@@ -279,7 +363,7 @@ require(['Vue', 'Utils'],
 									var id_selector = $(this).attr("id");
 									var id = id_selector.substr(id_selector.length - 1);
 									id = parseInt(id);
-									$('#my-carousel').carousel(id);
+									//$('#my-carousel').carousel(id);
 									$('[id^=carousel-selector-]').removeClass('selected');
 									$(this).addClass('selected');
 								});
@@ -291,6 +375,11 @@ require(['Vue', 'Utils'],
 									$('[id=carousel-selector-' + id + ']').addClass('selected');
 								});
 							});
+						} else {
+							toastr.warning('该众筹已下架', '警告');
+							setTimeout(function () {
+								location.href = '/invest/invest-list';
+							}, 2500);
 						}
 					}
 				});
@@ -320,7 +409,7 @@ require(['Vue', 'Utils'],
 							return toDecimal4(this.num * this.funding.UnitPercent);
 						},
 						amount: function () {
-							return this.num * this.funding.UnitPrice;
+							return toDecimal2(this.num * this.funding.UnitPrice);
 						}
 					},
 					methods: {

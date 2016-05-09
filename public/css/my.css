@@ -31,18 +31,20 @@ nav .my-logo,
 .carat,
 .my-product-list-failed,
 .cart-title-box .ui-nav-item-current .ui-nav-item-order,
-.cart-title-box .ui-nav-item .ui-nav-item-order{ background:url(../images/sprite.png) no-repeat; display:inline-block;}
+.cart-title-box .ui-nav-item .ui-nav-item-order,header .my-login-header a.pull-left{ background:url(../images/sprite.png) no-repeat; display:inline-block;}
 
 header.my-header-default{ height:40px; color:#fff;font-size:12px; position:relative;}
 header.my-header-default .my-login-header a{ color:#fff; line-height:40px; font-size:12px; padding-left:10px;}
 
-nav{ height:68px; background:#f6f7f8;}
-nav .my-logo{ float:left; background-position:-88px 0; text-indent:-9999px; width:304px; height:32px; margin-top:17px;}
+nav{ height:68px; background:#5b5a60;}
+nav .my-logo{ float:left; background-position:-88px 0; text-indent:-9999px; width:304px; height:40px; margin-top:17px;}
 nav .nav{ margin-top:13px;}
-nav .nav > li > a{ font-size:16px; color:#333;}
-nav .nav-pills > li.active > a{ background:none; color:#333;}
-nav .nav-pills > li.active > a:hover{ background:#eee; color:#333;}
+nav .nav > li > a{ font-size:16px; color:#fff;}
+nav .nav-pills > li.active > a{ background:none; color:#fff;}
+nav .nav-pills > li.active > a:hover,nav .nav-pills > li > a:hover{ background:#eee; color:#333;}
 nav .nav-pills > li + li {margin-left: 30px;}
+
+header .my-login-header a.pull-left{background-position: -88px 0;text-indent: -9999px;width: 304px;float: left !important;height: 40px;margin-top: 6px}
 
 footer{ height:74px; background:#525158; text-align:center;}
 .my-p-footer{ color:#adacac; font-size:12px; padding-top:20px; line-height:20px;}
@@ -69,7 +71,7 @@ box-sizing: content-box; }
 .dropdown .old{width: 100%;height: 100%;}
 .dropdown select{width: 100%;height: 100%;opacity: 0;}
 .dropdown  div{ opacity: 0; height:0;}
-.dropdown .selected{ display:inline-block;}
+.dropdown .selected{ display:inline-block;overflow:hidden;}
 .dropdown .selected{ border:1px solid #e8e8e8; background:#fff; padding:0 10px; width:80px; height:30px; line-height:30px; cursor:pointer;}
 .carat{ position:absolute; right:0px; top:3px; width:24px; height:24px; background-position:-51px -113px;cursor:pointer;}
 .dropdown div{
@@ -153,6 +155,7 @@ footer.my-footer-home{position:fixed; bottom:40px; height:auto; background:none;
 .my-item-box{ border:1px solid #d4d4d4; padding:20px; margin-bottom:20px; position:relative;}
 .my-item-box .my-item-img{ width:216px;}
 .my-item-box .my-item-info{ width:338px; margin:0 48px 0 24px;}
+.my-item-box .my-item-info p{ word-break:break-all;}
 .my-item-box .my-item-info h3{ font-size:18px; margin:12px 0; font-weight:bold;}
 .my-item-box .my-item-status{ width:532px;}
 .my-item-box .my-item-status .my-item-progress{ position:relative; padding:26px 0 0 0;}
@@ -232,9 +235,9 @@ footer.my-footer-home{position:fixed; bottom:40px; height:auto; background:none;
 .cart-title-box .ui-nav-item .ui-nav-item-order{ display:inline-block; height:34px; min-width:36px; background-position:20px -420px; padding-left:10px; font-weight:bold; }
 
 .cart-title-box .ui-nav-item-current {  background:#5b5a60; color:#fff;}
-.cart-title-box .ui-nav-item-current .ui-nav-item-order{ background-position:20px -297px;overflow:hidden;}
+.cart-title-box .ui-nav-item-current .ui-nav-item-order{ background-position:20px -297px;}
 
-.my-box{ border:1px solid #dfdfdf; padding:30px; margin-bottom:50px;}
+.my-box{ border:1px solid #dfdfdf; padding:80px; margin-bottom:50px;}
 .my-booking-box{ width:501px; margin:0 auto;}
 .my-p-booking-tip{ background:#f6f6f6; padding:14px; margin:22px 0;}
 .my-p-booking-tip p{ margin-bottom:22px;}
@@ -247,7 +250,7 @@ footer.my-footer-home{position:fixed; bottom:40px; height:auto; background:none;
 
 /*登录注册样式*/
 .my-top-login{ line-height:68px; color:#333;}
-.my-top-login a{ color:#333; padding:0 6px;}
+.my-top-login a{ color:#ffffff; padding:0 6px;}
 .my-top-login a:last-child{ padding-right:0;}
 
 .ui-reg-form{ width:492px; margin:0 auto;}
@@ -389,6 +392,8 @@ input.ui-checkbox { vertical-align: baseline;}
 /*查看数据页面样式*/
 .my-view-content{ padding:20px; border:1px solid #d3d3d3; border-top:none; margin-bottom:50px;}
 .my-view-content .my-project-list{ background:#f5f5f5; padding:16px 32px; margin-bottom:20px;}
+.my-view-content .my-project-list p{word-break:break-all;}
+.my-view-content .my-project-list img{margin:0 5px 5px 0;}
 .my-view-content .my-project-list:last-child{ margin-bottom:0;}
 .my-canvas-box{ width:960px; height:380px; margin:40px auto;}
 .my-canvas-nav{width:960px; margin:0 auto; text-align:center;}
@@ -406,6 +411,27 @@ DIV.digg  .next{ margin:2px 6px 2px 6px;}
 /*视频样式*/
 .ui-video-content{ background:#000; display:none;}
 .ui-video-content #player{ width:1200px; height:537px; display:block;}
+
+/*众筹列表也模态窗口样式*/
+
+.modal_align_b  .modal-content{ width:600px;}
+.modal_align_b  .modal-header{ border-bottom: 1px solid #e5e5e5; padding:15px;}
+
+.ui-confirm-trans{ text-align:center;}
+.ui-confirm-trans h3{ font-size:18px;}
+.ui-confirm-trans ul{ list-style:none; margin:0; display:inline-block; margin-right:-20px; padding:30px 15px 15px 15px;}
+.ui-confirm-trans li{ list-style:none; padding:0; float:left; position:relative; margin-right:20px;}
+.ui-confirm-trans li .ui-delete{ background:url(../images/sprite.png) no-repeat; background-position:-512px -482px; display:block; width:18px; height:18px; position:absolute; top:-9px; right:-9px;}
+.ui-confirm-trans p.ui-tip{ font-size:12px; color:#21b6b4;}
+.modal_align_b .modal-footer{ text-align:center; border:none; padding-top:20px;}
+.modal_align_b .modal-footer .btn{ font-size:16px; padding:10px 58px;}
+.modal_align_b .modal-footer .btn-dark:hover{ background:#2a2a2c; border-color:#2a2a2c;}
+
+.sl-custom-file{position:relative;display:inline-block;zoom:1;cursor:pointer;overflow:hidden;vertical-align:middle;}
+.sl-custom-file .ui-input-file{position:absolute;right:0;top:0;_zoom:30;font-size:300px\9;height:100%;_height:auto;opacity:0;}
+
+.warpper{position: relative;padding-bottom: 74px;height: auto;min-height: 100%}
+.warpper footer{position: absolute;left: 0;bottom: 0;width: 100%}
 
 [v-cloak] {
 	display: none;

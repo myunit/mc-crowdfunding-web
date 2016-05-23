@@ -145,7 +145,7 @@ footer.my-footer-home{position:fixed; bottom:40px; height:auto; background:none;
 .ui-icon-club{ background-position:-405px -356px;}
 
 /*首页样式*/
-.my-index-top{ background:#e5e5e5;}
+.my-index-top{ background:url("../images/index_banner.jpg");}
 .my-index-top .my-wp-1200{ height:350px; position:relative;}
 .my-index-top .my-wp-1200 .my-a-index-top{ font-size:18px; color:#333; position:absolute; bottom:24px; right:0;}
 

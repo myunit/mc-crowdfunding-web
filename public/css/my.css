@@ -147,7 +147,7 @@ footer.my-footer-home{position:fixed; bottom:40px; height:auto; background:none;
 /*首页样式*/
 .my-index-top{ background:url("../images/index_banner.jpg");}
 .my-index-top .my-wp-1200{ height:350px; position:relative;}
-.my-index-top .my-wp-1200 .my-a-index-top{ font-size:18px; color:#333; position:absolute; bottom:24px; right:0;}
+.my-index-top .my-wp-1200 .my-a-index-top{ font-size:18px; color:#FFFFFF; position:absolute; bottom:24px; right:0;}
 
 .my-h2{ font-size:20px; font-weight:bold; line-height:20px; border-left:4px solid #e14a4a; padding-left:8px; margin:60px 0 50px 0;}
 .my-h2 a{ float:right; font-size:14px; font-weight:normal; color:#333;}
